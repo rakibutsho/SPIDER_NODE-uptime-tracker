@@ -8,7 +8,7 @@ import {
 import { logout } from "@/redux/features/auth/authSlice";
 import Cookies from "js-cookie";
 import { LogOut } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
@@ -28,7 +28,6 @@ export function TeamSwitcher({
 }) {
   const [activeTeam] = React.useState(teams[0]);
   const dispatch = useDispatch();
-  const router = useRouter();
   const displayName = user?.name ?? "Default User";
   const displayEmail = user?.email ?? "user@guicopay.gn";
   const displayAvatar = user?.avatar ?? "https://github.com/shadcn.png";
@@ -44,10 +43,7 @@ export function TeamSwitcher({
     dispatch(logout());
     Cookies.remove("token");
     toast.success("Logged out successfully!");
-    setTimeout(() => {
-      router.push("/");
-      router.refresh();
-    }, 300);
+    signOut({ callbackUrl: "/login" });
   };
 
   const handleLogoutClick = async () => {
