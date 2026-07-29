@@ -92,7 +92,7 @@ export function TeamSwitcher({
 
       {/* Footer user and logout */}
       <div className="absolute bottom-4 left-4 right-4">
-        <div className="mb-4 flex items-center gap-3 rounded-xl bg-white/70 p-2">
+        {/* <div className="mb-4 flex items-center gap-3 rounded-xl bg-white/70 p-2">
           <Avatar className="h-9 w-9">
             <AvatarImage src={displayAvatar} alt={displayName} />
             <AvatarFallback>{displayFallback}</AvatarFallback>
@@ -105,7 +105,7 @@ export function TeamSwitcher({
               {displayEmail}
             </p>
           </div>
-        </div>
+        </div> */}
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton

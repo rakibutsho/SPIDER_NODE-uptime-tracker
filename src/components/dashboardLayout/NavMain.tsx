@@ -45,10 +45,10 @@ export function NavMain({
                 <SidebarMenuButton
                   tooltip={item.title}
                   onClick={item.onClick}
-                  className={`flex items-center gap-4 rounded-xl px-3 py-2.5 w-full cursor-pointer text-center transition-colors ${
+                  className={`flex items-center gap-4 rounded-xl px-3 py-2.5 w-full cursor-pointer text-left transition-colors ${
                     active
-                      ? "text-white bg-linear-to-r from-[#10A34B] to-[#0B843C] font-medium hover:from-[#0B843C] hover:to-[#0B843C] hover:text-white"
-                      : "text-[#8A8D91] hover:bg-white/80 hover:text-[#3A3A3A]"
+                      ? "text-[#00E5FF] bg-cyan-500/10 border border-cyan-500/20 font-medium hover:bg-cyan-500/20"
+                      : "text-slate-400 hover:bg-slate-800/50 hover:text-slate-200"
                   }`}
                 >
                   <div className="flex items-center gap-3">

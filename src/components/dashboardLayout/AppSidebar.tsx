@@ -11,6 +11,7 @@ import {
   UserCog,
   Users,
   Wallet,
+  type LucideIcon,
 } from "lucide-react";
 import type * as React from "react";
 
@@ -21,7 +22,18 @@ import { useSelector } from "react-redux";
 import { TeamSwitcher } from "./TeamSwitch";
 import { NavMain } from "./NavMain";
 
-const defaultUserData = {
+type NavigationItem = {
+  title: string;
+  path: string;
+  icon: LucideIcon;
+};
+
+type NavigationData = {
+  main: NavigationItem[];
+  other?: NavigationItem[];
+};
+
+const defaultUserData: NavigationData = {
   main: [
     {
       title: "Dashboard",
@@ -29,31 +41,14 @@ const defaultUserData = {
       icon: LayoutGrid,
     },
     {
-      title: "Messages",
-      path: "/messages",
-      icon: MessageCircleMore,
-    },
-    {
-      title: "Payments & Payouts",
-      path: "/challenges",
-      icon: Wallet,
-    },
-    {
       title: "Profile",
       path: "/profile",
       icon: CircleUser,
-    },
-  ],
-  other: [
-    {
-      title: "Support",
-      path: "/support",
-      icon: MessageCircleMore,
     },
   ],
 };
 
-const adminUserData = {
+const adminUserData: NavigationData = {
   main: [
     {
       title: "Dashboard",
@@ -61,50 +56,30 @@ const adminUserData = {
       icon: LayoutGrid,
     },
     {
-      title: "Customers",
+      title: "Monitors",
+      path: "/monitors",
+      icon: MonitorCog,
+    },
+    {
+      title: "Incidents",
+      path: "/incidents",
+      icon: ShieldAlert,
+    },
+    {
+      title: "Users",
       path: "/users",
       icon: Users,
-    },
-    {
-      title: "Merchants",
-      path: "/category",
-      icon: Codesandbox,
-    },
-    {
-      title: "Invoices",
-      path: "/invoices",
-      icon: ReceiptText,
-    },
-    {
-      title: "Payments & Payouts",
-      path: "/challenges",
-      icon: Wallet,
-    },
-    {
-      title: "Messages",
-      path: "/messages",
-      icon: MessageCircleMore,
     },
   ],
   other: [
     {
-      title: "Risk Monitoring",
-      path: "/risk-monitoring",
-      icon: ShieldAlert,
+      title: "Billing",
+      path: "/billing",
+      icon: ReceiptText,
     },
     {
-      title: "System Configuration",
-      path: "/system-configuration",
-      icon: MonitorCog,
-    },
-    {
-      title: "Profile",
-      path: "/profile",
-      icon: CircleUser,
-    },
-    {
-      title: "Access Management",
-      path: "/access-management",
+      title: "Settings",
+      path: "/settings",
       icon: UserCog,
     },
   ],
@@ -153,14 +128,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             icon: item.icon,
           }))}
         />
-        <NavMain
-          title={isAdminPath ? "Management" : "Other"}
-          items={navigationData.other.map((item) => ({
-            title: item.title,
-            url: buildUrl(item.path),
-            icon: item.icon,
-          }))}
-        />
+        {navigationData.other && navigationData.other.length > 0 && (
+          <NavMain
+            title={isAdminPath ? "Management" : "Other"}
+            items={navigationData.other.map((item) => ({
+              title: item.title,
+              url: buildUrl(item.path),
+              icon: item.icon,
+            }))}
+          />
+        )}
       </SidebarContent>
 
       <SidebarRail />
