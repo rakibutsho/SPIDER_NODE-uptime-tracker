@@ -59,7 +59,7 @@ export async function PATCH(req: Request, { params }: RouteParams) {
 
         const monitorId = parseInt(id, 10);
         if (isNaN(monitorId)) {
-            return NextResponse.json({ error: "Invalid monitor ID" }, { status: 400 });
+            return
         }
 
         const body = await req.json();
@@ -93,15 +93,20 @@ export async function PATCH(req: Request, { params }: RouteParams) {
             data: updateData,
         });
 
-        return NextResponse.json({ monitor: updatedMonitor }, { status: 200 });
+        return NextResponse.json(
+            { message: "Monitor updated successfully", monitor: updatedMonitor },
+            { status: 200 }
+        );
     } catch (error) {
         console.error("Update Monitor Error:", error);
         return NextResponse.json(
             { error: "Failed to update monitor" },
             { status: 500 }
-        );
+        )
+
     }
 }
+
 
 // ----------------------------------------------------
 // 3. DELETE MONITOR (DELETE)
@@ -118,7 +123,7 @@ export async function DELETE(req: Request, { params }: RouteParams) {
 
         const monitorId = parseInt(id, 10);
         if (isNaN(monitorId)) {
-            return NextResponse.json({ error: "Invalid monitor ID" }, { status: 400 });
+            return
         }
 
         const existingMonitor = await prisma.monitor.findFirst({
