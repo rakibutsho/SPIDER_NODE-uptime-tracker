@@ -1,98 +1,89 @@
-import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { getServerSession } from "next-auth";
+import { NextResponse } from "next/server";
 
+
+// ----------------------------------------------------
+// 1. GET ALL MONITORS FOR LOGGED-IN USER (GET)
+// ----------------------------------------------------
 export async function GET() {
   try {
     const session = await getServerSession(authOptions);
-
-    if (!session?.user?.email) {
-      return NextResponse.json(
-        { error: "Unauthorized. Please log in." },
-        { status: 401 }
-      );
-    }
-
-    // Find user in database
-    const user = await prisma.user.findUnique({
-      where: { email: session.user.email.toLowerCase() },
-    });
-
-    if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const monitors = await prisma.monitor.findMany({
-      where: { userId: user.id },
+      where: { userId: session.user.id },
       orderBy: { createdAt: "desc" },
     });
 
-    return NextResponse.json({ monitors });
+    return NextResponse.json({ monitors }, { status: 200 });
   } catch (error) {
-    console.error("GET /api/monitors error:", error);
+    console.error("Featch Monitors Error:", error);
     return NextResponse.json(
       { error: "Failed to fetch monitors" },
       { status: 500 }
-    );
+    )
   }
 }
+
+// ----------------------------------------------------
+// 2. CREATE A NEW MONITOR (POST)
+// ----------------------------------------------------
 
 export async function POST(req: Request) {
   try {
     const session = await getServerSession(authOptions);
-
-    if (!session?.user?.email) {
-      return NextResponse.json(
-        { error: "Unauthorized. Please log in." },
-        { status: 401 }
-      );
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "Unauthirized" }, { status: 401 })
     }
 
     const body = await req.json();
-    let { name, url } = body;
+    const { name, url, interval } = body;
 
+    // Field Validation
     if (!name || !url) {
       return NextResponse.json(
-        { error: "Monitor name and URL are required" },
+        { error: "Name and URL are required" },
         { status: 400 }
-      );
+      )
     }
 
-    name = name.trim();
-    url = url.trim();
+    // URL Format Validation
 
-    if (!url.startsWith("http://") && !url.startsWith("https://")) {
-      url = `https://${url}`;
-    }
-
-    const user = await prisma.user.findUnique({
-      where: { email: session.user.email.toLowerCase() },
-    });
-
-    if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    try {
+      new URL(url);
+    } catch (_) {
+      return NextResponse.json(
+        { error: 'Invalid URL format (e.g., https://example.com)' },
+        { status: 400 }
+      )
     }
 
     const newMonitor = await prisma.monitor.create({
       data: {
-        name,
-        url,
-        status: "UP",
-        lastChecked: new Date(),
-        userId: user.id,
-      },
-    });
+        name: name.trim(),
+        url: url.trim(),
+        interval: interval ? parseInt(interval) : 5,
+        userId: session.user.id,
+        status: "PENDING"
+      }
+    })
 
     return NextResponse.json(
-      { message: "Monitor created successfully", monitor: newMonitor },
+      { message: "Monitor listed successfully", monitor: newMonitor },
       { status: 201 }
-    );
+    )
+
   } catch (error) {
-    console.error("POST /api/monitors error:", error);
+    console.error("Create Monitor Error", error);
     return NextResponse.json(
       { error: "Failed to create monitor" },
       { status: 500 }
     );
+
   }
+
 }
