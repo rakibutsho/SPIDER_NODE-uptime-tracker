@@ -65,6 +65,7 @@ model Monitor {
   url         String
   name        String
   status      String    @default("UNKNOWN")
+  interval    Int       @default(5)
   lastChecked DateTime?
   userId      String
   user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)

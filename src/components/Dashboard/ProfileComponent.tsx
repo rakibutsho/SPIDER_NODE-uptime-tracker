@@ -28,6 +28,7 @@ import {
   Camera,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import TelegramSettings from "./TelegramSettings";
 
 interface UserProfile {
   id: string;
@@ -510,75 +511,53 @@ export default function ProfileComponent() {
           </div>
         </div>
 
-        {/* Telegram Notifications & Security Card */}
-        <div className="p-6 sm:p-10 rounded-3xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-md space-y-8 shadow-xl mb-6">
-          <div className="flex items-center gap-4 pb-5">
-            <div className="p-2.5 rounded-xl bg-sky-500/10 border border-sky-500/20 text-sky-400">
-              <Send className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="text-base font-bold text-white">Telegram & Security</h3>
-              <p className="text-xs text-slate-400">Notifications integration & access status</p>
-            </div>
-          </div>
+        {/* Security & Password Card */}
+        <div className="flex flex-col gap-8">
+          <TelegramSettings />
 
-          <div className="space-y-5">
-            <div className="p-5 sm:px-6 sm:py-6 rounded-2xl bg-slate-950/60 border border-slate-800/60 space-y-4">
-              <div className="flex items-center justify-between flex-wrap gap-2">
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Telegram Chat ID</span>
-                {isEditing ? (
-                  <input 
-                    type="text" 
-                    value={editForm.telegramChatId} 
-                    onChange={(e) => setEditForm(prev => ({...prev, telegramChatId: e.target.value}))}
-                    placeholder="e.g. 123456789"
-                    className="bg-slate-950/50 border border-slate-700 focus:border-sky-500 focus:ring-1 focus:ring-sky-500/50 rounded-xl px-4 py-2 text-xs font-mono text-white transition-all w-full sm:w-1/2 shadow-inner"
-                  />
-                ) : profile.telegramChatId ? (
-                  <span className="px-3 py-1 rounded-full bg-sky-500/10 text-sky-400 border border-sky-500/30 text-xs font-mono">
-                    {profile.telegramChatId}
-                  </span>
-                ) : (
-                  <span className="px-2.5 py-1 rounded-md bg-slate-900 text-slate-500 text-xs font-medium">
-                    Not configured
-                  </span>
-                )}
+          <div className="p-6 sm:p-10 rounded-3xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-md space-y-8 shadow-xl mb-6 flex-1">
+            <div className="flex items-center gap-4 pb-5">
+              <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
+                <Lock className="w-5 h-5" />
               </div>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                When a monitor changes status (e.g. goes DOWN or recovers UP), instant alert dispatches will be pushed to your configured Telegram Chat ID.
-              </p>
+              <div>
+                <h3 className="text-base font-bold text-white">Security</h3>
+                <p className="text-xs text-slate-400">Account access status</p>
+              </div>
             </div>
 
-            <div className="p-5 sm:px-6 sm:py-5 rounded-2xl bg-slate-950/60 border border-slate-800/60 flex flex-col gap-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Password Protection</span>
-                <span className="text-xs font-medium text-slate-200 flex items-center gap-1.5">
-                  <Lock className="w-3.5 h-3.5 text-emerald-400" />
-                  {profile.hasPassword ? "Custom Password Set" : "OAuth Managed Account"}
-                </span>
-              </div>
-              
-              {isEditing && (
-                <div className="pt-5 mt-3 border-t border-slate-800/80 space-y-4">
-                  <p className="text-xs text-slate-400">Change Password (leave blank to keep current)</p>
-                  {profile.hasPassword && (
+            <div className="space-y-5">
+              <div className="p-5 sm:px-6 sm:py-5 rounded-2xl bg-slate-950/60 border border-slate-800/60 flex flex-col gap-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Password Protection</span>
+                  <span className="text-xs font-medium text-slate-200 flex items-center gap-1.5">
+                    <Lock className="w-3.5 h-3.5 text-emerald-400" />
+                    {profile.hasPassword ? "Custom Password Set" : "OAuth Managed Account"}
+                  </span>
+                </div>
+                
+                {isEditing && (
+                  <div className="pt-5 mt-3 border-t border-slate-800/80 space-y-4">
+                    <p className="text-xs text-slate-400">Change Password (leave blank to keep current)</p>
+                    {profile.hasPassword && (
+                      <input 
+                        type="password" 
+                        placeholder="Current Password"
+                        value={editForm.currentPassword} 
+                        onChange={(e) => setEditForm(prev => ({...prev, currentPassword: e.target.value}))}
+                        className="bg-slate-950/50 border border-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 rounded-xl px-4 py-2.5 text-sm text-white transition-all w-full shadow-inner"
+                      />
+                    )}
                     <input 
                       type="password" 
-                      placeholder="Current Password"
-                      value={editForm.currentPassword} 
-                      onChange={(e) => setEditForm(prev => ({...prev, currentPassword: e.target.value}))}
+                      placeholder="New Password (min 6 characters)"
+                      value={editForm.newPassword} 
+                      onChange={(e) => setEditForm(prev => ({...prev, newPassword: e.target.value}))}
                       className="bg-slate-950/50 border border-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 rounded-xl px-4 py-2.5 text-sm text-white transition-all w-full shadow-inner"
                     />
-                  )}
-                  <input 
-                    type="password" 
-                    placeholder="New Password (min 6 characters)"
-                    value={editForm.newPassword} 
-                    onChange={(e) => setEditForm(prev => ({...prev, newPassword: e.target.value}))}
-                    className="bg-slate-950/50 border border-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 rounded-xl px-4 py-2.5 text-sm text-white transition-all w-full shadow-inner"
-                  />
-                </div>
-              )}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

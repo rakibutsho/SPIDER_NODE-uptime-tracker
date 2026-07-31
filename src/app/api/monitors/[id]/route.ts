@@ -1,138 +1,147 @@
-import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "@/lib/auth"
 import { prisma } from "@/lib/prisma";
+import { getServerSession } from "next-auth"
+import { NextResponse } from "next/server";
 
-export async function DELETE(
-  req: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const session = await getServerSession(authOptions);
 
-    if (!session?.user?.email) {
-      return NextResponse.json(
-        { error: "Unauthorized. Please log in." },
-        { status: 401 }
-      );
-    }
-
-    const { id } = await params;
-    const monitorId = parseInt(id, 10);
-
-    if (isNaN(monitorId)) {
-      return NextResponse.json(
-        { error: "Invalid monitor ID" },
-        { status: 400 }
-      );
-    }
-
-    const user = await prisma.user.findUnique({
-      where: { email: session.user.email.toLowerCase() },
-    });
-
-    if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
-    }
-
-    // Ensure monitor belongs to the authenticated user
-    const existingMonitor = await prisma.monitor.findFirst({
-      where: { id: monitorId, userId: user.id },
-    });
-
-    if (!existingMonitor) {
-      return NextResponse.json(
-        { error: "Monitor not found or unauthorized" },
-        { status: 404 }
-      );
-    }
-
-    await prisma.monitor.delete({
-      where: { id: monitorId },
-    });
-
-    return NextResponse.json({ message: "Monitor deleted successfully" });
-  } catch (error) {
-    console.error("DELETE /api/monitors/[id] error:", error);
-    return NextResponse.json(
-      { error: "Failed to delete monitor" },
-      { status: 500 }
-    );
-  }
+interface RouteParams {
+    params: Promise<{ id: string }>
 }
 
-export async function PATCH(
-  req: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const session = await getServerSession(authOptions);
+// ----------------------------------------------------
+// 1. GET SINGLE MONITOR DETAILS (GET)
+// ----------------------------------------------------
 
-    if (!session?.user?.email) {
-      return NextResponse.json(
-        { error: "Unauthorized. Please log in." },
-        { status: 401 }
-      );
-    }
-
-    const { id } = await params;
-    const monitorId = parseInt(id, 10);
-
-    if (isNaN(monitorId)) {
-      return NextResponse.json(
-        { error: "Invalid monitor ID" },
-        { status: 400 }
-      );
-    }
-
-    const user = await prisma.user.findUnique({
-      where: { email: session.user.email.toLowerCase() },
-    });
-
-    if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
-    }
-
-    const existingMonitor = await prisma.monitor.findFirst({
-      where: { id: monitorId, userId: user.id },
-    });
-
-    if (!existingMonitor) {
-      return NextResponse.json(
-        { error: "Monitor not found or unauthorized" },
-        { status: 404 }
-      );
-    }
-
-    // Perform a real HTTP ping check to update status
-    let newStatus = "DOWN";
+export async function GET(req: Request, { params }: RouteParams) {
     try {
-      const pingRes = await fetch(existingMonitor.url, {
-        method: "HEAD",
-        cache: "no-store",
-        headers: { "User-Agent": "PulseGuard-UptimeChecker/1.0" },
-      });
-      if (pingRes.ok || pingRes.status < 400) {
-        newStatus = "UP";
-      }
-    } catch {
-      newStatus = "DOWN";
+        const session = await getServerSession(authOptions);
+        const { id } = await params;
+
+        if (!session?.user?.id) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+        }
+
+        const monitorId = parseInt(id, 10);
+        if (isNaN(monitorId)) {
+            return NextResponse.json({ error: "Invalid monitor ID" }, { status: 400 });
+        }
+
+        const monitor = await prisma.monitor.findUnique({
+            where: { id: monitorId, userId: session.user.id }
+        });
+
+        if (!monitor) {
+            return NextResponse.json({ error: "Monitor not found" }, { status: 404 })
+        }
+
+        return NextResponse.json({ monitor }, { status: 200 })
+    } catch (error) {
+        console.error("Get Single Monitor Error:", error);
+        return NextResponse.json(
+            { error: "Failed to fetch monitor" },
+            { status: 500 }
+        )
     }
+}
 
-    const updatedMonitor = await prisma.monitor.update({
-      where: { id: monitorId },
-      data: {
-        status: newStatus,
-        lastChecked: new Date(),
-      },
-    });
+// ----------------------------------------------------
+// 2. UPDATE MONITOR (PATCH)
+// ----------------------------------------------------
 
-    return NextResponse.json({ monitor: updatedMonitor });
-  } catch (error) {
-    console.error("PATCH /api/monitors/[id] error:", error);
-    return NextResponse.json(
-      { error: "Failed to check monitor status" },
-      { status: 500 }
-    );
-  }
+export async function PATCH(req: Request, { params }: RouteParams) {
+    try {
+        const session = await getServerSession(authOptions);
+        const { id } = await params;
+
+        if (!session?.user?.id) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+        }
+
+        const monitorId = parseInt(id, 10);
+        if (isNaN(monitorId)) {
+            return NextResponse.json({ error: "Invalid monitor ID" }, { status: 400 });
+        }
+
+        const body = await req.json();
+        const { name, url, interval, isActive } = body;
+
+        //check if the monitor exists and belong to the user
+        const existingMonitor = await prisma.monitor.findFirst({
+            where: { id: monitorId, userId: session.user.id },
+        })
+
+        if (!existingMonitor) {
+            return NextResponse.json({ error: "Monitor not found" }, { status: 404 })
+        }
+
+        const updateData: Record<string, any> = {};
+
+        if (name !== undefined) updateData.name = name.trim();
+        if (url !== undefined) {
+            try {
+                new URL(url);
+                updateData.url = url.trim();
+            } catch (_) {
+                return NextResponse.json({ error: 'Invalid URL format' }, { status: 400 });
+            }
+        }
+        if (interval) updateData.interval = parseInt(interval);
+        if (isActive !== undefined) updateData.status = Boolean(isActive);
+
+        const updatedMonitor = await prisma.monitor.update({
+            where: { id: monitorId },
+            data: updateData,
+        });
+
+        return NextResponse.json({ monitor: updatedMonitor }, { status: 200 });
+    } catch (error) {
+        console.error("Update Monitor Error:", error);
+        return NextResponse.json(
+            { error: "Failed to update monitor" },
+            { status: 500 }
+        );
+    }
+}
+
+// ----------------------------------------------------
+// 3. DELETE MONITOR (DELETE)
+// ----------------------------------------------------
+
+export async function DELETE(req: Request, { params }: RouteParams) {
+    try {
+        const session = await getServerSession(authOptions);
+        const { id } = await params;
+
+        if (!session?.user?.id) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
+        const monitorId = parseInt(id, 10);
+        if (isNaN(monitorId)) {
+            return NextResponse.json({ error: "Invalid monitor ID" }, { status: 400 });
+        }
+
+        const existingMonitor = await prisma.monitor.findFirst({
+            where: { id: monitorId, userId: session.user.id },
+        });
+
+        if (!existingMonitor) {
+            return NextResponse.json({ error: 'Monitor not found' }, { status: 404 });
+        }
+
+        await prisma.monitor.delete({
+            where: { id: monitorId },
+        });
+
+        return NextResponse.json(
+            { message: 'Monitor deleted successfully' },
+            { status: 200 }
+        );
+    } catch (error) {
+        console.error('Delete Monitor Error:', error);
+        return NextResponse.json(
+            { error: 'Failed to delete monitor' },
+            { status: 500 }
+        );
+    }
 }
