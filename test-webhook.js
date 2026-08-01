@@ -1,7 +1,7 @@
 const https = require('https');
 const http = require('http');
 
-const TOKEN = '8995540920:AAECoRztYD-tLThmKRPbgs4LomeUrwLgRzU';
+
 const getUpdatesUrl = `https://api.telegram.org/bot${TOKEN}/getUpdates`;
 
 https.get(getUpdatesUrl, (res) => {
