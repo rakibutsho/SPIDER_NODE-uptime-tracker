@@ -24,15 +24,15 @@ export const Navbar = () => {
 
         {/* Desktop Nav Actions */}
         <div className="hidden md:flex items-center gap-4">
-          <a
-            href="https://github.com"
+          <Link
+            href="https://github.com/rakibutsho/uptime-tracker"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg border border-slate-800 hover:border-slate-700 bg-slate-900/60 text-slate-300 hover:text-white text-xs font-medium transition-all"
           >
             <Github className="w-4 h-4" />
             <span>Star on GitHub</span>
-          </a>
+          </Link>
 
           {status === "loading" ? (
             <div className="w-24 h-8 bg-slate-800/60 rounded-lg animate-pulse" />
