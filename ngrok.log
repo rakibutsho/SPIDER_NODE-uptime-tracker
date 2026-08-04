@@ -12,3 +12,12 @@ t=2026-08-04T15:55:25+0600 lvl=info msg="join connections" obj=join id=77fd5481e
 t=2026-08-04T15:56:44+0600 lvl=info msg="join connections" obj=join id=04781a9bcba3 l=127.0.0.1:3000 r=91.108.5.148:46316
 t=2026-08-04T16:01:16+0600 lvl=info msg="join connections" obj=join id=6a6b2e977136 l=127.0.0.1:3000 r=91.108.5.148:22108
 t=2026-08-04T16:01:35+0600 lvl=info msg="join connections" obj=join id=b8b21ce96836 l=127.0.0.1:3000 r=91.108.5.148:22108
+t=2026-08-04T22:20:03+0600 lvl=warn msg="failed to open private leg" id=35ce8d4190b9 privaddr=localhost:3000 err="dial tcp 127.0.0.1:3000: connect: connection refused"
+t=2026-08-04T22:20:05+0600 lvl=warn msg="failed to open private leg" id=98bebf0d4a6a privaddr=localhost:3000 err="dial tcp 127.0.0.1:3000: connect: connection refused"
+t=2026-08-04T22:20:08+0600 lvl=warn msg="failed to open private leg" id=714cb2646237 privaddr=localhost:3000 err="dial tcp 127.0.0.1:3000: connect: connection refused"
+t=2026-08-04T22:20:12+0600 lvl=warn msg="failed to open private leg" id=66917cf1a71e privaddr=localhost:3000 err="dial tcp 127.0.0.1:3000: connect: connection refused"
+t=2026-08-04T22:20:20+0600 lvl=warn msg="failed to open private leg" id=4b6614310d9f privaddr=localhost:3000 err="dial tcp 127.0.0.1:3000: connect: connection refused"
+t=2026-08-04T22:20:37+0600 lvl=warn msg="failed to open private leg" id=aa5a90f6ccc6 privaddr=localhost:3000 err="dial tcp 127.0.0.1:3000: connect: connection refused"
+t=2026-08-04T22:21:09+0600 lvl=warn msg="failed to open private leg" id=728ac6c3b0c9 privaddr=localhost:3000 err="dial tcp 127.0.0.1:3000: connect: connection refused"
+t=2026-08-04T22:22:14+0600 lvl=warn msg="failed to open private leg" id=c02de561712c privaddr=localhost:3000 err="dial tcp 127.0.0.1:3000: connect: connection refused"
+t=2026-08-04T22:23:18+0600 lvl=warn msg="failed to open private leg" id=4adae6c6d05d privaddr=localhost:3000 err="dial tcp 127.0.0.1:3000: connect: connection refused"
