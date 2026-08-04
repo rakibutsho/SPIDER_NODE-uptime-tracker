@@ -9,11 +9,13 @@ import { logout } from "@/redux/features/auth/authSlice";
 import Cookies from "js-cookie";
 import { LogOut, Activity } from "lucide-react";
 import { signOut } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 import Swal from "sweetalert2";
+import logo from "@/assets/logo.png"
 
 export function TeamSwitcher({
   teams,
@@ -76,12 +78,13 @@ export function TeamSwitcher({
       <SidebarMenu>
         <SidebarMenuItem>
           <Link href={"/"} className="flex items-center gap-3 px-2 py-3">
-            <div className="flex aspect-square size-10 items-center justify-center rounded-lg bg-black text-[#DC2626] shadow-sm">
+            {/* <div className="flex aspect-square size-10 items-center justify-center rounded-lg bg-black text-[#DC2626] shadow-sm">
               <Activity className="size-6" />
-            </div>
-            <h2 className="text-[22px] font-bold text-red-500 tracking-tight">
-              SpiderNode
-            </h2>
+            </div> */}
+            <Image src={logo} alt="Logo" width={50} height={50} className="w-12 h-12 object-contain" />
+            <span className="text-xl font-bold tracking-tight text-white font-mono">
+              Spider<span className="text-[#DC2626]">Node</span>
+            </span>
           </Link>
         </SidebarMenuItem>
       </SidebarMenu>

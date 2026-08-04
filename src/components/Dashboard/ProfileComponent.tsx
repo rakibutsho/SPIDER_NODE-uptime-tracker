@@ -42,7 +42,7 @@ interface UserProfile {
 }
 
 export default function ProfileComponent() {
-  const { status } = useSession();
+  const { data: session, status, update } = useSession();
   const router = useRouter();
 
   const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -154,6 +154,12 @@ export default function ProfileComponent() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Update failed");
+      
+      // Update NextAuth session cookie so navbar and other places reflect new name/image immediately
+      await update({
+        name: data.user.name,
+        image: data.user.image,
+      });
       
       toast.success("Profile updated successfully!");
       setIsEditing(false);

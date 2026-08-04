@@ -76,7 +76,12 @@ export function Dashboard() {
           router.push("/login");
           return;
         }
-        throw new Error("Failed to fetch monitors");
+        let errorMsg = "Failed to fetch monitors";
+        try {
+          const errData = await res.json();
+          if (errData.details) errorMsg += `: ${errData.details}`;
+        } catch (e) {}
+        throw new Error(errorMsg);
       }
       const data = await res.json();
       setMonitors(data.monitors || []);

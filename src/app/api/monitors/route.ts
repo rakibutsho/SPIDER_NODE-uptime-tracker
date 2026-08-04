@@ -23,7 +23,7 @@ export async function GET() {
   } catch (error) {
     console.error("Featch Monitors Error:", error);
     return NextResponse.json(
-      { error: "Failed to fetch monitors" },
+      { error: "Failed to fetch monitors", details: error instanceof Error ? error.message : String(error) },
       { status: 500 }
     )
   }

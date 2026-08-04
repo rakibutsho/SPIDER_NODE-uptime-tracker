@@ -65,15 +65,27 @@ export const authOptions: NextAuthOptions = {
         }),
     ],
     callbacks: {
-        async jwt({ token, user }) {
+        async jwt({ token, user, trigger, session }) {
             if (user) {
                 token.id = user.id;
+            }
+            
+            // Handle session update
+            if (trigger === "update" && session) {
+                if (session.image !== undefined) {
+                    token.picture = session.image; // NextAuth uses 'picture' internally for image
+                }
+                if (session.name !== undefined) {
+                    token.name = session.name;
+                }
             }
             return token;
         },
         async session({ session, token }) {
             if (session.user) {
                 session.user.id = token.id as string;
+                if (token.picture) session.user.image = token.picture;
+                if (token.name) session.user.name = token.name;
             }
             return session;
         },
