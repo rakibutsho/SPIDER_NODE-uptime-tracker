@@ -54,6 +54,7 @@ export default function ProfileComponent() {
   const [isEditing, setIsEditing] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [editForm, setEditForm] = useState({
     name: "",
     telegramChatId: "",
@@ -165,8 +166,7 @@ export default function ProfileComponent() {
     }
   };
 
-  const handleDelete = async () => {
-    if (!confirm("Are you sure you want to delete your account? This action is permanent and cannot be undone.")) return;
+  const confirmDelete = async () => {
     try {
       setIsDeleting(true);
       const res = await fetch("/api/user/profile", {
@@ -181,6 +181,7 @@ export default function ProfileComponent() {
     } catch (err: any) {
       toast.error(err.message);
       setIsDeleting(false);
+      setShowDeleteModal(false);
     }
   };
 
@@ -619,7 +620,7 @@ export default function ProfileComponent() {
             <p className="text-xs text-slate-500 mt-1">Permanently remove your account and all associated data.</p>
           </div>
           <button
-            onClick={handleDelete}
+            onClick={() => setShowDeleteModal(true)}
             disabled={isDeleting}
             className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-500 text-sm font-bold transition-all disabled:opacity-50 cursor-pointer"
           >
@@ -628,6 +629,40 @@ export default function ProfileComponent() {
           </button>
         </div>
       </div>
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="relative w-full max-w-md p-6 sm:p-8 rounded-3xl bg-slate-900 border border-rose-500/30 shadow-[0_0_40px_rgba(225,29,72,0.15)] space-y-6">
+            <div className="flex flex-col items-center text-center space-y-4">
+              <div className="p-4 rounded-full bg-rose-500/10 text-rose-500 border border-rose-500/20 mb-2">
+                <AlertCircle className="w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-bold text-white">Delete Account?</h3>
+              <p className="text-sm text-slate-400">
+                Are you absolutely sure you want to delete your account? This action is <span className="font-bold text-rose-400">permanent</span> and cannot be undone. All your data will be wiped immediately.
+              </p>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row items-center gap-3 w-full pt-4">
+              <button
+                onClick={() => setShowDeleteModal(false)}
+                disabled={isDeleting}
+                className="w-full sm:w-1/2 px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium transition-all"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDelete}
+                disabled={isDeleting}
+                className="w-full sm:w-1/2 flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-sm font-bold transition-all disabled:opacity-50"
+              >
+                {isDeleting ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
+                {isDeleting ? "Deleting..." : "Yes, Delete It"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
