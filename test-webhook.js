@@ -1,6 +1,8 @@
 const https = require('https');
 const http = require('http');
 
+const TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+
 
 const getUpdatesUrl = `https://api.telegram.org/bot${TOKEN}/getUpdates`;
 

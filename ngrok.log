@@ -1,0 +1,14 @@
+t=2026-08-04T15:54:57+0600 lvl=info msg="no configuration paths supplied"
+t=2026-08-04T15:54:57+0600 lvl=info msg="using configuration at default config path" path=/home/rakibul_islam/.config/ngrok/ngrok.yml
+t=2026-08-04T15:54:57+0600 lvl=info msg="open config file" path=/home/rakibul_islam/.config/ngrok/ngrok.yml err=<nil>
+t=2026-08-04T15:54:57+0600 lvl=info msg="FIPS 140 mode" enabled=false
+t=2026-08-04T15:54:57+0600 lvl=info msg="starting web service" obj=web addr=127.0.0.1:4040 allow_hosts=[]
+t=2026-08-04T15:54:58+0600 lvl=info msg="client session established" obj=tunnels.session
+t=2026-08-04T15:54:58+0600 lvl=info msg="tunnel session started" obj=tunnels.session
+t=2026-08-04T15:54:58+0600 lvl=info msg="started tunnel" obj=tunnels name=command_line addr=http://localhost:3000 url=https://scaling-morality-uncaring.ngrok-free.dev
+t=2026-08-04T15:54:59+0600 lvl=info msg=start pg=/api/tunnels id=6d32bfadafa73abb
+t=2026-08-04T15:54:59+0600 lvl=info msg=end pg=/api/tunnels id=6d32bfadafa73abb status=200 dur=359.871µs
+t=2026-08-04T15:55:25+0600 lvl=info msg="join connections" obj=join id=77fd5481e29d l=127.0.0.1:3000 r=91.108.5.148:58252
+t=2026-08-04T15:56:44+0600 lvl=info msg="join connections" obj=join id=04781a9bcba3 l=127.0.0.1:3000 r=91.108.5.148:46316
+t=2026-08-04T16:01:16+0600 lvl=info msg="join connections" obj=join id=6a6b2e977136 l=127.0.0.1:3000 r=91.108.5.148:22108
+t=2026-08-04T16:01:35+0600 lvl=info msg="join connections" obj=join id=b8b21ce96836 l=127.0.0.1:3000 r=91.108.5.148:22108
