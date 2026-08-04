@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3007",
     "build": "npx prisma generate && next build",
-    "start": "npx prisma db push --accept-data-loss && next start",
+    "start": "npx prisma db push --accept-data-loss && next start -p 3007",
     "lint": "eslint"
   },
   "dependencies": {
