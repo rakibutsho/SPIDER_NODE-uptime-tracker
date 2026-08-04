@@ -1,5 +1,5 @@
-// import { MonitorDetails } from "@/components/Dashboard/MonitorDetails";
+import { MonitorDetails } from "@/components/Dashboard/MonitorDetails";
 
-// export default function MonitorDetailsPage() {
-//   return <MonitorDetails />;
-// }
+export default function MonitorDetailsPage() {
+  return <MonitorDetails />;
+}
