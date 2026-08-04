@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { Activity, Github, LayoutDashboard, LogIn, LogOut, Menu, X } from "lucide-react";
+import logo from "@/assets/logo.png"
+import Image from "next/image";
 
 export const Navbar = () => {
   const { data: session, status } = useSession();
@@ -14,9 +16,10 @@ export const Navbar = () => {
       <div className="w-full max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 py-3.5">
         {/* Brand Logo */}
         <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="p-2 rounded-xl bg-red-500/10 border border-red-500/30 text-[#DC2626] group-hover:scale-105 transition-transform shadow-sm shadow-red-500/20">
+          {/* <div className="p-2 rounded-xl bg-red-500/10 border border-red-500/30 text-[#DC2626] group-hover:scale-105 transition-transform shadow-sm shadow-red-500/20">
             <Activity className="w-5 h-5" />
-          </div>
+          </div> */}
+          <Image src={logo} alt="Logo" width={50} height={50} className="w-12 h-12 object-contain" />
           <span className="text-xl font-bold tracking-tight text-white font-mono">
             Spider<span className="text-[#DC2626]">Node</span>
           </span>

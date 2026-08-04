@@ -2,6 +2,8 @@
 
 import React, { useState, Suspense } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import logo from "@/assets/logo.png";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { toast } from "sonner";
@@ -69,9 +71,10 @@ function LoginFormContent() {
         {/* Brand Header */}
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2 mb-3 group">
-            <div className="p-2.5 rounded-xl bg-red-500/10 border border-red-500/30 text-[#DC2626] group-hover:scale-105 transition-transform shadow-sm shadow-red-500/20">
+            {/* <div className="p-2.5 rounded-xl bg-red-500/10 border border-red-500/30 text-[#DC2626] group-hover:scale-105 transition-transform shadow-sm shadow-red-500/20">
               <Activity className="w-6 h-6" />
-            </div>
+            </div> */}
+            <Image src={logo} alt="Logo" width={50} height={50} className="w-12 h-12 object-contain" />
             <span className="text-2xl font-bold tracking-tight text-white font-mono">
               Spider<span className="text-[#DC2626]">Node</span>
             </span>
