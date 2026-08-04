@@ -22,9 +22,13 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
+      - name: Create .env file for Build
+        run: |
+          cat << 'EOF' > .env
+          ${{ secrets.ENV_FILE }}
+          EOF
+
       - name: Build Next.js App
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: npm run build
 
       - name: Zip Build Artifacts
