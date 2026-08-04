@@ -19,3 +19,5 @@ t=2026-08-04T22:20:12+0600 lvl=warn msg="failed to open private leg" id=66917cf1
 t=2026-08-04T22:20:20+0600 lvl=warn msg="failed to open private leg" id=4b6614310d9f privaddr=localhost:3000 err="dial tcp 127.0.0.1:3000: connect: connection refused"
 t=2026-08-04T22:20:37+0600 lvl=warn msg="failed to open private leg" id=aa5a90f6ccc6 privaddr=localhost:3000 err="dial tcp 127.0.0.1:3000: connect: connection refused"
 t=2026-08-04T22:21:09+0600 lvl=warn msg="failed to open private leg" id=728ac6c3b0c9 privaddr=localhost:3000 err="dial tcp 127.0.0.1:3000: connect: connection refused"
+t=2026-08-04T22:22:14+0600 lvl=warn msg="failed to open private leg" id=c02de561712c privaddr=localhost:3000 err="dial tcp 127.0.0.1:3000: connect: connection refused"
+t=2026-08-04T22:23:18+0600 lvl=warn msg="failed to open private leg" id=4adae6c6d05d privaddr=localhost:3000 err="dial tcp 127.0.0.1:3000: connect: connection refused"
