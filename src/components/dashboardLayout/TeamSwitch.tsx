@@ -7,8 +7,9 @@ import {
 } from "@/components/ui/sidebar";
 import { logout } from "@/redux/features/auth/authSlice";
 import Cookies from "js-cookie";
-import { LogOut } from "lucide-react";
+import { LogOut, Activity } from "lucide-react";
 import { signOut } from "next-auth/react";
+import Link from "next/link";
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
@@ -29,7 +30,7 @@ export function TeamSwitcher({
   const [activeTeam] = React.useState(teams[0]);
   const dispatch = useDispatch();
   const displayName = user?.name ?? "Default User";
-  const displayEmail = user?.email ?? "user@guicopay.gn";
+  const displayEmail = user?.email ?? "user@spidernode.com";
   const displayAvatar = user?.avatar ?? "https://github.com/shadcn.png";
   const displayFallback =
     displayName
@@ -54,7 +55,7 @@ export function TeamSwitcher({
       showCancelButton: true,
       confirmButtonText: "Log Out",
       cancelButtonText: "Cancel",
-      confirmButtonColor: "#0B843C",
+      confirmButtonColor: "#DC2626", // Red for the new theme
       cancelButtonColor: "#6B7280",
       background: "#FFFFFF",
       color: "#111827",
@@ -74,19 +75,14 @@ export function TeamSwitcher({
       {/* Sidebar top logo */}
       <SidebarMenu>
         <SidebarMenuItem>
-          <div className="flex items-center gap-2 px-2 py-3">
-            {/* <Image
-              src={Logo}
-              alt="logo"
-              width={48}
-              height={48}
-              priority
-              className="rounded-md"
-            /> */}
-            <h2 className="text-[26px] font-semibold text-[#111827]">
-              Guicopay
+          <Link href={"/"} className="flex items-center gap-3 px-2 py-3">
+            <div className="flex aspect-square size-10 items-center justify-center rounded-lg bg-black text-[#DC2626] shadow-sm">
+              <Activity className="size-6" />
+            </div>
+            <h2 className="text-[22px] font-bold text-red-500 tracking-tight">
+              SpiderNode
             </h2>
-          </div>
+          </Link>
         </SidebarMenuItem>
       </SidebarMenu>
 

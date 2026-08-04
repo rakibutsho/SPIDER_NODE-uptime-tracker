@@ -68,10 +68,43 @@ model Monitor {
   isActive    Boolean   @default(true)
   interval    Int       @default(5)
   lastChecked DateTime?
+  responseTime Int?      @default(0)
+  uptimePercent Float    @default(100.0)
+  totalChecks Int        @default(0)
+  failedChecks Int       @default(0)
   userId      String
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  pings       Ping[]
+  incidents   Incident[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 
   @@map("monitors")
+}
+
+model Ping {
+  id           String   @id @default(cuid())
+  monitorId    Int
+  status       String   // "UP" | "DOWN"
+  responseTime Int
+  createdAt    DateTime @default(now())
+
+  monitor      Monitor  @relation(fields: [monitorId], references: [id], onDelete: Cascade)
+
+  @@index([monitorId])
+  @@map("pings")
+}
+
+model Incident {
+  id           String    @id @default(cuid())
+  monitorId    Int
+  status       String    // "ONGOING" | "RESOLVED"
+  description  String?
+  startedAt    DateTime  @default(now())
+  resolvedAt   DateTime?
+
+  monitor      Monitor   @relation(fields: [monitorId], references: [id], onDelete: Cascade)
+
+  @@index([monitorId])
+  @@map("incidents")
 }

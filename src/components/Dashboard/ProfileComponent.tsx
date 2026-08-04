@@ -274,7 +274,7 @@ export default function ProfileComponent() {
         <p className="text-sm text-slate-400">{error || "User information is unavailable."}</p>
         <button
           onClick={() => fetchProfile()}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#00E5FF] text-[#090D16] font-bold text-xs hover:bg-cyan-400 transition-all shadow-md shadow-cyan-500/20"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#DC2626] text-[#090D16] font-bold text-xs hover:bg-red-400 transition-all shadow-md shadow-red-500/20"
         >
           <RefreshCw className="w-4 h-4" />
           <span>Try Again</span>
@@ -288,7 +288,7 @@ export default function ProfileComponent() {
       {/* 1. Premium Header Profile Card */}
       <div className="relative rounded-3xl border border-slate-800/80 bg-slate-900/60 backdrop-blur-2xl shadow-[0_8px_30px_rgb(0,0,0,0.4)] p-6 sm:p-10 overflow-hidden">
         {/* Subtle Background Glows */}
-        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-cyan-500/10 blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-red-500/10 blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 h-64 rounded-full bg-indigo-500/10 blur-3xl pointer-events-none" />
 
         <div className="relative flex flex-col sm:flex-row items-center justify-between gap-8 w-full">
@@ -298,7 +298,7 @@ export default function ProfileComponent() {
             
             {/* Avatar Container */}
             <div className="relative shrink-0 flex-none group" style={{ width: '120px', height: '120px' }}>
-              <div className="absolute inset-0 rounded-[2rem] border-[3px] border-slate-800/80 shadow-2xl bg-slate-950 overflow-hidden flex items-center justify-center transition-all duration-300 group-hover:border-cyan-500/50 group-hover:shadow-[0_0_25px_rgba(6,182,212,0.2)]">
+              <div className="absolute inset-0 rounded-[2rem] border-[3px] border-slate-800/80 shadow-2xl bg-slate-950 overflow-hidden flex items-center justify-center transition-all duration-300 group-hover:border-red-500/50 group-hover:shadow-[0_0_25px_rgba(6,182,212,0.2)]">
                 {(editForm.image || profile.image) ? (
                   <img 
                     src={editForm.image || profile.image || ""} 
@@ -306,7 +306,7 @@ export default function ProfileComponent() {
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-800 to-slate-950 text-[#00E5FF] font-bold text-4xl font-mono">
+                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-800 to-slate-950 text-[#DC2626] font-bold text-4xl font-mono">
                     {getInitials(profile.name, profile.email)}
                   </div>
                 )}
@@ -328,7 +328,7 @@ export default function ProfileComponent() {
               </h1>
               
               <div className="flex items-center justify-center sm:justify-start gap-2.5 text-slate-400 text-sm truncate">
-                <div className="p-1.5 rounded-lg bg-cyan-500/10 text-cyan-400 shrink-0">
+                <div className="p-1.5 rounded-lg bg-red-500/10 text-red-400 shrink-0">
                   <Mail className="w-3.5 h-3.5" />
                 </div>
                 <span className="font-mono text-slate-300 font-medium truncate">{profile.email || "No email attached"}</span>
@@ -340,7 +340,7 @@ export default function ProfileComponent() {
                   className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-950/50 hover:bg-slate-900 border border-slate-800/80 text-slate-300 text-xs font-mono transition-all cursor-pointer shadow-sm hover:border-slate-700 max-w-full group"
                   title="Click to copy User ID"
                 >
-                  <Fingerprint className="w-4 h-4 text-[#00E5FF] shrink-0 group-hover:scale-110 transition-transform" />
+                  <Fingerprint className="w-4 h-4 text-[#DC2626] shrink-0 group-hover:scale-110 transition-transform" />
                   <span className="text-slate-200 font-medium truncate">{profile.id}</span>
                   {copiedId ? <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /> : <Copy className="w-3.5 h-3.5 text-slate-500 shrink-0 group-hover:text-slate-300 transition-colors" />}
                 </button>
@@ -350,7 +350,7 @@ export default function ProfileComponent() {
 
           {/* Action Buttons (Right Side) */}
           <div className="flex flex-row flex-wrap items-center justify-center sm:justify-end gap-3 w-full sm:w-auto sm:ml-auto self-center">
-            <span className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-950/80 border border-cyan-500/30 text-[#00E5FF] text-xs font-semibold font-mono shadow-sm">
+            <span className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-950/80 border border-red-500/30 text-[#DC2626] text-xs font-semibold font-mono shadow-sm">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Pro Member</span>
             </span>
@@ -367,7 +367,7 @@ export default function ProfileComponent() {
               <button
                 onClick={handleUpdate}
                 disabled={isUpdating}
-                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white text-sm font-bold transition-all cursor-pointer shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:shadow-[0_0_25px_rgba(6,182,212,0.5)] hover:-translate-y-0.5 disabled:opacity-50 disabled:hover:translate-y-0"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-500 to-blue-500 hover:from-red-400 hover:to-blue-400 text-white text-sm font-bold transition-all cursor-pointer shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:shadow-[0_0_25px_rgba(6,182,212,0.5)] hover:-translate-y-0.5 disabled:opacity-50 disabled:hover:translate-y-0"
               >
                 {isUpdating ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
                 <span>{isUpdating ? "Saving..." : "Save"}</span>
@@ -378,7 +378,7 @@ export default function ProfileComponent() {
                 disabled={refreshing}
                 className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-slate-950/80 hover:bg-slate-800 border border-slate-700/80 text-slate-300 hover:text-white text-sm font-medium transition-all cursor-pointer shadow-sm hover:shadow-md disabled:opacity-50"
               >
-                <RefreshCw className={`w-4 h-4 ${refreshing ? "animate-spin text-[#00E5FF]" : ""}`} />
+                <RefreshCw className={`w-4 h-4 ${refreshing ? "animate-spin text-[#DC2626]" : ""}`} />
                 <span>Refresh</span>
               </button>
             )}
@@ -410,7 +410,7 @@ export default function ProfileComponent() {
         <div className="p-6 sm:p-8 rounded-3xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-md hover:border-slate-700/80 transition-all space-y-4 shadow-lg">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-slate-400 tracking-wider uppercase">Auth Method</span>
-            <div className="p-2.5 rounded-xl bg-cyan-500/10 text-[#00E5FF] border border-cyan-500/20">
+            <div className="p-2.5 rounded-xl bg-red-500/10 text-[#DC2626] border border-red-500/20">
               <KeyRound className="w-4 h-4" />
             </div>
           </div>
@@ -472,7 +472,7 @@ export default function ProfileComponent() {
         {/* Personal & Account Information */}
         <div className="p-6 sm:p-10 rounded-3xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-md space-y-8 shadow-xl">
           <div className="flex items-center gap-4 pb-5">
-            <div className="p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-[#00E5FF]">
+            <div className="p-2.5 rounded-xl bg-red-500/10 border border-red-500/20 text-[#DC2626]">
               <UserIcon className="w-5 h-5" />
             </div>
             <div>
@@ -489,7 +489,7 @@ export default function ProfileComponent() {
                   type="text" 
                   value={editForm.name} 
                   onChange={(e) => setEditForm(prev => ({...prev, name: e.target.value}))}
-                  className="bg-slate-950/50 border border-slate-700 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50 rounded-xl px-4 py-2 text-sm text-white transition-all w-full sm:w-1/2 shadow-inner"
+                  className="bg-slate-950/50 border border-slate-700 focus:border-red-500 focus:ring-1 focus:ring-red-500/50 rounded-xl px-4 py-2 text-sm text-white transition-all w-full sm:w-1/2 shadow-inner"
                   placeholder="Enter your full name"
                 />
               ) : (
@@ -504,7 +504,7 @@ export default function ProfileComponent() {
 
             <div className="p-5 sm:px-6 sm:py-5 rounded-2xl bg-slate-950/60 border border-slate-800/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Account ID</span>
-              <span className="text-xs font-mono text-[#00E5FF] bg-cyan-950/40 px-3 py-1.5 rounded-lg border border-cyan-800/40 truncate max-w-full">
+              <span className="text-xs font-mono text-[#DC2626] bg-red-950/40 px-3 py-1.5 rounded-lg border border-red-800/40 truncate max-w-full">
                 {profile.id}
               </span>
             </div>
@@ -569,7 +569,7 @@ export default function ProfileComponent() {
           <button
             onClick={handleUpdate}
             disabled={isUpdating}
-            className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-sm transition-all cursor-pointer shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] hover:-translate-y-1 disabled:opacity-50 disabled:hover:translate-y-0"
+            className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl bg-gradient-to-r from-red-500 to-blue-600 hover:from-red-400 hover:to-blue-500 text-white font-bold text-sm transition-all cursor-pointer shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] hover:-translate-y-1 disabled:opacity-50 disabled:hover:translate-y-0"
           >
             {isUpdating ? <RefreshCw className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
             {isUpdating ? "Saving Your Changes..." : "Save All Changes"}

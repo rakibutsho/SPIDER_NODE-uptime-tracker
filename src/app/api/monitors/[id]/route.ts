@@ -62,7 +62,13 @@ export async function PATCH(req: Request, { params }: RouteParams) {
             return
         }
 
-        const body = await req.json();
+        let body: any = {};
+        try {
+            body = await req.json();
+        } catch (e) {
+            // Ignore JSON parse error if body is empty (manual ping)
+        }
+        
         const { name, url, interval, isActive } = body;
 
         //check if the monitor exists and belong to the user
@@ -86,7 +92,7 @@ export async function PATCH(req: Request, { params }: RouteParams) {
             }
         }
         if (interval) updateData.interval = parseInt(interval);
-        if (isActive !== undefined) updateData.status = Boolean(isActive);
+        if (isActive !== undefined) updateData.isActive = Boolean(isActive);
 
         const updatedMonitor = await prisma.monitor.update({
             where: { id: monitorId },

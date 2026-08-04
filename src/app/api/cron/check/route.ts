@@ -5,9 +5,15 @@ export async function GET(req: Request) {
   try {
     // 1. SECURITY CHECK (CRON SECRET VALIDATION)
     const authHeader = req.headers.get("authorization");
+    const url = new URL(req.url);
+    const querySecret = url.searchParams.get("secret");
     const cronSecret = process.env.CRON_SECRET;
 
-    if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
+    if (
+      cronSecret &&
+      authHeader !== `Bearer ${cronSecret}` &&
+      querySecret !== cronSecret
+    ) {
       return NextResponse.json(
         { error: "Unauthorized Cron Request" },
         { status: 401 },

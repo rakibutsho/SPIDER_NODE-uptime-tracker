@@ -12,10 +12,7 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
         <SidebarInset className="flex flex-col flex-1">
           <AppHeader />
           <div className="flex-1 overflow-y-auto">
-            <div className="flex flex-col gap-4 p-4 pt-0">
-              {children}
-              <Toaster richColors position="top-center" />
-            </div>
+            <div className="flex flex-col gap-4 p-4 pt-0">{children}</div>
           </div>
         </SidebarInset>
       </SidebarProvider>

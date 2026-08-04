@@ -3,6 +3,7 @@
 import {
   CircleUser,
   Codesandbox,
+  Globe,
   LayoutGrid,
   MessageCircleMore,
   MonitorCog,
@@ -41,9 +42,21 @@ const defaultUserData: NavigationData = {
       icon: LayoutGrid,
     },
     {
+      title: "Incidents",
+      path: "/incidents",
+      icon: ShieldAlert,
+    },
+    {
       title: "Profile",
       path: "/profile",
       icon: CircleUser,
+    },
+  ],
+  other: [
+    {
+      title: "Status Page",
+      path: "/status",
+      icon: Globe,
     },
   ],
 };
@@ -113,9 +126,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             name:
               currentUser?.name ??
               (isAdminPath ? "Admin User" : "Default User"),
-            email:
-              currentUser?.email ??
-              (isAdminPath ? "admin@guicopay.gn" : "user@guicopay.gn"),
+            email: currentUser?.email ?? (isAdminPath ? "admin@spidernode.com" : "user@spidernode.com"),
             avatar: currentUser?.avatar,
             roleLabel: isAdminPath ? "Admin" : "User",
           }}

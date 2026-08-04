@@ -14,11 +14,11 @@ export const Navbar = () => {
       <div className="w-full max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 py-3.5">
         {/* Brand Logo */}
         <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="p-2 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-[#00E5FF] group-hover:scale-105 transition-transform cyan-glow">
+          <div className="p-2 rounded-xl bg-red-500/10 border border-red-500/30 text-[#DC2626] group-hover:scale-105 transition-transform shadow-sm shadow-red-500/20">
             <Activity className="w-5 h-5" />
           </div>
           <span className="text-xl font-bold tracking-tight text-white font-mono">
-            Pulse<span className="text-[#00E5FF]">Guard</span>
+            Spider<span className="text-[#DC2626]">Node</span>
           </span>
         </Link>
 
@@ -40,7 +40,7 @@ export const Navbar = () => {
             <div className="flex items-center gap-3">
               <Link
                 href="/dashboard"
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#00E5FF] hover:bg-cyan-400 text-[#090D16] text-xs font-bold transition-all shadow-md shadow-cyan-500/20"
+                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#DC2626] hover:bg-red-500 text-white text-xs font-bold transition-all shadow-md shadow-red-500/20"
               >
                 <LayoutDashboard className="w-4 h-4" />
                 <span>Dashboard</span>
@@ -56,7 +56,7 @@ export const Navbar = () => {
           ) : (
             <Link
               href="/login"
-              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#00E5FF] hover:bg-cyan-400 text-[#090D16] text-xs font-bold transition-all shadow-md shadow-cyan-500/20"
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#DC2626] hover:bg-red-500 text-white text-xs font-bold transition-all shadow-md shadow-red-500/20"
             >
               <LogIn className="w-4 h-4" />
               <span>Sign In</span>
@@ -91,7 +91,7 @@ export const Navbar = () => {
               <Link
                 href="/dashboard"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#00E5FF] text-[#090D16] font-bold text-sm"
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#DC2626] text-white font-bold text-sm"
               >
                 <LayoutDashboard className="w-4 h-4" />
                 <span>Go to Dashboard</span>
@@ -108,7 +108,7 @@ export const Navbar = () => {
             <Link
               href="/login"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#00E5FF] text-[#090D16] font-bold text-sm"
+              className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#DC2626] text-white font-bold text-sm"
             >
               <LogIn className="w-4 h-4" />
               <span>Sign In</span>

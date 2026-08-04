@@ -21,13 +21,13 @@ export default function Home() {
     <div className="w-full bg-[#090D16] text-slate-100 overflow-hidden">
       {/* Hero Glows */}
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-24 text-center">
-        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-[#00E5FF]/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-[#DC2626]/10 rounded-full blur-[120px] pointer-events-none" />
 
         {/* Badge */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-[#00E5FF] text-xs font-mono mb-8 backdrop-blur-md">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-950/60 border border-red-500/30 text-[#DC2626] text-xs font-mono mb-8 backdrop-blur-md">
           <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00E5FF] opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00E5FF]"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#DC2626] opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#DC2626]"></span>
           </span>
           Next-Gen Infrastructure Monitoring System
         </div>
@@ -35,7 +35,7 @@ export default function Home() {
         {/* Headline */}
         <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight max-w-5xl mx-auto leading-[1.1]">
           Instant Uptime Alerts. <br />
-          <span className="cyan-gradient-text">Zero False Positives.</span>
+          <span className="red-gradient-text">Zero False Positives.</span>
         </h1>
 
         <p className="mt-6 text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto font-normal">
@@ -46,7 +46,7 @@ export default function Home() {
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link
             href={session ? "/dashboard" : "/register"}
-            className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#00E5FF] hover:bg-cyan-400 text-[#090D16] font-bold text-sm transition-all shadow-xl shadow-cyan-500/25 flex items-center justify-center gap-2 group"
+            className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#DC2626] hover:bg-red-400 text-[#090D16] font-bold text-sm transition-all shadow-xl shadow-red-500/25 flex items-center justify-center gap-2 group"
           >
             <span>{session ? "Open Dashboard" : "Start Monitoring Free"}</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -55,7 +55,7 @@ export default function Home() {
             href="/dashboard"
             className="w-full sm:w-auto px-8 py-3.5 rounded-xl glass-panel hover:bg-slate-800/80 text-slate-200 font-semibold text-sm transition-all border border-slate-700/80 flex items-center justify-center gap-2"
           >
-            <Activity className="w-4 h-4 text-[#00E5FF]" />
+            <Activity className="w-4 h-4 text-[#DC2626]" />
             <span>Explore Dashboard</span>
           </Link>
         </div>
@@ -70,7 +70,7 @@ export default function Home() {
                 <div className="w-3 h-3 rounded-full bg-amber-500/80" />
                 <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
                 <span className="text-xs text-slate-500 font-mono ml-2">
-                  pulseguard.io/dashboard
+                  spidernode.io/dashboard
                 </span>
               </div>
               <div className="flex items-center gap-2">
@@ -89,7 +89,7 @@ export default function Home() {
               </div>
               <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
                 <div className="text-xs text-slate-400 mb-1">Avg Response Time</div>
-                <div className="text-2xl font-bold font-mono text-[#00E5FF]">24ms</div>
+                <div className="text-2xl font-bold font-mono text-[#DC2626]">24ms</div>
               </div>
               <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
                 <div className="text-xs text-slate-400 mb-1">Incidents (30d)</div>
@@ -155,8 +155,8 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-cyan-500/40 transition-colors">
-              <div className="p-3 rounded-xl bg-cyan-500/10 text-[#00E5FF] w-fit mb-4">
+            <div className="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-red-500/40 transition-colors">
+              <div className="p-3 rounded-xl bg-red-500/10 text-[#DC2626] w-fit mb-4">
                 <Zap className="w-6 h-6" />
               </div>
               <h3 className="text-lg font-bold text-white mb-2">Sub-Minute Pings</h3>
@@ -165,8 +165,8 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-cyan-500/40 transition-colors">
-              <div className="p-3 rounded-xl bg-cyan-500/10 text-[#00E5FF] w-fit mb-4">
+            <div className="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-red-500/40 transition-colors">
+              <div className="p-3 rounded-xl bg-red-500/10 text-[#DC2626] w-fit mb-4">
                 <ShieldCheck className="w-6 h-6" />
               </div>
               <h3 className="text-lg font-bold text-white mb-2">Multi-Region Validation</h3>
@@ -175,8 +175,8 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-cyan-500/40 transition-colors">
-              <div className="p-3 rounded-xl bg-cyan-500/10 text-[#00E5FF] w-fit mb-4">
+            <div className="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-red-500/40 transition-colors">
+              <div className="p-3 rounded-xl bg-red-500/10 text-[#DC2626] w-fit mb-4">
                 <Globe2 className="w-6 h-6" />
               </div>
               <h3 className="text-lg font-bold text-white mb-2">Instant Alerting</h3>

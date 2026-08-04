@@ -6,7 +6,6 @@ import ReduxProvider from "@/redux/Provider";
 import AuthProvider from "@/providers/AuthProvider";
 import Loading from "@/components/Others/Loader/Loading";
 import {
-  bitcount,
   gravitas,
   lobster,
   openSans,
@@ -16,7 +15,7 @@ import {
 } from "@/fonts/Fonts";
 
 export const metadata: Metadata = {
-  title: "PulseGuard | Real-Time Uptime & Infrastructure Monitoring",
+  title: "SpiderNode | Real-Time Uptime & Infrastructure Monitoring",
   description: "Developer-centric, real-time uptime monitoring for websites, APIs, and microservices.",
 };
 
@@ -28,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${openSans.variable} ${playfair.variable} ${bitcount.variable} ${lobster.variable} ${roboto.variable} ${gravitas.variable} ${rowdies.variable} antialiased bg-[#090D16] text-slate-100 min-h-screen`}
+        className={`${openSans.variable} ${playfair.variable} ${lobster.variable} ${roboto.variable} ${gravitas.variable} ${rowdies.variable} antialiased bg-[#090D16] text-slate-100 min-h-screen`}
       >
         <Suspense fallback={<Loading />}>
           <AuthProvider>

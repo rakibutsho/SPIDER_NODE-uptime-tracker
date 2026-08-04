@@ -119,15 +119,64 @@ export async function runCronChecks() {
       }
 
       // ----------------------------------------------------
-      // 4. UPDATE MONITOR IN DATABASE
+      // 4. UPDATE MONITOR IN DATABASE & RECORD LOGS
       // ----------------------------------------------------
-      return prisma.monitor.update({
+      const totalChecks = (monitor.totalChecks || 0) + 1;
+      const failedChecks = (monitor.failedChecks || 0) + (!isUp ? 1 : 0);
+      const uptimePercent = Math.max(0, Math.min(100, ((totalChecks - failedChecks) / totalChecks) * 100));
+
+      const updateData: any = {
+        status: newStatus,
+        lastChecked: new Date(),
+        responseTime,
+        totalChecks,
+        failedChecks,
+        uptimePercent,
+      };
+
+      await prisma.monitor.update({
         where: { id: monitor.id },
-        data: {
-          status: newStatus,
-          lastChecked: new Date(),
-        },
+        data: updateData,
       });
+
+      // Insert Ping
+      await prisma.ping.create({
+        data: {
+          monitorId: monitor.id,
+          status: newStatus,
+          responseTime,
+        }
+      });
+
+      // Handle Incidents
+      if (newStatus === "DOWN" && previousStatus !== "DOWN") {
+        // Create new ongoing incident
+        await prisma.incident.create({
+          data: {
+            monitorId: monitor.id,
+            status: "ONGOING",
+            description: `Monitor went down. Status code: ${statusCode || 'Timeout'}`,
+          }
+        });
+      } else if (newStatus === "UP" && previousStatus === "DOWN") {
+        // Resolve ongoing incident
+        const ongoingIncident = await prisma.incident.findFirst({
+          where: { monitorId: monitor.id, status: "ONGOING" },
+          orderBy: { startedAt: "desc" },
+        });
+
+        if (ongoingIncident) {
+          await prisma.incident.update({
+            where: { id: ongoingIncident.id },
+            data: {
+              status: "RESOLVED",
+              resolvedAt: new Date(),
+            }
+          });
+        }
+      }
+
+      return monitor.id;
     }),
   );
 

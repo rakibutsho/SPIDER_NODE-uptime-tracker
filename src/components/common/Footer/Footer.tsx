@@ -29,7 +29,7 @@ const socialLinks = [
   { name: "GitHub", href: "https://github.com", icon: Github },
   { name: "Twitter", href: "#", icon: Twitter },
   { name: "LinkedIn", href: "#", icon: Linkedin },
-  { name: "Email", href: "mailto:support@pulseguard.io", icon: Mail },
+  { name: "Email", href: "mailto:support@spidernode.com", icon: Mail },
 ];
 
 export const Footer = () => {
@@ -40,11 +40,11 @@ export const Footer = () => {
           {/* Logo & Info */}
           <div className="md:col-span-2 space-y-4">
             <Link href="/" className="inline-flex items-center gap-2.5 group">
-              <div className="p-2 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-[#00E5FF] group-hover:scale-105 transition-transform cyan-glow">
+              <div className="p-2 rounded-xl bg-red-500/10 border border-red-500/30 text-[#DC2626] group-hover:scale-105 transition-transform shadow-sm shadow-red-500/20">
                 <Activity className="w-5 h-5" />
               </div>
               <span className="text-xl font-bold tracking-tight text-white font-mono">
-                Pulse<span className="text-[#00E5FF]">Guard</span>
+                Spider<span className="text-[#DC2626]">Node</span>
               </span>
             </Link>
             <p className="text-xs text-slate-400 max-w-sm leading-relaxed">
@@ -65,7 +65,7 @@ export const Footer = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-[#00E5FF] hover:border-slate-700 transition-colors"
+                  className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-[#DC2626] hover:border-slate-700 transition-colors"
                   title={social.name}
                 >
                   <social.icon className="w-4 h-4" />
@@ -85,7 +85,7 @@ export const Footer = () => {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-xs text-slate-400 hover:text-[#00E5FF] transition-colors"
+                    className="text-xs text-slate-400 hover:text-[#DC2626] transition-colors"
                   >
                     {link.name}
                   </Link>
@@ -104,7 +104,7 @@ export const Footer = () => {
                 <li key={link.name}>
                   <a
                     href={link.href}
-                    className="text-xs text-slate-400 hover:text-[#00E5FF] transition-colors"
+                    className="text-xs text-slate-400 hover:text-[#DC2626] transition-colors"
                   >
                     {link.name}
                   </a>
@@ -123,7 +123,7 @@ export const Footer = () => {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-xs text-slate-400 hover:text-[#00E5FF] transition-colors"
+                    className="text-xs text-slate-400 hover:text-[#DC2626] transition-colors"
                   >
                     {link.name}
                   </Link>
@@ -136,7 +136,7 @@ export const Footer = () => {
         {/* Bottom Bar */}
         <div className="pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-slate-500 font-mono">
-            © {new Date().getFullYear()} PulseGuard. All rights reserved.
+            © {new Date().getFullYear()} SpiderNode. All rights reserved.
           </p>
           <p className="text-xs text-slate-500 font-mono">
             Designed for high availability & engineering teams.
