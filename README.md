@@ -1,169 +1,120 @@
-# next-redux-starter — Next.js + TypeScript + Redux + shadcn-style Boilerplate
+# 🕸️ SpiderNode - Modern Uptime Monitoring
 
-This repository is a lightweight Next.js boilerplate that demonstrates a recommended folder structure and wiring for:
+SpiderNode is a premium, high-performance uptime tracking and status page application built for modern teams. It allows you to monitor your HTTP/HTTPS endpoints, track response times, manage incidents, and provide transparent public status pages to your users.
 
-- Next.js 16 + React 19
-- Redux Toolkit + React-Redux (with `redux-persist`)
-- shadcn-style component organization (component-driven UI under `src/components` / `src/components/ui`)
-- Tailwind CSS and utility-first styling
-
-Use this starter when you want a modern Next.js app scaffolded with a predictable folder layout and ready-to-use Redux integration.
-
-## Quick links
-
-- Package manifest: `package.json`
-- Environment: `.env` (dev/prod base URLs)
-- App entry: `src/app/layout.tsx` and the `src/app/(commonLayout)` area
-
-## What you get
-
-- Next 16 & React 19 stack
-- Redux Toolkit store setup at `src/redux/store.ts`
-- Provider wiring at `src/redux/Provider.tsx`
-- Example auth slice at `src/redux/features/auth/authSlice.ts`
-- Organized UI components under `src/components` and `src/components/ui` (shadcn-inspired)
-- Common components: Navbar, Footer, Loader, PageNotFound
-- Utility helper at `src/lib/utils.ts`
-
-## Contract (small)
-
-- Inputs: developer provides environment variables in `.env` and installs node deps.
-- Outputs: a running Next.js dev server (hot reload) and persisted Redux state (via `redux-persist`).
-- Success criteria: `npm run dev` starts without critical runtime errors; Redux store hydrates; UI components render.
-
-## Edge cases to watch
-
-- Missing `.env` values (app expects NEXT_PUBLIC_DEV_BASE_URL / NEXT_PUBLIC_BASE_URL)
-- Redux-persist storage mismatch or SSR hydration warnings — check `redux-persist` config if you see flashing state.
-- Next.js app dir behavior — pages and app router differences (this project uses the App Router).
-- Large bundles: check dependencies and tree-shake unused libs.
-
-## Folder structure explained
-
-Top-level (relevant files/folders):
-
-- `package.json` - scripts and dependencies
-- `.env` - public env vars (see below)
-- `src/app/` - Next.js App Router (layout, pages grouped in subfolders)
-  - `layout.tsx` - root layout
-  - `not-found.tsx` - 404 handling
-  - `(commonLayout)/` - example common layout and page
-  - `(authLayout)/` - placeholder for auth-scoped routes
-
-- `src/components/` - UI components
-  - `common/` - Navbar, Footer
-  - `home/` - Home page component
-  - `Others/` - Loader, PageNotFound components
-  - `ui/` - primitive UI components (button.tsx, card.tsx, sheet.tsx) — this mirrors the shadcn approach (design-system primitives)
-
-- `src/lib/` - utilities (`utils.ts`)
-- `src/redux/` - Redux wiring
-  - `Provider.tsx` - React-Redux provider wrapper
-  - `store.ts` - store configuration
-  - `api/` - baseApi and testapi
-  - `features/` - slices (example: `auth/authSlice.ts`)
-
-## package.json (high level)
-
-Important dependencies from the project (exact versions available in `package.json`):
-
-- `next`: 16.0.0
-- `react`: 19.2.0
-- `@reduxjs/toolkit`, `react-redux`: redux toolkit & bindings
-- `redux-persist`: state persistence
-- `tailwindcss` & `@tailwindcss/postcss` (Tailwind v4 listed)
-- UI helper libs: `lucide-react`, `clsx`, `class-variance-authority`, etc.
-
-Dev dependencies include TypeScript and ESLint.
-
-## Environment
-
-Example `.env` values (present in repo):
-
-```text
-NEXT_PUBLIC_ENV=development
-NEXT_PUBLIC_PORT=5000
-NEXT_PUBLIC_BASE_URL=https://api.yourproductiondomain.com/api
-NEXT_PUBLIC_DEV_BASE_URL=http://localhost:5000/api
-```
-
-Make sure to copy or edit `.env` for your local environment.
-
-## Installation (Windows / PowerShell)
-
-Open PowerShell in the project root and run:
-
-```powershell
-# install dependencies
-npm install
-
-# run dev server
-npm run dev
-```
-
-The project exposes these scripts from `package.json`:
-
-- `dev` — next dev
-- `build` — next build
-- `start` — next start
-- `lint` — eslint (run `npm run lint` to see lint issues)
-
-## Adding / using shadcn-style components
-
-This repo already organizes UI primitives under `src/components/ui` following a shadcn-style approach (component-first primitives like `button.tsx`, `card.tsx`, `sheet.tsx`). If you want to adopt the official `shadcn/ui` setup, follow the upstream docs to install and configure it, or use the existing primitives as a pattern.
-
-Suggested steps to add the shadcn toolchain (optional):
-
-1. Install the `shadcn/ui` package or use their scaffolding tool per their docs.
-2. Generate components into `src/components/ui`.
-3. Wire theme / tailwind tokens as needed.
-
-## Notes on Redux setup
-
-- Store configuration lives in `src/redux/store.ts`.
-- A `Provider` wrapper exists at `src/redux/Provider.tsx` — use the wrapper in `_app` or root layout to provide the store.
-- `redux-persist` is installed to keep state across sessions; verify storage config for SSR correctness.
-
-## Development tips
-
-- If you get hydration warnings, ensure that persisted state is rehydrated client-side only (guard server vs client usage).
-- Use the `src/components/ui/*` primitives to keep the UI consistent.
-- Add tests around reducers and selectors for early feedback.
-
-## Quality gates (recommended checks)
-
-- Build: run `npm run build` locally to ensure production builds. (Not run here.)
-- Lint/Typecheck: run your linter and TypeScript check via your editor or `npm run lint` plus `tsc --noEmit`.
-- Tests: no tests included by default — consider adding a small Jest/Testing Library setup.
-
-## Try it — quick commands
-
-```powershell
-# clone the repo (change the URL if you forked or renamed the repository)
-git clone https://github.com/rakib-utsho/NextJs_REDUX_boilerplate.git
-cd NextJs_REDUX_boilerplate
-
-# install dependencies
-npm install
-
-# run dev server
-npm run dev
-```
-
-Open <http://localhost:3000> (or the port set in `NEXT_PUBLIC_PORT`) in your browser.
-
-## Contributing and next steps
-
-- Add more feature slices under `src/redux/features/` as your app grows.
-- Expand `src/components/ui` with shared primitives and document usage.
-- Add CI (GitHub Actions) to run lint/build on PRs.
-
-## Author
-
-Md. Rakibul Islam — Junior Frontend Developer
-
-## License
-
-This project is open-source and released under the MIT License. See the `LICENSE` file for the full text.
+![SpiderNode Dashboard](public/window.svg) *(Replace with actual dashboard screenshot)*
 
 ---
+
+## ✨ Features
+
+- **🌐 Real-time HTTP/HTTPS Monitoring**: Add endpoints and configure custom check intervals (1m, 5m, 10m, etc.).
+- **⚡ Automated Health Checks**: Built-in secure cron endpoint (`/api/cron/check`) to trigger automated polling.
+- **📊 Detailed Dashboards**: View historical response times, latency averages, and precise uptime percentages.
+- **🚨 Incident Management**: Automatically track outages and resolve incidents when services recover.
+- **📣 Public Status Pages**: Generate shareable, read-only status pages for your customers (`/status/[id]`).
+- **📱 Telegram Alerts**: Connect a Telegram bot to receive instant push notifications when a monitor goes down.
+- **🔐 Secure Authentication**: Integrated NextAuth.js supporting Email/Password, Google, and GitHub logins.
+- **🎨 Premium UI/UX**: Designed with a sleek, dark-mode glassmorphism aesthetic (Tailwind CSS).
+
+---
+
+## 🏗️ System Architecture
+
+*Note: The complete system architecture design is available in the provided `draw.io` file.*
+
+At a high level, the architecture consists of:
+1. **Next.js 15 (App Router)** serving as both the React frontend and the API backend.
+2. **Prisma ORM** interacting with a **PostgreSQL** database to store users, monitors, pings, and incidents.
+3. **Cron Job Service** (e.g., Vercel Cron or GitHub Actions) triggering the secure `/api/cron/check` endpoint.
+4. **Telegram Bot API** integrated directly into the checking logic to dispatch alerts on status changes.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework:** [Next.js 15](https://nextjs.org/) (App Router) + React 19
+- **Database:** [PostgreSQL](https://www.postgresql.org/)
+- **ORM:** [Prisma ORM](https://www.prisma.io/)
+- **Authentication:** [NextAuth.js (Auth.js)](https://next-auth.js.org/)
+- **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
+- **Icons & UI:** [Lucide React](https://lucide.dev/), [Sonner](https://sonner.emilkowal.ski/) (Toasts)
+
+---
+
+## 🚀 Getting Started
+
+### 1. Prerequisites
+- Node.js 18+
+- PostgreSQL database (Local, Supabase, Neon, etc.)
+- Telegram Bot Token (Optional, for notifications)
+
+### 2. Clone the Repository
+```bash
+git clone https://github.com/your-username/spidernode.git
+cd spidernode
+```
+
+### 3. Install Dependencies
+```bash
+npm install
+```
+
+### 4. Environment Variables
+Create a `.env` file in the root directory and configure the following variables:
+
+```env
+# Database
+DATABASE_URL="postgresql://user:password@localhost:5432/spidernode?schema=public"
+
+# NextAuth Configuration
+NEXTAUTH_SECRET="your_super_secret_key"
+NEXTAUTH_URL="http://localhost:3000"
+
+# OAuth Providers (Optional)
+GITHUB_ID="your_github_oauth_id"
+GITHUB_SECRET="your_github_oauth_secret"
+GOOGLE_CLIENT_ID="your_google_oauth_id"
+GOOGLE_CLIENT_SECRET="your_google_oauth_secret"
+
+# Automated Checks
+NEXT_PUBLIC_CRON_SECRET="your_super_secret_cron_key_123"
+
+# Telegram Bot (Optional)
+TELEGRAM_BOT_TOKEN="your_telegram_bot_token"
+NEXT_PUBLIC_TELEGRAM_BOT_USERNAME="your_telegram_bot_username"
+```
+
+### 5. Database Setup
+Push the Prisma schema to your PostgreSQL database to generate the tables:
+```bash
+npx prisma db push
+```
+
+### 6. Run the Development Server
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+---
+
+## ⚙️ Setting up Automated Checks (Cron)
+
+To automate the monitoring, you need an external service to ping your application. 
+
+You can use a service like **Vercel Cron**, **cron-job.org**, or **GitHub Actions** to make a `GET` request to your secure endpoint every X minutes:
+
+```text
+GET https://your-domain.com/api/cron/check?secret=your_super_secret_cron_key_123
+```
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+
+This project is licensed under the MIT License.

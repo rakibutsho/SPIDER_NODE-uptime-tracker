@@ -41,6 +41,11 @@ const defaultUserData: NavigationData = {
       path: "",
       icon: LayoutGrid,
     },
+    // {
+    //   title: "Monitors",
+    //   path: "",
+    //   icon: MonitorCog,
+    // },
     {
       title: "Incidents",
       path: "/incidents",
