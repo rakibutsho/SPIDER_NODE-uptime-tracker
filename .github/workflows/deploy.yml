@@ -31,7 +31,7 @@ jobs:
         run: npm run build
 
       - name: Tar Build Artifacts
-        run: tar -czf deploy.tar.gz .next public package.json package-lock.json prisma .env
+        run: tar -czf deploy.tar.gz .next public package.json package-lock.json prisma ecosystem.config.js .env
 
       - name: Copy Archive to VPS via SCP
         uses: appleboy/scp-action@master
@@ -74,5 +74,5 @@ jobs:
             npx prisma db push --accept-data-loss
             
             echo "--- Restarting PM2 ---"
-            pm2 restart uptime-tracker || pm2 start npm --name "uptime-tracker" -- start
+            pm2 restart uptime-tracker || pm2 start ecosystem.config.js
             echo "--- Deployment Complete ---"
