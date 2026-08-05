@@ -31,7 +31,7 @@ jobs:
         run: npm run build
 
       - name: Zip Build Artifacts
-        run: zip -r deploy.zip .next public package.json package-lock.json prisma
+        run: zip -r deploy.zip .next public package.json package-lock.json prisma .env
 
       - name: Copy Zip to VPS via SCP
         uses: appleboy/scp-action@master
