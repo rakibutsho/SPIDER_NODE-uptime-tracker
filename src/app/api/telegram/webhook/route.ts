@@ -28,7 +28,7 @@ export async function POST(req: Request) {
                     await sendTelegramAlert(
                         chatId,
                         `🎉 <b>Account Connected!</b>\n\nHello <b>${user.name || 'User'
-                        }</b>, your Telegram account is now successfully linked to PluseGuard.`
+                        }</b>, your Telegram account is now successfully linked to SpiderNode.`
                     );
                 }
             }
