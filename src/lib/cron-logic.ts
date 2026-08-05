@@ -56,8 +56,11 @@ export async function runCronChecks() {
         const response = await fetch(monitor.url, {
           method: "GET",
           signal: controller.signal,
+          redirect: "follow",           // Follow HTTP → HTTPS redirects
+          cache: "no-store",            // Disable Next.js fetch caching
           headers: {
-            "User-Agent": "UptimeTrackerBot/1.0",
+            "User-Agent": "Mozilla/5.0 (compatible; UptimeTrackerBot/1.0)",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
           },
         });
 
@@ -66,15 +69,17 @@ export async function runCronChecks() {
         responseTime = Math.round(endTime - startTime);
         statusCode = response.status;
 
-        // HTTP Status 200-399 means site is UP
-        if (response.ok || (statusCode >= 200 && statusCode < 400)) {
+        // HTTP Status 200-399 means site is UP (includes 3xx that were followed)
+        if (statusCode >= 200 && statusCode < 400) {
           isUp = true;
         }
-      } catch (error) {
+      } catch (error: any) {
         // Timeout or Network Failure means site is DOWN
         const endTime = performance.now();
         responseTime = Math.round(endTime - startTime);
         isUp = false;
+        // Log the real reason so we can debug false-downs
+        console.error(`[CronCheck] FAILED for ${monitor.url} — ${error?.message ?? String(error)}`);
       }
 
       const newStatus = isUp ? "UP" : "DOWN";
