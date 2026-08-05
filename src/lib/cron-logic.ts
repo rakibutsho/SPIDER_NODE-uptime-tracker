@@ -4,7 +4,7 @@ import { sendTelegramAlert } from "@/lib/telegram";
 // Request timeout for ping (10 seconds)
 const TIMEOUT_MS = 10 * 1000;
 
-export async function runCronChecks() {
+export async function runCronChecks(force = false) {
   // ----------------------------------------------------
   // 1. FETCH ACTIVE MONITORS WITH USER DATA
   // ----------------------------------------------------
@@ -25,17 +25,21 @@ export async function runCronChecks() {
   // 2. FILTER BY INTERVAL (ONLY CHECK IF DUE)
   // ----------------------------------------------------
   const now = new Date();
-  
-  const monitorsToCheck = monitors.filter((monitor) => {
-    // If it has never been checked, check it immediately
-    if (!monitor.lastChecked) return true;
-    
-    // Calculate the next time it should be checked based on its interval (in minutes)
-    const nextCheckTime = new Date(monitor.lastChecked.getTime() + monitor.interval * 60 * 1000);
-    
-    // It's due if the current time has passed the scheduled next check time
-    return now >= nextCheckTime;
-  });
+
+  const monitorsToCheck = force
+    ? monitors // Skip interval filter — check everything immediately
+    : monitors.filter((monitor) => {
+        // If it has never been checked, check it immediately
+        if (!monitor.lastChecked) return true;
+
+        // Calculate the next time it should be checked based on its interval (in minutes)
+        const nextCheckTime = new Date(
+          monitor.lastChecked.getTime() + monitor.interval * 60 * 1000
+        );
+
+        // It's due if the current time has passed the scheduled next check time
+        return now >= nextCheckTime;
+      });
 
   if (monitorsToCheck.length === 0) {
     return { message: "No monitors are due for a check right now", result: [] };
