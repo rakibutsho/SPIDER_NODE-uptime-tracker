@@ -70,6 +70,9 @@ jobs:
             echo "--- Generating Prisma Client ---"
             npx prisma generate
             
+            echo "--- Pushing Schema to DB ---"
+            npx prisma db push --accept-data-loss
+            
             echo "--- Restarting PM2 ---"
-            pm2 restart spidernode || pm2 start npm --name "spidernode" -- start
+            pm2 restart uptime-tracker || pm2 start npm --name "uptime-tracker" -- start
             echo "--- Deployment Complete ---"
