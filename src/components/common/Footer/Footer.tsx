@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { Activity, Github, Linkedin, Mail, Twitter } from "lucide-react";
+import { Activity01Icon as Activity, GithubIcon as Github, Linkedin01Icon as Linkedin, Mail01Icon as Mail, TwitterIcon as Twitter } from "hugeicons-react";
 import Image from "next/image";
 import logo from "@/assets/logo.png"
 

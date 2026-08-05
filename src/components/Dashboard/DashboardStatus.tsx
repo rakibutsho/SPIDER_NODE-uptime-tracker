@@ -4,17 +4,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import {
-  Activity,
-  CheckCircle2,
-  Clock,
-  Copy,
-  ExternalLink,
-  Globe,
-  Loader2,
-  RefreshCw,
-  XCircle,
-} from "lucide-react";
+import { Activity01Icon as Activity, CheckmarkCircle02Icon as CheckCircle2, Clock01Icon as Clock, Copy01Icon as Copy, LinkSquare01Icon as ExternalLink, GlobeIcon as Globe, Loading01Icon as Loader2, RefreshIcon as RefreshCw, CancelCircleIcon as XCircle } from "hugeicons-react";
 
 interface Monitor {
   id: number;

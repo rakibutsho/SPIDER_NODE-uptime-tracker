@@ -24,6 +24,7 @@ model User {
   monitors       Monitor[]
   accounts       Account[]
   sessions       Session[]
+  feedbacks      Feedback[]
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
 
@@ -107,4 +108,21 @@ model Incident {
 
   @@index([monitorId])
   @@map("incidents")
+}
+
+model Feedback {
+  id          String   @id @default(cuid())
+  userId      String
+  type        String   // "FEATURE", "BUG", "GENERAL"
+  title       String
+  description String
+  status      String   @default("PENDING") // "PENDING", "PLANNED", "IN_PROGRESS", "COMPLETED"
+  upvotes     Int      @default(0)
+  
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId])
+  @@map("feedbacks")
 }

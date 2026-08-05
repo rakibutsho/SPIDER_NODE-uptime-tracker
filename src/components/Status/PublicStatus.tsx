@@ -2,16 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import {
-  Activity,
-  AlertTriangle,
-  CheckCircle2,
-  Clock,
-  ExternalLink,
-  Globe,
-  Loader2,
-  XCircle,
-} from "lucide-react";
+import { Activity01Icon as Activity, Alert01Icon as AlertTriangle, CheckmarkCircle02Icon as CheckCircle2, Clock01Icon as Clock, LinkSquare01Icon as ExternalLink, GlobeIcon as Globe, Loading01Icon as Loader2, CancelCircleIcon as XCircle } from "hugeicons-react";
 
 interface Monitor {
   id: number;

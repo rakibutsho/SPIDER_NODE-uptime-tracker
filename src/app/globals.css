@@ -37,9 +37,8 @@
 
   /* Custom Font Variables */
   --font-sans: var(--font-open-sans);
-  --font-serif: var(--font-playfair);
-  --font-mono: var(--font-roboto);
-  --font-rowdies: var(--font-rowdies);
+  --font-heading: var(--font-space-grotesk);
+  --font-mono: var(--font-space-grotesk);
 }
 
 :root {
@@ -93,6 +92,9 @@
     background-color: var(--background);
     color: var(--foreground);
     font-family: var(--font-sans), sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading), sans-serif;
   }
 }
 

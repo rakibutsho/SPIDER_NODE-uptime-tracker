@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Wrench, Clock, Construction } from 'lucide-react';
+import { Wrench01Icon as Wrench, Clock01Icon as Clock, Settings01Icon as Construction } from "hugeicons-react";
 
 export default function UnderConstruction() {
   return (

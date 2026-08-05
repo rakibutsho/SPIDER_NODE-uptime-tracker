@@ -1,19 +1,7 @@
 "use client";
 
-import {
-  CircleUser,
-  Codesandbox,
-  Globe,
-  LayoutGrid,
-  MessageCircleMore,
-  MonitorCog,
-  ReceiptText,
-  ShieldAlert,
-  UserCog,
-  Users,
-  Wallet,
-  type LucideIcon,
-} from "lucide-react";
+import { UserCircle02Icon as CircleUser, CodesandboxIcon as Codesandbox, GlobeIcon as Globe, LayoutGridIcon as LayoutGrid, Message01Icon as MessageCircleMore, ComputerSettingsIcon as MonitorCog, File01Icon as ReceiptText, Shield01Icon as ShieldAlert, AccountSetting01Icon as UserCog, UserMultiple02Icon as Users, Wallet01Icon as Wallet } from "hugeicons-react";
+type LucideIcon = React.ElementType;
 import type * as React from "react";
 
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";

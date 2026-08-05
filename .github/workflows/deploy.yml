@@ -55,6 +55,9 @@ jobs:
             # Create backup and clear old files
             cd /var/www/uptime-tracker
             
+            # Clear old Next.js build to prevent reusing stale cache files
+            rm -rf .next
+            
             # Unzip new build, overwriting old files
             unzip -o /tmp/deploy.zip -d /var/www/uptime-tracker
             rm /tmp/deploy.zip

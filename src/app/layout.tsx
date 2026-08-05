@@ -6,12 +6,8 @@ import ReduxProvider from "@/redux/Provider";
 import AuthProvider from "@/providers/AuthProvider";
 import Loading from "@/components/Others/Loader/Loading";
 import {
-  gravitas,
-  lobster,
   openSans,
-  playfair,
-  roboto,
-  rowdies,
+  spaceGrotesk,
 } from "@/fonts/Fonts";
 
 export const metadata: Metadata = {
@@ -27,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${openSans.variable} ${playfair.variable} ${lobster.variable} ${roboto.variable} ${gravitas.variable} ${rowdies.variable} antialiased bg-[#090D16] text-slate-100 min-h-screen`}
+        className={`${openSans.variable} ${spaceGrotesk.variable} antialiased bg-[#090D16] text-slate-100 min-h-screen`}
       >
         <Suspense fallback={<Loading />}>
           <AuthProvider>

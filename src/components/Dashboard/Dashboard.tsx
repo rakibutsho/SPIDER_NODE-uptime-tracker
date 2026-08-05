@@ -4,22 +4,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import {
-  Activity,
-  Plus,
-  RefreshCw,
-  Trash2,
-  ExternalLink,
-  LogOut,
-  ShieldCheck,
-  Globe,
-  Clock,
-  TrendingUp,
-  Loader2,
-  X,
-  Edit2,
-  Power,
-} from "lucide-react";
+import { Activity01Icon as Activity, PlusSignIcon as Plus, RefreshIcon as RefreshCw, Delete02Icon as Trash2, LinkSquare01Icon as ExternalLink, Logout01Icon as LogOut, Shield01Icon as ShieldCheck, GlobeIcon as Globe, Clock01Icon as Clock, ArrowUpRight01Icon as TrendingUp, Loading01Icon as Loader2, Cancel01Icon as X, Edit02Icon as Edit2, EcoPowerIcon as Power } from "hugeicons-react";
 import Link from "next/link";
 
 interface Monitor {

@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/sidebar";
 import { logout } from "@/redux/features/auth/authSlice";
 import Cookies from "js-cookie";
-import { LogOut, Activity } from "lucide-react";
+import { Logout01Icon as LogOut, Activity01Icon as Activity } from "hugeicons-react";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";

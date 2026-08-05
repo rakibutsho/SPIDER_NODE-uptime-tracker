@@ -2,15 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
-import { 
-  Send, 
-  CheckCircle2, 
-  XCircle, 
-  ExternalLink, 
-  Loader2, 
-  Bell,
-  Trash2
-} from "lucide-react";
+import { SentIcon as Send, CheckmarkCircle02Icon as CheckCircle2, CancelCircleIcon as XCircle, LinkSquare01Icon as ExternalLink, Loading01Icon as Loader2, Notification01Icon as Bell, Delete02Icon as Trash2 } from "hugeicons-react";
 
 export default function TelegramSettings() {
   const [chatId, setChatId] = useState<string | null>(null);

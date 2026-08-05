@@ -7,7 +7,7 @@ import logo from "@/assets/logo.png";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { toast } from "sonner";
-import { Activity, ArrowRight, Github, Mail, Lock, User, Eye, EyeOff, Loader2 } from "lucide-react";
+import { Activity01Icon as Activity, ArrowRight01Icon as ArrowRight, GithubIcon as Github, Mail01Icon as Mail, LockIcon as Lock, UserIcon as User, ViewIcon as Eye, ViewOffIcon as EyeOff, Loading01Icon as Loader2 } from "hugeicons-react";
 
 export function RegisterForm() {
   const router = useRouter();

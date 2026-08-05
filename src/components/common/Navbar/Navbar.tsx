@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
-import { Activity, Github, LayoutDashboard, LogIn, LogOut, Menu, X } from "lucide-react";
+import { Activity01Icon as Activity, GithubIcon as Github, DashboardSquare01Icon as LayoutDashboard, Login01Icon as LogIn, Logout01Icon as LogOut, Menu01Icon as Menu, Cancel01Icon as X } from "hugeicons-react";
 import logo from "@/assets/logo.png"
 import Image from "next/image";
 
@@ -12,7 +12,7 @@ export const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-slate-800/80 bg-[#090D16]/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full border-b border-slate-800/80 bg-[#090D16]/80 backdrop-blur-md font-sans">
       <div className="w-full max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 py-3.5">
         {/* Brand Logo */}
         <Link href="/" className="flex items-center gap-2.5 group">
@@ -20,7 +20,7 @@ export const Navbar = () => {
             <Activity className="w-5 h-5" />
           </div> */}
           <Image src={logo} alt="Logo" width={50} height={50} className="w-12 h-12 object-contain" />
-          <span className="text-xl font-bold tracking-tight text-white font-mono">
+          <span className="text-xl font-bold tracking-tight text-white font-heading">
             Spider<span className="text-[#DC2626]">Node</span>
           </span>
         </Link>

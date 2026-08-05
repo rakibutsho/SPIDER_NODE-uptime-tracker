@@ -4,18 +4,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import {
-  AlertTriangle,
-  CheckCircle2,
-  Clock,
-  Loader2,
-  RefreshCw,
-  ServerCrash,
-  ShieldCheck,
-  XCircle,
-  Activity,
-  ExternalLink,
-} from "lucide-react";
+import { Alert01Icon as AlertTriangle, CheckmarkCircle02Icon as CheckCircle2, Clock01Icon as Clock, Loading01Icon as Loader2, RefreshIcon as RefreshCw, ServerStack01Icon as ServerCrash, Shield01Icon as ShieldCheck, CancelCircleIcon as XCircle, Activity01Icon as Activity, LinkSquare01Icon as ExternalLink } from "hugeicons-react";
 import Link from "next/link";
 
 interface Monitor {

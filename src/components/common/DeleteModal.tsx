@@ -9,7 +9,7 @@
 // } from "@/components/ui/dialog";
 // import { useState } from "react";
 // import { toast } from "sonner";
-// import { Pencil, HelpCircle } from "lucide-react"; // Added Question mark icon
+// import { PencilEdit01Icon as Pencil, QuestionIcon as HelpCircle } from "hugeicons-react"; // Added Question mark icon
 // import { useHideContestMutation } from "@/redux/features/dashboard/dashboard.api";
 
 // interface DeleteModalProps {

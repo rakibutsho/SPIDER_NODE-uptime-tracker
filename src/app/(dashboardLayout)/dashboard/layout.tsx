@@ -1,5 +1,6 @@
 import AppHeader from "@/components/dashboardLayout/AppHeader";
 import { AppSidebar } from "@/components/dashboardLayout/AppSidebar";
+import FeedbackButton from "@/components/Dashboard/FeedbackButton";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import React, { ReactNode } from "react";
 import { Toaster } from "sonner";
@@ -15,6 +16,7 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
             <div className="flex flex-col gap-4 p-4 pt-0">{children}</div>
           </div>
         </SidebarInset>
+        <FeedbackButton />
       </SidebarProvider>
     </div>
   );

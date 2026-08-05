@@ -3,7 +3,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { SidebarTrigger } from "../ui/sidebar";
 
-// import { Bell } from "lucide-react"
+// import { BellIcon as Bell } from "hugeicons-react";
 // import { Button } from "./ui/button"
 
 const AppHeader = () => {
