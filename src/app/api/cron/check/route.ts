@@ -9,6 +9,13 @@ export async function GET(req: Request) {
     const querySecret = url.searchParams.get("secret");
     const cronSecret = process.env.CRON_SECRET;
 
+    if (!cronSecret) {
+      return NextResponse.json(
+        { error: "CRON_SECRET is not configured in production environment." },
+        { status: 500 },
+      );
+    }
+
     if (
       cronSecret &&
       authHeader !== `Bearer ${cronSecret}` &&

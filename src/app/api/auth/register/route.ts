@@ -1,10 +1,21 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import bcrypt from "bcryptjs"
-
+import bcrypt from "bcryptjs";
+import { rateLimit, getIP } from "@/lib/rate-limit";
+import { generateVerificationToken } from "@/lib/tokens";
+import { sendVerificationEmail } from "@/lib/mail";
 
 export async function POST(req: Request) {
     try {
+        const ip = getIP(req);
+        // Max 5 registration attempts per IP per hour (3600000 ms)
+        const { success, remaining } = rateLimit(`register_${ip}`, { limit: 5, windowMs: 3600000 });
+        if (!success) {
+            return NextResponse.json(
+                { error: "Too many registration attempts. Please try again later." },
+                { status: 429, headers: { "X-RateLimit-Remaining": remaining.toString() } }
+            );
+        }
         const body = await req.json();
         const { name, email, password } = body;
 
@@ -53,11 +64,15 @@ export async function POST(req: Request) {
                 image: true,
                 createdAt: true
             }
-        })
+        });
+
+        // Generate verification token and send email
+        const verificationToken = await generateVerificationToken(normalizedEmail);
+        await sendVerificationEmail(verificationToken.email, verificationToken.token);
 
         return NextResponse.json(
             {
-                message: "User registered successfully",
+                message: "User registered. Please check your email to verify your account.",
                 user: newUser
             },
             { status: 201 }
