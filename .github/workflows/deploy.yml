@@ -48,25 +48,28 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.VPS_SSH_KEY }}
+          command_timeout: 30m
           script: |
+            echo "--- Loading NVM ---"
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-            # Create backup and clear old files
+            echo "--- Navigating to directory ---"
             cd /var/www/uptime-tracker
             
-            # Clear old Next.js build to prevent reusing stale cache files
+            echo "--- Clearing old Next.js build ---"
             rm -rf .next
             
-            # Extract new build, overwriting old files
+            echo "--- Extracting new build ---"
             tar -xzf /tmp/deploy.tar.gz -C /var/www/uptime-tracker
             rm /tmp/deploy.tar.gz
             
-            # Install strictly production dependencies to save RAM
-            npm ci --omit=dev
+            echo "--- Installing dependencies (this may take a few minutes on small servers) ---"
+            npm ci --omit=dev --no-audit --no-fund
             
-            # Generate Prisma Client for the VPS OS architecture
+            echo "--- Generating Prisma Client ---"
             npx prisma generate
             
-            # Restart PM2
+            echo "--- Restarting PM2 ---"
             pm2 restart spidernode || pm2 start npm --name "spidernode" -- start
+            echo "--- Deployment Complete ---"
