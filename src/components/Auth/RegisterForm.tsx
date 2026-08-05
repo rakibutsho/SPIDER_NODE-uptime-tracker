@@ -49,22 +49,9 @@ export function RegisterForm() {
         return;
       }
 
-      toast.success("Account created successfully! Logging you in...");
-
-      // 2. Trigger automatic sign-in
-      const signInRes = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-      });
-
-      if (signInRes?.ok) {
-        router.push("/dashboard");
-        router.refresh();
-      } else {
-        toast.error(signInRes?.error || "Registered, but failed to auto sign-in. Please log in.");
-        router.push("/login");
-      }
+      toast.success("Account created! Please check your email to verify.");
+      router.push("/verify-email-sent");
+      
     } catch (err) {
       console.error(err);
       toast.error("An unexpected error occurred during registration.");

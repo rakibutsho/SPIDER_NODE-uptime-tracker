@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { rateLimit, getIP } from "@/lib/rate-limit";
+import { generateVerificationToken } from "@/lib/tokens";
+import { sendVerificationEmail } from "@/lib/mail";
 
 export async function POST(req: Request) {
     try {
@@ -62,11 +64,15 @@ export async function POST(req: Request) {
                 image: true,
                 createdAt: true
             }
-        })
+        });
+
+        // Generate verification token and send email
+        const verificationToken = await generateVerificationToken(normalizedEmail);
+        await sendVerificationEmail(verificationToken.email, verificationToken.token);
 
         return NextResponse.json(
             {
-                message: "User registered successfully",
+                message: "User registered. Please check your email to verify your account.",
                 user: newUser
             },
             { status: 201 }
