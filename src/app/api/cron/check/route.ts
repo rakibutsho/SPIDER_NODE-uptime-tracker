@@ -21,7 +21,8 @@ export async function GET(req: Request) {
     }
 
     // 2. RUN CHECKS
-    const { message, result } = await runCronChecks();
+    const force = url.searchParams.get("force") === "true";
+    const { message, result } = await runCronChecks(force);
 
     return NextResponse.json(
       { message, result },
