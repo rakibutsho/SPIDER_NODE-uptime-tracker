@@ -74,5 +74,5 @@ jobs:
             npx prisma db push --accept-data-loss
             
             echo "--- Restarting PM2 ---"
-            pm2 restart uptime-tracker || pm2 start ecosystem.config.js
+            pm2 start ecosystem.config.js
             echo "--- Deployment Complete ---"
