@@ -2,8 +2,7 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-
-
+import { rateLimit, getIP } from "@/lib/rate-limit";
 // ----------------------------------------------------
 // 1. GET ALL MONITORS FOR LOGGED-IN USER (GET)
 // ----------------------------------------------------
@@ -35,9 +34,31 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
+    const ip = getIP(req);
+    // Max 20 monitor creation attempts per minute per IP
+    const { success, remaining } = rateLimit(`monitors_${ip}`, { limit: 20, windowMs: 60000 });
+    if (!success) {
+      return NextResponse.json(
+        { error: "Too many requests. Please try again later." },
+        { status: 429, headers: { "X-RateLimit-Remaining": remaining.toString() } }
+      );
+    }
+
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
       return NextResponse.json({ error: "Unauthirized" }, { status: 401 })
+    }
+
+    // Check Monitor Limit
+    const currentMonitorsCount = await prisma.monitor.count({
+      where: { userId: session.user.id }
+    });
+
+    if (currentMonitorsCount >= 10) {
+      return NextResponse.json(
+        { error: "Monitor limit reached. You can only create up to 10 monitors on the free tier." },
+        { status: 403 }
+      );
     }
 
     const body = await req.json();
