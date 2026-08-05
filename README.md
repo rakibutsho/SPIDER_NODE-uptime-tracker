@@ -4,7 +4,17 @@
 
 **Positioning:** The free uptime monitor with Telegram alerts — built by a developer, for developers.
 
-![SpiderNode Dashboard](public/window.svg) *(Replace with actual dashboard screenshot)*
+### Dashboard
+![SpiderNode Dashboard](root_images/Screenshot_2.png)
+
+### Public Status Page
+![Status Page](root_images/Screenshot.png)
+
+### Incident Management
+![Incident Log](root_images/Screenshot_1.png)
+
+### Instant Telegram Alerts
+![Telegram Alerts](root_images/Screenshot_3.png)
 
 ---
 
