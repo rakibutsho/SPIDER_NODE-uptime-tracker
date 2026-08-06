@@ -80,7 +80,7 @@ export const Navbar = () => {
       {mobileMenuOpen && (
         <div className="md:hidden border-b border-slate-800 bg-[#0F172A] px-4 py-4 space-y-3">
           <a
-            href="https://github.com"
+            href="https://github.com/rakibutsho/uptime-tracker"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-slate-900 text-slate-300 text-sm font-medium"
