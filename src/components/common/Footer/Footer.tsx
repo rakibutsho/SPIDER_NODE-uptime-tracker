@@ -7,28 +7,28 @@ import Image from "next/image";
 import logo from "@/assets/logo.png"
 
 const footerLinks = {
-  product: [
+  features: [
     { name: "Uptime Monitoring", href: "#" },
     { name: "API Monitoring", href: "#" },
     { name: "Status Pages", href: "#" },
     { name: "Incident Response", href: "#" },
   ],
   resources: [
-    { name: "Documentation", href: "#" },
-    { name: "API Reference", href: "#" },
-    { name: "System Status", href: "#" },
-    { name: "GitHub Repository", href: "https://github.com" },
+    { name: "Documentation", href: "/docs" },
+    { name: "API Reference", href: "/api-reference" },
+    { name: "System Status", href: "/status" },
+    { name: "GitHub Repository", href: "https://github.com/rakibutsho/uptime-tracker" },
   ],
   legal: [
-    { name: "Privacy Policy", href: "#" },
-    { name: "Terms of Service", href: "#" },
-    { name: "Cookie Settings", href: "#" },
-    { name: "Security SLA", href: "#" },
+    { name: "Privacy Policy", href: "/privacy-policy" },
+    { name: "Terms of Service", href: "/terms" },
+    { name: "Cookie Settings", href: "/cookie-settings" },
+    { name: "Security SLA", href: "/security-sla" },
   ],
 };
 
 const socialLinks = [
-  { name: "GitHub", href: "https://github.com", icon: Github },
+  { name: "GitHub", href: "https://github.com/rakibutsho/uptime-tracker", icon: Github },
   { name: "Twitter", href: "#", icon: Twitter },
   { name: "LinkedIn", href: "#", icon: Linkedin },
   { name: "Email", href: "mailto:support@spidernode.com", icon: Mail },
@@ -78,13 +78,13 @@ export const Footer = () => {
             </div>
           </div>
 
-          {/* Product Links */}
+          {/* Features Links */}
           <div>
             <h3 className="text-xs font-mono uppercase tracking-wider font-semibold text-white mb-4">
-              Product
+              Features
             </h3>
             <ul className="space-y-2.5">
-              {footerLinks.product.map((link) => (
+              {footerLinks.features.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.href}
@@ -141,8 +141,16 @@ export const Footer = () => {
           <p className="text-xs text-slate-500 font-mono">
             © {new Date().getFullYear()} SpiderNode. All rights reserved.
           </p>
-          <p className="text-xs text-slate-500 font-mono">
-            Designed for high availability & engineering teams.
+          <p className="text-xs text-slate-500 font-mono flex items-center gap-1">
+            Designed & Developed by{" "}
+            <a 
+              href="https://rakibutsho.dev" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-slate-400 hover:text-[#DC2626] transition-colors"
+            >
+              Md. Rakibul Islam
+            </a>
           </p>
         </div>
       </div>
