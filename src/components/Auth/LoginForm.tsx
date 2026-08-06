@@ -12,7 +12,19 @@ import { Activity01Icon as Activity, ArrowRight01Icon as ArrowRight, GithubIcon 
 function LoginFormContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+  let callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+
+  // Sanitize callbackUrl to prevent localhost redirects in production
+  try {
+    if (callbackUrl.startsWith("http")) {
+      const parsedUrl = new URL(callbackUrl);
+      if (typeof window !== "undefined" && parsedUrl.hostname !== window.location.hostname) {
+        callbackUrl = parsedUrl.pathname + parsedUrl.search;
+      }
+    }
+  } catch (e) {
+    callbackUrl = "/dashboard";
+  }
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

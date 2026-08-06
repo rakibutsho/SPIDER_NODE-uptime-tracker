@@ -9,10 +9,10 @@ export async function proxy(request: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET 
   });
 
-  // If there's no valid token, redirect to the login page
   if (!token) {
     const loginUrl = new URL("/login", request.url);
-    loginUrl.searchParams.set("callbackUrl", encodeURI(request.url));
+    const callbackPath = request.nextUrl.pathname + request.nextUrl.search;
+    loginUrl.searchParams.set("callbackUrl", callbackPath);
     return NextResponse.redirect(loginUrl);
   }
 
