@@ -1,93 +1,10 @@
-import React from "react";
-import Link from "next/link";
-import { CodeCircleIcon as Code, Settings01Icon as Settings, Link01Icon as LinkIcon, Database01Icon as Database, ArrowRight01Icon as ArrowRight } from "hugeicons-react";
+import ApiMonitoringContent from "@/components/Features/ApiMonitoringContent";
+
+export const metadata = {
+  title: "API Monitoring | SpiderNode",
+  description: "Advanced API monitoring with JSON assertions and performance tracking.",
+};
 
 export default function ApiMonitoringFeature() {
-  const features = [
-    {
-      title: "Custom Headers & Auth",
-      description: "Pass Bearer tokens, API keys, and custom headers required to access your secured endpoints.",
-      icon: Settings,
-    },
-    {
-      title: "JSON Body Assertions",
-      description: "Validate the structure and specific keys of the JSON payload returned by your API.",
-      icon: Database,
-    },
-    {
-      title: "Latency Tracking",
-      description: "Track API response times over time. Get alerted if your p99 latency spikes unexpectedly.",
-      icon: LinkIcon,
-    },
-  ];
-
-  return (
-    <div className="min-h-screen bg-[#090D16] text-slate-100 overflow-hidden font-sans pt-24 pb-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        
-        {/* Hero */}
-        <div className="text-center max-w-4xl mx-auto mb-16 relative">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] h-[300px] bg-[#DC2626]/10 rounded-full blur-[100px] pointer-events-none" />
-          
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-950/60 border border-red-500/30 text-[#DC2626] text-xs font-mono mb-6 backdrop-blur-md">
-            <Code className="w-4 h-4" />
-            Developer Focused
-          </div>
-          
-          <h1 className="text-4xl md:text-6xl font-extrabold font-heading tracking-tight mb-6">
-            Advanced <span className="red-gradient-text">API Monitoring</span>
-          </h1>
-          <p className="text-lg text-slate-400 mb-8">
-            Go beyond simple pings. Validate HTTP status codes, check response bodies, and ensure your microservices are returning the right data.
-          </p>
-          
-          <Link
-            href="/register"
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-[#DC2626] hover:bg-red-400 text-[#090D16] font-bold text-sm transition-all shadow-xl shadow-red-500/25 group"
-          >
-            Start Monitoring Free
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </div>
-
-        {/* Feature Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-20">
-          {features.map((feature, idx) => (
-            <div key={idx} className="glass-panel p-8 rounded-2xl glass-panel-hover group">
-              <div className="w-12 h-12 rounded-xl bg-slate-900/50 border border-slate-800 flex items-center justify-center mb-6 group-hover:border-red-500/30 group-hover:text-[#DC2626] transition-colors">
-                <feature.icon className="w-6 h-6 text-slate-400 group-hover:text-[#DC2626]" />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
-              <p className="text-sm text-slate-400 leading-relaxed">
-                {feature.description}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        {/* Technical Details */}
-        <div className="mt-24 max-w-4xl mx-auto glass-panel p-10 rounded-3xl border-slate-800 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-[80px]" />
-          <h2 className="text-2xl font-bold text-white mb-6">Example Payload Assertion</h2>
-          <div className="bg-[#0f172a] rounded-xl p-6 border border-slate-700/50">
-            <pre className="text-sm text-slate-300 font-mono overflow-x-auto">
-              <code>
-{`{
-  "status": 200,
-  "assert": {
-    "body.success": true,
-    "body.data.items.length": { "$gt": 0 }
-  }
-}`}
-              </code>
-            </pre>
-          </div>
-          <p className="mt-6 text-sm text-slate-400">
-            Define precise assertions for your REST or GraphQL APIs to ensure they are not just reachable, but actually functioning correctly.
-          </p>
-        </div>
-
-      </div>
-    </div>
-  );
+  return <ApiMonitoringContent />;
 }
