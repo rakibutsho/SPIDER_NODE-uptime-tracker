@@ -31,7 +31,6 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # env files (can opt-in for committing if needed)
-.env*
 
 # vercel
 .vercel
@@ -44,10 +43,10 @@ next-env.d.ts
 
 # IDEs and Editors
 .idea/
-.vscode/
 *.swp
 *.swo
 
 # AI Agents and Tools
 .gemini/
 .agents/
+config.bat
