@@ -8,16 +8,19 @@ export default function StatusPagesFeature() {
       title: "Custom Domains",
       description: "Host your status page on your own domain (e.g., status.yourcompany.com) for a seamless brand experience.",
       icon: Domain,
+      comingSoon: true,
     },
     {
       title: "Custom Branding",
       description: "Match your status page to your brand identity with custom logos, colors, and layouts.",
       icon: PaintBoard,
+      comingSoon: true,
     },
     {
       title: "Incident Communication",
       description: "Post updates during an outage to keep your customers informed and reduce support ticket volume.",
       icon: WebDesign,
+      comingSoon: false,
     },
   ];
 
@@ -53,7 +56,14 @@ export default function StatusPagesFeature() {
         {/* Feature Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-20">
           {features.map((feature, idx) => (
-            <div key={idx} className="glass-panel p-8 rounded-2xl glass-panel-hover group">
+            <div key={idx} className="glass-panel p-8 rounded-2xl glass-panel-hover group relative">
+              {feature.comingSoon && (
+                <div className="absolute top-4 right-4">
+                  <span className="text-[10px] uppercase tracking-wider font-bold px-2.5 py-1 rounded-full bg-red-500/10 text-red-500 border border-red-500/20">
+                    Coming Soon
+                  </span>
+                </div>
+              )}
               <div className="w-12 h-12 rounded-xl bg-slate-900/50 border border-slate-800 flex items-center justify-center mb-6 group-hover:border-red-500/30 group-hover:text-[#DC2626] transition-colors">
                 <feature.icon className="w-6 h-6 text-slate-400 group-hover:text-[#DC2626]" />
               </div>

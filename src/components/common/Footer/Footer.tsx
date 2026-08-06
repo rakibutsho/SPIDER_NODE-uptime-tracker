@@ -8,10 +8,10 @@ import logo from "@/assets/logo.png"
 
 const footerLinks = {
   features: [
-    { name: "Uptime Monitoring", href: "#" },
-    { name: "API Monitoring", href: "#" },
-    { name: "Status Pages", href: "#" },
-    { name: "Incident Response", href: "#" },
+    { name: "Uptime Monitoring", href: "/features/uptime-monitoring" },
+    { name: "API Monitoring", href: "/features/api-monitoring" },
+    { name: "Status Pages", href: "/features/status-pages" },
+    { name: "Incident Response", href: "/features/incident-response" },
   ],
   resources: [
     { name: "Documentation", href: "/docs" },
