@@ -51,3 +51,6 @@ next-env.d.ts
 # AI Agents and Tools
 .gemini/
 .agents/
+
+# Local project notes (not for version control)
+project_analysis.md
