@@ -52,8 +52,35 @@ export async function register() {
       }
     });
 
+    // Database Batch Flusher (Every 15 minutes)
+    cron.schedule("*/15 * * * *", async () => {
+      try {
+        console.log("🔄 Flushing database batches...");
+        const { flushBatches } = await import("./lib/db-batcher");
+        await flushBatches();
+      } catch (e) {
+        console.error("❌ Failed to flush database batches:", e);
+      }
+    });
+
     console.log("   └─ Polling every 1 minute.");
+    console.log("   └─ Flushing to DB every 15 minutes.");
     console.log("   └─ To use Vercel Cron as primary instead, set CRON_MODE=vercel");
+
+    // Graceful shutdown flush
+    const gracefulShutdown = async () => {
+      console.log("🛑 Shutting down, flushing database batches...");
+      try {
+        const { flushBatches } = await import("./lib/db-batcher");
+        await flushBatches();
+      } catch (e) {
+        console.error("❌ Shutdown flush failed:", e);
+      }
+      process.exit(0);
+    };
+
+    process.on("SIGTERM", gracefulShutdown);
+    process.on("SIGINT", gracefulShutdown);
   }
 }
 

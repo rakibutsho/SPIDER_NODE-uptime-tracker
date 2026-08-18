@@ -62,5 +62,10 @@
     "typescript": "^5"
   },
   "author": "Md. Rakibul Islam (Junior Frontend Developer)",
-  "license": "MIT"
+  "license": "MIT",
+  "allowScripts": {
+    "@prisma/engines@7.9.1": true,
+    "prisma@7.9.1": true,
+    "unrs-resolver@1.11.1": true
+  }
 }

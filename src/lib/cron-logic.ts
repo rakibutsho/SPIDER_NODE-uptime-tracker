@@ -34,7 +34,7 @@ export async function runCronChecks(force = false) {
 
         // Calculate the next time it should be checked based on its interval (in minutes)
         const nextCheckTime = new Date(
-          monitor.lastChecked.getTime() + monitor.interval * 60 * 1000
+          monitor.lastChecked.getTime() + monitor.interval * 60 * 1000,
         );
 
         // It's due if the current time has passed the scheduled next check time
@@ -60,11 +60,12 @@ export async function runCronChecks(force = false) {
         const response = await fetch(monitor.url, {
           method: "GET",
           signal: controller.signal,
-          redirect: "follow",           // Follow HTTP → HTTPS redirects
-          cache: "no-store",            // Disable Next.js fetch caching
+          redirect: "follow", // Follow HTTP → HTTPS redirects
+          cache: "no-store", // Disable Next.js fetch caching
           headers: {
             "User-Agent": "Mozilla/5.0 (compatible; UptimeTrackerBot/1.0)",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            Accept:
+              "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
           },
         });
 
@@ -83,7 +84,9 @@ export async function runCronChecks(force = false) {
         responseTime = Math.round(endTime - startTime);
         isUp = false;
         // Log the real reason so we can debug false-downs
-        console.error(`[CronCheck] FAILED for ${monitor.url} — ${error?.message ?? String(error)}`);
+        console.error(
+          `[CronCheck] FAILED for ${monitor.url} — ${error?.message ?? String(error)}`,
+        );
       }
 
       const newStatus = isUp ? "UP" : "DOWN";
@@ -130,58 +133,71 @@ export async function runCronChecks(force = false) {
       // ----------------------------------------------------
       // 4. UPDATE MONITOR IN DATABASE & RECORD LOGS
       // ----------------------------------------------------
-      const totalChecks = (monitor.totalChecks || 0) + 1;
-      const failedChecks = (monitor.failedChecks || 0) + (!isUp ? 1 : 0);
-      const uptimePercent = Math.max(0, Math.min(100, ((totalChecks - failedChecks) / totalChecks) * 100));
+      const hasStatusChanged = previousStatus !== newStatus;
 
-      const updateData: any = {
-        status: newStatus,
-        lastChecked: new Date(),
-        responseTime,
-        totalChecks,
-        failedChecks,
-        uptimePercent,
-      };
+      if (!hasStatusChanged) {
+        // FAST PATH: Routine check, no status change.
+        // Queue in memory to save database compute.
+        const { queueRoutineCheck } = await import("./db-batcher");
+        queueRoutineCheck(monitor.id, newStatus, responseTime);
+      } else {
+        // SLOW PATH: Status changed or first check. Write to DB immediately.
+        const totalChecks = (monitor.totalChecks || 0) + 1;
+        const failedChecks = (monitor.failedChecks || 0) + (!isUp ? 1 : 0);
+        const uptimePercent = Math.max(
+          0,
+          Math.min(100, ((totalChecks - failedChecks) / totalChecks) * 100),
+        );
 
-      await prisma.monitor.update({
-        where: { id: monitor.id },
-        data: updateData,
-      });
-
-      // Insert Ping
-      await prisma.ping.create({
-        data: {
-          monitorId: monitor.id,
+        const updateData: any = {
           status: newStatus,
+          lastChecked: new Date(),
           responseTime,
-        }
-      });
+          totalChecks,
+          failedChecks,
+          uptimePercent,
+        };
 
-      // Handle Incidents
-      if (newStatus === "DOWN" && previousStatus !== "DOWN") {
-        // Create new ongoing incident
-        await prisma.incident.create({
+        await prisma.monitor.update({
+          where: { id: monitor.id },
+          data: updateData,
+        });
+
+        // Insert Ping
+        await prisma.ping.create({
           data: {
             monitorId: monitor.id,
-            status: "ONGOING",
-            description: `Monitor went down. Status code: ${statusCode || 'Timeout'}`,
-          }
-        });
-      } else if (newStatus === "UP" && previousStatus === "DOWN") {
-        // Resolve ongoing incident
-        const ongoingIncident = await prisma.incident.findFirst({
-          where: { monitorId: monitor.id, status: "ONGOING" },
-          orderBy: { startedAt: "desc" },
+            status: newStatus,
+            responseTime,
+          },
         });
 
-        if (ongoingIncident) {
-          await prisma.incident.update({
-            where: { id: ongoingIncident.id },
+        // Handle Incidents
+        if (newStatus === "DOWN" && previousStatus !== "DOWN") {
+          // Create new ongoing incident
+          await prisma.incident.create({
             data: {
-              status: "RESOLVED",
-              resolvedAt: new Date(),
-            }
+              monitorId: monitor.id,
+              status: "ONGOING",
+              description: `Monitor went down. Status code: ${statusCode || "Timeout"}`,
+            },
           });
+        } else if (newStatus === "UP" && previousStatus === "DOWN") {
+          // Resolve ongoing incident
+          const ongoingIncident = await prisma.incident.findFirst({
+            where: { monitorId: monitor.id, status: "ONGOING" },
+            orderBy: { startedAt: "desc" },
+          });
+
+          if (ongoingIncident) {
+            await prisma.incident.update({
+              where: { id: ongoingIncident.id },
+              data: {
+                status: "RESOLVED",
+                resolvedAt: new Date(),
+              },
+            });
+          }
         }
       }
 
