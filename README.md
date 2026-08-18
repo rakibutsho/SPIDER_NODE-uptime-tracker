@@ -34,13 +34,18 @@
 
 ## 🏗️ System Architecture
 
-*Note: The complete system architecture design is available in the provided `draw.io` file.*
+![System Architecture Diagram](root_images/system-arc.png)
+
+
+### In-Memory Write Batching Mechanism
+![In-Memory Batching Flow](root_images/system.png)
 
 At a high level, the architecture consists of:
 1. **Next.js 16 (App Router)** serving as both the React frontend and the API backend.
-2. **Prisma ORM** interacting with a **PostgreSQL (Neon serverless)** database to store users, monitors, pings, incidents, and security tokens.
-3. **Cron Job Service** (e.g., Vercel Cron or GitHub Actions) triggering the secure `/api/cron/check` endpoint.
-4. **Telegram Bot API & Nodemailer** integrated directly into the checking and auth logic to dispatch instant alerts and transactional emails.
+2. **Prisma ORM & PostgreSQL** storing users, monitors, pings, incidents, and security tokens.
+3. **In-Memory Write Batching Pipeline** for optimized uptime checks. Routine UP pings are queued in-memory and flushed to the database in bulk via `db-batcher.ts` to dramatically reduce database load and compute usage.
+4. **Cron Job Services** (Internal `node-cron` or Vercel Cron) to orchestrate polling and bulk flushes.
+5. **Telegram Bot API & Nodemailer** integrated into the logic to dispatch instant downtime alerts and transactional emails.
 
 ---
 
