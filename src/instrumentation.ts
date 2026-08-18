@@ -63,8 +63,20 @@ export async function register() {
       }
     });
 
+    // Database Cleanup (Daily at midnight)
+    cron.schedule("0 0 * * *", async () => {
+      try {
+        console.log("🧹 Running daily database cleanup...");
+        const { runCleanup } = await import("./lib/cleanup-logic");
+        await runCleanup();
+      } catch (e) {
+        console.error("❌ Failed to run database cleanup:", e);
+      }
+    });
+
     console.log("   └─ Polling every 1 minute.");
     console.log("   └─ Flushing to DB every 15 minutes.");
+    console.log("   └─ Cleaning old logs daily at midnight.");
     console.log("   └─ To use Vercel Cron as primary instead, set CRON_MODE=vercel");
 
     // Graceful shutdown flush
