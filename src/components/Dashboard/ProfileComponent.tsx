@@ -13,6 +13,7 @@ interface UserProfile {
   email: string | null;
   image: string | null;
   telegramChatId: string | null;
+  timezone: string;
   hasPassword: boolean;
   createdAt: string;
   updatedAt: string;
@@ -35,6 +36,7 @@ export default function ProfileComponent() {
   const [editForm, setEditForm] = useState({
     name: "",
     telegramChatId: "",
+    timezone: "",
     currentPassword: "",
     newPassword: "",
     image: "",
@@ -74,6 +76,7 @@ export default function ProfileComponent() {
             ...prev,
             name: data.user.name || "",
             telegramChatId: data.user.telegramChatId || "",
+            timezone: data.user.timezone || "UTC",
           }));
           if (isRefresh) {
             toast.success("Profile reloaded!");
@@ -116,6 +119,7 @@ export default function ProfileComponent() {
       if (editForm.name !== profile?.name) payload.name = editForm.name;
       if (editForm.telegramChatId !== profile?.telegramChatId)
         payload.telegramChatId = editForm.telegramChatId;
+      if (editForm.timezone !== profile?.timezone) payload.timezone = editForm.timezone;
       if (editForm.newPassword) {
         payload.newPassword = editForm.newPassword;
         payload.currentPassword = editForm.currentPassword;
@@ -527,6 +531,38 @@ export default function ProfileComponent() {
               ) : (
                 <span className="text-sm font-medium text-white">
                   {profile.name || "Not provided"}
+                </span>
+              )}
+            </div>
+
+            <div className="p-5 sm:px-6 sm:py-5 rounded-2xl bg-slate-950/60 border border-slate-800/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                Timezone
+              </span>
+              {isEditing ? (
+                <select
+                  value={editForm.timezone}
+                  onChange={(e) =>
+                    setEditForm((prev) => ({ ...prev, timezone: e.target.value }))
+                  }
+                  className="bg-slate-950/50 border border-slate-700 focus:border-red-500 focus:ring-1 focus:ring-red-500/50 rounded-xl px-4 py-2 text-sm text-white transition-all w-full sm:w-1/2 shadow-inner"
+                >
+                  <option value="UTC">UTC</option>
+                  <option value="America/New_York">Eastern Time (US & Canada)</option>
+                  <option value="America/Chicago">Central Time (US & Canada)</option>
+                  <option value="America/Denver">Mountain Time (US & Canada)</option>
+                  <option value="America/Los_Angeles">Pacific Time (US & Canada)</option>
+                  <option value="Europe/London">London</option>
+                  <option value="Europe/Paris">Paris</option>
+                  <option value="Asia/Dubai">Dubai</option>
+                  <option value="Asia/Dhaka">Dhaka</option>
+                  <option value="Asia/Kolkata">Kolkata</option>
+                  <option value="Asia/Tokyo">Tokyo</option>
+                  <option value="Australia/Sydney">Sydney</option>
+                </select>
+              ) : (
+                <span className="text-sm font-medium text-white">
+                  {profile.timezone || "UTC"}
                 </span>
               )}
             </div>

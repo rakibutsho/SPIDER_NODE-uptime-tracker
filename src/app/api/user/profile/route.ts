@@ -33,6 +33,7 @@ export async function GET() {
                 email: true,
                 image: true,
                 telegramChatId: true,
+                timezone: true,
                 password: true,
                 createdAt: true,
                 updatedAt: true
@@ -78,7 +79,7 @@ export async function PATCH(req: Request) {
 
         //get user data
         const body = await req.json();
-        const { name, telegramChatId, currentPassword, newPassword, image } = body;
+        const { name, telegramChatId, timezone, currentPassword, newPassword, image } = body;
 
         const existingUser = await prisma.user.findUnique({
             where: { id: session.user.id },
@@ -92,6 +93,7 @@ export async function PATCH(req: Request) {
         const updateData: Record<string, any> = {};
         if (name !== undefined) updateData.name = name.trim();
         if (telegramChatId !== undefined) updateData.telegramChatId = telegramChatId.trim();
+        if (timezone !== undefined) updateData.timezone = timezone.trim();
 
         // ------------------------------------------------
         // CLOUDINARY IMAGE HANDLER
@@ -165,6 +167,7 @@ export async function PATCH(req: Request) {
                 email: true,
                 image: true,
                 telegramChatId: true,
+                timezone: true,
                 updatedAt: true
             }
         });

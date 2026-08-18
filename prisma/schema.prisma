@@ -21,6 +21,7 @@ model User {
   image          String?
   password       String?
   telegramChatId String?
+  timezone       String    @default("UTC")
   monitors       Monitor[]
   accounts       Account[]
   sessions       Session[]

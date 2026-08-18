@@ -12,7 +12,7 @@ export async function runCronChecks(force = false) {
     where: { isActive: true },
     include: {
       user: {
-        select: { telegramChatId: true, name: true },
+        select: { telegramChatId: true, name: true, timezone: true },
       },
     },
   });
@@ -103,7 +103,7 @@ export async function runCronChecks(force = false) {
 📌 <b>Name:</b> ${monitor.name}
 🌐 <b>URL:</b> ${monitor.url}
 ⚡ <b>Response Time:</b> ${responseTime}ms
-🕒 <b>Time:</b> ${new Date().toLocaleString()}
+🕒 <b>Time:</b> ${new Date().toLocaleString("en-US", { timeZone: monitor.user.timezone || "UTC", timeZoneName: "short" })}
           `.trim();
           await sendTelegramAlert(monitor.user.telegramChatId, message);
         } else if (newStatus === "DOWN") {
@@ -114,7 +114,7 @@ export async function runCronChecks(force = false) {
 🌐 <b>URL:</b> ${monitor.url}
 ⚠️ <b>Status Code:</b> ${statusCode || "No Response / Timeout"}
 ⏱️ <b>Response Time:</b> ${responseTime}ms
-🕒 <b>Time:</b> ${new Date().toLocaleString()}
+🕒 <b>Time:</b> ${new Date().toLocaleString("en-US", { timeZone: monitor.user.timezone || "UTC", timeZoneName: "short" })}
           `.trim();
           await sendTelegramAlert(monitor.user.telegramChatId, message);
         } else if (newStatus === "UP" && previousStatus === "DOWN") {
@@ -124,7 +124,7 @@ export async function runCronChecks(force = false) {
 📌 <b>Name:</b> ${monitor.name}
 🌐 <b>URL:</b> ${monitor.url}
 ⚡ <b>Response Time:</b> ${responseTime}ms
-🕒 <b>Time:</b> ${new Date().toLocaleString()}
+🕒 <b>Time:</b> ${new Date().toLocaleString("en-US", { timeZone: monitor.user.timezone || "UTC", timeZoneName: "short" })}
           `.trim();
           await sendTelegramAlert(monitor.user.telegramChatId, message);
         }
