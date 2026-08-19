@@ -31,6 +31,10 @@ export async function GET(req: Request) {
     const force = url.searchParams.get("force") === "true";
     const { message, result } = await runCronChecks(force);
 
+    // 3. FLUSH BATCHES IMMEDIATELY (For Serverless Environments)
+    const { flushBatches } = await import("@/lib/db-batcher");
+    await flushBatches();
+
     return NextResponse.json(
       { message, result },
       { status: 200 },

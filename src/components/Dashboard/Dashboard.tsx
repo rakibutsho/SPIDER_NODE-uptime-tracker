@@ -184,12 +184,10 @@ export function Dashboard() {
   const handleCheckMonitor = async (id: number) => {
     setCheckingId(id);
     try {
-      // Trigger a manual check of this specific monitor via its PATCH route
-      // Now that the body parsing issue is fixed, this should work safely if we don't send a body
       const res = await fetch(
-        `/api/cron/check?secret=${process.env.NEXT_PUBLIC_CRON_SECRET}`,
+        `/api/monitors/${id}/check`,
         {
-          method: "GET",
+          method: "POST",
         },
       );
       const data = await res.json();

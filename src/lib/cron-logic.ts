@@ -4,12 +4,15 @@ import { sendTelegramAlert } from "@/lib/telegram";
 // Request timeout for ping (10 seconds)
 const TIMEOUT_MS = 10 * 1000;
 
-export async function runCronChecks(force = false) {
+export async function runCronChecks(force = false, specificMonitorId?: number) {
   // ----------------------------------------------------
   // 1. FETCH ACTIVE MONITORS WITH USER DATA
   // ----------------------------------------------------
   const monitors = await prisma.monitor.findMany({
-    where: { isActive: true },
+    where: { 
+      isActive: true,
+      ...(specificMonitorId ? { id: specificMonitorId } : {})
+    },
     include: {
       user: {
         select: { telegramChatId: true, name: true, timezone: true },
