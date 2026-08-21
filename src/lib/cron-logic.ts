@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { sendTelegramAlert } from "@/lib/telegram";
+import { runCleanup } from "@/lib/cleanup-logic";
 
 // Request timeout for ping (10 seconds)
 const TIMEOUT_MS = 10 * 1000;
@@ -207,6 +208,13 @@ export async function runCronChecks(force = false, specificMonitorId?: number) {
       return monitor.id;
     }),
   );
+
+  // Auto-cleanup old data
+  try {
+    await runCleanup();
+  } catch (cleanupError) {
+    console.error("[CronCheck] Cleanup failed:", cleanupError);
+  }
 
   return { message: "Successfully checked all monitors", result: checkResults };
 }

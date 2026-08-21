@@ -107,7 +107,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar
       collapsible="offcanvas"
-      className="[--sidebar-primary:#10A34B] [--sidebar-primary-foreground:#FFFFFF]"
+      className="bg-[#121212] border-r border-slate-800/80 [--sidebar-primary:#10A34B] [--sidebar-primary-foreground:#FFFFFF]"
       {...props}
     >
       <SidebarContent className="px-3 pt-2">
