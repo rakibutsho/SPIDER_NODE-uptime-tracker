@@ -9,7 +9,7 @@ export default function HowItWorks() {
       id: "01",
       title: "Add Your Endpoint",
       description: "Simply paste the URL of your website, REST API, or any public microservice that you want to keep online.",
-      icon: <LinkIcon className="w-6 h-6 text-[#DC2626]" />,
+      icon: <LinkIcon className="w-6 h-6 text-[#EF4444]" />,
       glowColor: "from-red-500/20",
     },
     {
@@ -29,18 +29,18 @@ export default function HowItWorks() {
   ];
 
   return (
-    <div className="py-24 relative overflow-hidden bg-[#090D16]">
+    <div className="py-24 relative overflow-hidden bg-[#121212]">
       {/* Background glow effects */}
       <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[500px] h-[500px] bg-red-900/10 blur-[120px] rounded-full pointer-events-none" />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         <div className="text-center max-w-2xl mx-auto mb-20">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/80 border border-slate-800 text-slate-300 text-xs font-mono mb-4">
-            <Activity className="w-3.5 h-3.5 text-[#DC2626]" />
+            <Activity className="w-3.5 h-3.5 text-[#EF4444]" />
             Quick Start Guide
           </div>
           <h2 className="text-3xl md:text-4xl font-extrabold font-heading tracking-tight text-white">
-            From Zero to Monitored in <span className="text-[#DC2626]">60 Seconds</span>
+            From Zero to Monitored in <span className="text-[#EF4444]">60 Seconds</span>
           </h2>
           <p className="text-slate-400 mt-4 text-base">
             No complex SDKs or messy configurations. Just point us at your infrastructure and we'll handle the rest.

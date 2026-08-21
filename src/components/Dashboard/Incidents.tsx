@@ -67,9 +67,9 @@ export function Incidents() {
 
   if (status === "loading" || loading) {
     return (
-      <div className="min-h-screen bg-[#090D16] flex items-center justify-center">
+      <div className="min-h-screen bg-[#121212] flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <Loader2 className="w-8 h-8 animate-spin text-[#DC2626]" />
+          <Loader2 className="w-8 h-8 animate-spin text-[#EF4444]" />
           <span className="text-xs text-slate-400 font-mono">Loading Incidents...</span>
         </div>
       </div>
@@ -93,14 +93,14 @@ export function Incidents() {
   };
 
   return (
-    <div className="min-h-screen bg-[#090D16] text-slate-100 p-4 sm:p-6">
+    <div className="min-h-screen bg-[#121212] text-slate-100 p-4 sm:p-6">
       <div className="max-w-5xl mx-auto space-y-6">
 
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl font-bold text-white flex items-center gap-3">
-              <ServerCrash className="w-6 h-6 text-[#DC2626]" />
+              <ServerCrash className="w-6 h-6 text-[#EF4444]" />
               Incident Log
             </h1>
             <p className="text-xs text-slate-400 mt-1 font-mono">
@@ -113,7 +113,7 @@ export function Incidents() {
             className="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-400 hover:text-white transition-colors cursor-pointer self-start sm:self-auto"
             title="Refresh"
           >
-            <RefreshCw className={`w-4 h-4 ${refreshing ? "animate-spin text-[#DC2626]" : ""}`} />
+            <RefreshCw className={`w-4 h-4 ${refreshing ? "animate-spin text-[#EF4444]" : ""}`} />
           </button>
         </div>
 
@@ -174,7 +174,7 @@ export function Incidents() {
             </p>
             <Link
               href="/dashboard"
-              className="inline-flex items-center gap-2 mt-2 px-4 py-2 rounded-xl bg-[#DC2626] hover:bg-red-400 text-white text-xs font-bold transition-all"
+              className="inline-flex items-center gap-2 mt-2 px-4 py-2 rounded-xl bg-[#EF4444] hover:bg-red-400 text-white text-xs font-bold transition-all"
             >
               <Activity className="w-3.5 h-3.5" />
               View Monitors
@@ -213,7 +213,7 @@ export function Incidents() {
                           <div className="flex items-center gap-2 flex-wrap">
                             <Link
                               href={`/dashboard/monitor/${incident.monitor.id}`}
-                              className="text-sm font-bold text-slate-200 hover:text-[#DC2626] transition-colors truncate"
+                              className="text-sm font-bold text-slate-200 hover:text-[#EF4444] transition-colors truncate"
                             >
                               {incident.monitor.name}
                             </Link>

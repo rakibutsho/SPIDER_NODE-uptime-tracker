@@ -57,7 +57,7 @@ export function TeamSwitcher({
       showCancelButton: true,
       confirmButtonText: "Log Out",
       cancelButtonText: "Cancel",
-      confirmButtonColor: "#DC2626", // Red for the new theme
+      confirmButtonColor: "#EF4444", // Red for the new theme
       cancelButtonColor: "#6B7280",
       background: "#FFFFFF",
       color: "#111827",
@@ -78,12 +78,12 @@ export function TeamSwitcher({
       <SidebarMenu>
         <SidebarMenuItem>
           <Link href={"/"} className="flex items-center gap-3 px-2 py-3">
-            {/* <div className="flex aspect-square size-10 items-center justify-center rounded-lg bg-black text-[#DC2626] shadow-sm">
+            {/* <div className="flex aspect-square size-10 items-center justify-center rounded-lg bg-black text-[#EF4444] shadow-sm">
               <Activity className="size-6" />
             </div> */}
             <Image src={logo} alt="Logo" width={50} height={50} className="w-12 h-12 object-contain" />
             <span className="text-xl font-bold tracking-tight text-white font-mono">
-              Spider<span className="text-[#DC2626]">Node</span>
+              Spider<span className="text-[#EF4444]">Node</span>
             </span>
           </Link>
         </SidebarMenuItem>

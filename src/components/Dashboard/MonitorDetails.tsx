@@ -92,9 +92,9 @@ export function MonitorDetails() {
 
   if (status === "loading" || loading) {
     return (
-      <div className="min-h-screen bg-[#090D16] flex items-center justify-center">
+      <div className="min-h-screen bg-[#121212] flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <Loader2 className="w-8 h-8 animate-spin text-[#DC2626]" />
+          <Loader2 className="w-8 h-8 animate-spin text-[#EF4444]" />
           <span className="text-xs text-slate-400 font-mono">Loading Monitor Data...</span>
         </div>
       </div>
@@ -108,7 +108,7 @@ export function MonitorDetails() {
   const chartPings = [...monitor.pings].reverse().slice(-50); // Show last 50
   
   return (
-    <div className="min-h-screen bg-[#090D16] text-slate-100 p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-[#121212] text-slate-100 p-4 sm:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto space-y-8">
         
         {/* Top Header */}
@@ -150,7 +150,7 @@ export function MonitorDetails() {
                 href={monitor.url} 
                 target="_blank" 
                 rel="noreferrer"
-                className="text-sm text-slate-400 hover:text-[#DC2626] flex items-center gap-1 mt-1 transition-colors"
+                className="text-sm text-slate-400 hover:text-[#EF4444] flex items-center gap-1 mt-1 transition-colors"
               >
                 <Globe className="w-3.5 h-3.5" />
                 {monitor.url}
@@ -188,7 +188,7 @@ export function MonitorDetails() {
           <div className="glass-panel p-5 rounded-2xl border border-slate-800">
             <div className="flex items-center justify-between text-slate-400 mb-2">
               <span className="text-xs font-mono">AVG RESPONSE TIME</span>
-              <TrendingUp className="w-4 h-4 text-[#DC2626]" />
+              <TrendingUp className="w-4 h-4 text-[#EF4444]" />
             </div>
             <div className="text-3xl font-extrabold font-mono text-white">
               {monitor.responseTime || 0}ms
@@ -209,7 +209,7 @@ export function MonitorDetails() {
         {/* Response Time Chart (Bar Chart visualization) */}
         <div className="glass-panel p-5 sm:p-6 rounded-2xl border border-slate-800">
           <h2 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-            <Activity className="w-5 h-5 text-[#DC2626]" />
+            <Activity className="w-5 h-5 text-[#EF4444]" />
             Response Time History (Last 50 checks)
           </h2>
           
@@ -229,7 +229,7 @@ export function MonitorDetails() {
                     key={ping.id} 
                     title={`${ping.responseTime}ms at ${new Date(ping.createdAt).toLocaleTimeString()}`}
                     className={`flex-1 min-w-[4px] rounded-t-sm transition-all hover:opacity-80 cursor-crosshair group relative ${
-                      isDown ? 'bg-rose-500' : 'bg-[#DC2626]'
+                      isDown ? 'bg-rose-500' : 'bg-[#EF4444]'
                     }`}
                     style={{ height: `${isDown ? 10 : heightPercent}%` }}
                   >

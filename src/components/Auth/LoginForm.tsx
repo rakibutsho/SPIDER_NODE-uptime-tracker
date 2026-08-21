@@ -74,7 +74,7 @@ function LoginFormContent() {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center p-4 bg-[#090D16] text-slate-100 relative overflow-hidden">
+    <div className="min-h-screen w-full flex items-center justify-center p-4 bg-[#121212] text-slate-100 relative overflow-hidden">
       {/* Background glow effects */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-red-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/4 left-1/3 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
@@ -83,12 +83,12 @@ function LoginFormContent() {
         {/* Brand Header */}
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2 mb-3 group">
-            {/* <div className="p-2.5 rounded-xl bg-red-500/10 border border-red-500/30 text-[#DC2626] group-hover:scale-105 transition-transform shadow-sm shadow-red-500/20">
+            {/* <div className="p-2.5 rounded-xl bg-red-500/10 border border-red-500/30 text-[#EF4444] group-hover:scale-105 transition-transform shadow-sm shadow-red-500/20">
               <Activity className="w-6 h-6" />
             </div> */}
             <Image src={logo} alt="Logo" width={50} height={50} className="w-12 h-12 object-contain" />
             <span className="text-2xl font-bold tracking-tight text-white font-mono">
-              Spider<span className="text-[#DC2626]">Node</span>
+              Spider<span className="text-[#EF4444]">Node</span>
             </span>
           </Link>
           <h1 className="text-2xl font-bold text-slate-100 mt-2">Welcome Back</h1>
@@ -108,7 +108,7 @@ function LoginFormContent() {
               className="w-full flex items-center justify-center gap-3 px-4 py-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/60 text-slate-200 text-sm font-medium transition-all duration-200 disabled:opacity-50 cursor-pointer"
             >
               {socialLoading === "google" ? (
-                <Loader2 className="w-4 h-4 animate-spin text-[#DC2626]" />
+                <Loader2 className="w-4 h-4 animate-spin text-[#EF4444]" />
               ) : (
                 <svg className="w-4 h-4" viewBox="0 0 24 24">
                   <path
@@ -139,7 +139,7 @@ function LoginFormContent() {
               className="w-full flex items-center justify-center gap-3 px-4 py-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/60 text-slate-200 text-sm font-medium transition-all duration-200 disabled:opacity-50 cursor-pointer"
             >
               {socialLoading === "github" ? (
-                <Loader2 className="w-4 h-4 animate-spin text-[#DC2626]" />
+                <Loader2 className="w-4 h-4 animate-spin text-[#EF4444]" />
               ) : (
                 <Github className="w-4 h-4 text-slate-100" />
               )}
@@ -215,7 +215,7 @@ function LoginFormContent() {
             <button
               type="submit"
               disabled={isLoading || !!socialLoading}
-              className="w-full mt-2 py-3 rounded-xl bg-[#DC2626] hover:bg-red-500 text-white font-semibold text-sm transition-all duration-200 shadow-lg shadow-red-500/20 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+              className="w-full mt-2 py-3 rounded-xl bg-[#EF4444] hover:bg-red-500 text-white font-semibold text-sm transition-all duration-200 shadow-lg shadow-red-500/20 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
             >
               {isLoading ? (
                 <>
@@ -236,7 +236,7 @@ function LoginFormContent() {
             Don&apos;t have an account?{" "}
             <Link
               href="/register"
-              className="text-[#DC2626] hover:underline font-medium ml-1"
+              className="text-[#EF4444] hover:underline font-medium ml-1"
             >
               Create Account
             </Link>
@@ -249,7 +249,7 @@ function LoginFormContent() {
 
 export function LoginForm() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[#090D16] flex items-center justify-center"><Loader2 className="w-8 h-8 animate-spin text-[#DC2626]"/></div>}>
+    <Suspense fallback={<div className="min-h-screen bg-[#121212] flex items-center justify-center"><Loader2 className="w-8 h-8 animate-spin text-[#EF4444]"/></div>}>
       <LoginFormContent />
     </Suspense>
   );

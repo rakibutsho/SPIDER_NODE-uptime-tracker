@@ -7,7 +7,7 @@ export default function CookieSettingsPage() {
   const [marketing, setMarketing] = useState(false);
 
   return (
-    <div className="min-h-screen pt-24 pb-12 bg-[#090D16] text-slate-300">
+    <div className="min-h-screen pt-24 pb-12 bg-[#121212] text-slate-300">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         
         <div className="mb-12">
@@ -47,7 +47,7 @@ export default function CookieSettingsPage() {
             <div className="shrink-0">
               <button 
                 onClick={() => setAnalytics(!analytics)}
-                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${analytics ? 'bg-[#DC2626]' : 'bg-slate-700'}`}
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${analytics ? 'bg-[#EF4444]' : 'bg-slate-700'}`}
               >
                 <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${analytics ? 'translate-x-6' : 'translate-x-1'}`} />
               </button>
@@ -65,7 +65,7 @@ export default function CookieSettingsPage() {
             <div className="shrink-0">
               <button 
                 onClick={() => setMarketing(!marketing)}
-                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${marketing ? 'bg-[#DC2626]' : 'bg-slate-700'}`}
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${marketing ? 'bg-[#EF4444]' : 'bg-slate-700'}`}
               >
                 <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${marketing ? 'translate-x-6' : 'translate-x-1'}`} />
               </button>
@@ -73,7 +73,7 @@ export default function CookieSettingsPage() {
           </div>
 
           <div className="pt-6 flex justify-end">
-            <button className="px-6 py-3 bg-[#DC2626] hover:bg-red-500 text-white font-bold rounded-xl shadow-lg shadow-red-500/20 transition-all">
+            <button className="px-6 py-3 bg-[#EF4444] hover:bg-red-500 text-white font-bold rounded-xl shadow-lg shadow-red-500/20 transition-all">
               Save Preferences
             </button>
           </div>

@@ -44,7 +44,7 @@ export function ForgotPasswordForm() {
 
   if (isSent) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4 bg-[#090D16]">
+      <div className="min-h-screen flex items-center justify-center p-4 bg-[#121212]">
         <div className="max-w-md w-full glass-panel border border-slate-800 rounded-2xl p-8 text-center space-y-6">
           <div className="flex justify-center">
             <div className="w-16 h-16 bg-emerald-500/10 rounded-full flex items-center justify-center">
@@ -71,7 +71,7 @@ export function ForgotPasswordForm() {
   }
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center p-4 bg-[#090D16] text-slate-100 relative overflow-hidden">
+    <div className="min-h-screen w-full flex items-center justify-center p-4 bg-[#121212] text-slate-100 relative overflow-hidden">
       <div className="w-full max-w-md z-10 my-8">
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-slate-100">Forgot Password</h1>
@@ -94,7 +94,7 @@ export function ForgotPasswordForm() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@company.com"
                   required
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-800 focus:border-[#DC2626]/60 focus:ring-1 focus:ring-[#DC2626]/60 text-slate-100 placeholder-slate-500 text-sm outline-none transition-all"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-800 focus:border-[#EF4444]/60 focus:ring-1 focus:ring-[#EF4444]/60 text-slate-100 placeholder-slate-500 text-sm outline-none transition-all"
                 />
               </div>
             </div>
@@ -102,7 +102,7 @@ export function ForgotPasswordForm() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full mt-2 py-3 rounded-xl bg-[#DC2626] hover:bg-red-500 text-white font-semibold text-sm transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+              className="w-full mt-2 py-3 rounded-xl bg-[#EF4444] hover:bg-red-500 text-white font-semibold text-sm transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
             >
               {isLoading ? (
                 <>

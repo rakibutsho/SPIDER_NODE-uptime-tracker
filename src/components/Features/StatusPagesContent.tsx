@@ -26,14 +26,14 @@ export default function StatusPagesContent() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#090D16] text-slate-100 overflow-hidden font-sans pt-24 pb-12">
+    <div className="min-h-screen bg-[#121212] text-slate-100 overflow-hidden font-sans pt-24 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         
         {/* Hero */}
         <div className="text-center max-w-4xl mx-auto mb-16 relative">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] h-[300px] bg-[#DC2626]/10 rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] h-[300px] bg-[#EF4444]/10 rounded-full blur-[100px] pointer-events-none" />
           
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-950/60 border border-red-500/30 text-[#DC2626] text-xs font-mono mb-6 backdrop-blur-md">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-950/60 border border-red-500/30 text-[#EF4444] text-xs font-mono mb-6 backdrop-blur-md">
             <WebDesign className="w-4 h-4" />
             Build Trust
           </div>
@@ -47,7 +47,7 @@ export default function StatusPagesContent() {
           
           <Link
             href="/register"
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-[#DC2626] hover:bg-red-400 text-[#090D16] font-bold text-sm transition-all shadow-xl shadow-red-500/25 group"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-[#EF4444] hover:bg-red-400 text-[#121212] font-bold text-sm transition-all shadow-xl shadow-red-500/25 group"
           >
             Create Your Status Page
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -65,8 +65,8 @@ export default function StatusPagesContent() {
                   </span>
                 </div>
               )}
-              <div className="w-12 h-12 rounded-xl bg-slate-900/50 border border-slate-800 flex items-center justify-center mb-6 group-hover:border-red-500/30 group-hover:text-[#DC2626] transition-colors">
-                <feature.icon className="w-6 h-6 text-slate-400 group-hover:text-[#DC2626]" />
+              <div className="w-12 h-12 rounded-xl bg-slate-900/50 border border-slate-800 flex items-center justify-center mb-6 group-hover:border-red-500/30 group-hover:text-[#EF4444] transition-colors">
+                <feature.icon className="w-6 h-6 text-slate-400 group-hover:text-[#EF4444]" />
               </div>
               <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
               <p className="text-sm text-slate-400 leading-relaxed">

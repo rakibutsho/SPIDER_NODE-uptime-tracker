@@ -261,9 +261,9 @@ export function Dashboard() {
     (status === "unauthenticated" && loadingMonitors)
   ) {
     return (
-      <div className="min-h-screen bg-[#090D16] flex items-center justify-center">
+      <div className="min-h-screen bg-[#121212] flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <Loader2 className="w-8 h-8 animate-spin text-[#DC2626]" />
+          <Loader2 className="w-8 h-8 animate-spin text-[#EF4444]" />
           <span className="text-xs text-slate-400 font-mono">
             Loading Dashboard...
           </span>
@@ -302,7 +302,7 @@ export function Dashboard() {
     .toUpperCase();
 
   return (
-    <div className="min-h-screen bg-[#090D16] text-slate-100 p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-[#121212] text-slate-100 p-4 sm:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Header Bar */}
         <div className="glass-panel p-4 sm:p-6 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border border-slate-800">
@@ -312,17 +312,17 @@ export function Dashboard() {
               <img
                 src={userImage}
                 alt={userName}
-                className="w-12 h-12 rounded-xl object-cover ring-2 ring-[#DC2626]/40"
+                className="w-12 h-12 rounded-xl object-cover ring-2 ring-[#EF4444]/40"
               />
             ) : (
-              <div className="w-12 h-12 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-[#DC2626] font-mono font-bold text-lg red-glow">
+              <div className="w-12 h-12 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-[#EF4444] font-mono font-bold text-lg red-glow">
                 {userInitials}
               </div>
             )}
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="text-xl font-bold text-white">{userName}</h1>
-                <span className="px-2 py-0.5 rounded-md bg-red-500/10 text-[#DC2626] text-[10px] font-mono font-semibold border border-red-500/20">
+                <span className="px-2 py-0.5 rounded-md bg-red-500/10 text-[#EF4444] text-[10px] font-mono font-semibold border border-red-500/20">
                   PRO MONITOR
                 </span>
               </div>
@@ -342,7 +342,7 @@ export function Dashboard() {
 
             <button
               onClick={() => setIsAddModalOpen(true)}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#DC2626] hover:bg-red-400 text-[#090D16] font-bold text-xs transition-all shadow-lg shadow-red-500/20 cursor-pointer"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#EF4444] hover:bg-red-400 text-[#121212] font-bold text-xs transition-all shadow-lg shadow-red-500/20 cursor-pointer"
             >
               <Plus className="w-4 h-4" />
               <span>Add Monitor</span>
@@ -363,7 +363,7 @@ export function Dashboard() {
           <div className="glass-panel p-5 rounded-2xl border border-slate-800">
             <div className="flex items-center justify-between text-slate-400 mb-2">
               <span className="text-xs font-mono">ACTIVE MONITORS</span>
-              <Globe className="w-4 h-4 text-[#DC2626]" />
+              <Globe className="w-4 h-4 text-[#EF4444]" />
             </div>
             <div className="text-3xl font-extrabold font-mono text-white">
               {totalMonitors}
@@ -389,7 +389,7 @@ export function Dashboard() {
           <div className="glass-panel p-5 rounded-2xl border border-slate-800">
             <div className="flex items-center justify-between text-slate-400 mb-2">
               <span className="text-xs font-mono">STATUS OVERVIEW</span>
-              <Activity className="w-4 h-4 text-[#DC2626]" />
+              <Activity className="w-4 h-4 text-[#EF4444]" />
             </div>
             <div
               className={`text-xl font-extrabold font-mono ${
@@ -408,7 +408,7 @@ export function Dashboard() {
               <span className="text-xs font-mono">AVG LATENCY</span>
               <TrendingUp className="w-4 h-4 text-red-400" />
             </div>
-            <div className="text-3xl font-extrabold font-mono text-[#DC2626]">
+            <div className="text-3xl font-extrabold font-mono text-[#EF4444]">
               {avgLatency}ms
             </div>
             <p className="text-[11px] text-slate-500 mt-1">
@@ -435,14 +435,14 @@ export function Dashboard() {
               title="Refresh List"
             >
               <RefreshCw
-                className={`w-4 h-4 ${loadingMonitors ? "animate-spin text-[#DC2626]" : ""}`}
+                className={`w-4 h-4 ${loadingMonitors ? "animate-spin text-[#EF4444]" : ""}`}
               />
             </button>
           </div>
 
           {loadingMonitors && monitors.length === 0 ? (
             <div className="p-12 text-center text-slate-500 font-mono text-xs flex flex-col items-center gap-2">
-              <Loader2 className="w-6 h-6 animate-spin text-[#DC2626]" />
+              <Loader2 className="w-6 h-6 animate-spin text-[#EF4444]" />
               <span>Fetching status records...</span>
             </div>
           ) : monitors.length === 0 ? (
@@ -459,7 +459,7 @@ export function Dashboard() {
               </p>
               <button
                 onClick={() => setIsAddModalOpen(true)}
-                className="mt-2 px-4 py-2 rounded-xl bg-[#DC2626] text-[#090D16] text-xs font-bold shadow-md shadow-red-500/20 cursor-pointer"
+                className="mt-2 px-4 py-2 rounded-xl bg-[#EF4444] text-[#121212] text-xs font-bold shadow-md shadow-red-500/20 cursor-pointer"
               >
                 + Add Your First Monitor
               </button>
@@ -523,7 +523,7 @@ export function Dashboard() {
                         {/* Site Name */}
                         <td className="py-4 px-4 sm:px-6">
                           <Link href={`/dashboard/monitor/${monitor.id}`}>
-                            <div className="font-semibold text-slate-200 font-sans text-sm mb-1 hover:text-[#DC2626] transition-colors cursor-pointer">
+                            <div className="font-semibold text-slate-200 font-sans text-sm mb-1 hover:text-[#EF4444] transition-colors cursor-pointer">
                               {monitor.name}
                             </div>
                           </Link>
@@ -531,7 +531,7 @@ export function Dashboard() {
                             href={monitor.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 text-slate-400 hover:text-[#DC2626] transition-colors text-[10px]"
+                            className="inline-flex items-center gap-1 text-slate-400 hover:text-[#EF4444] transition-colors text-[10px]"
                           >
                             <span>{monitor.url}</span>
                             <ExternalLink className="w-3 h-3" />
@@ -603,13 +603,13 @@ export function Dashboard() {
                               disabled={
                                 checkingId === monitor.id || !monitor.isActive
                               }
-                              className="p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-400 hover:text-[#DC2626] transition-colors cursor-pointer disabled:opacity-50"
+                              className="p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-400 hover:text-[#EF4444] transition-colors cursor-pointer disabled:opacity-50"
                               title="Re-check endpoint status"
                             >
                               <RefreshCw
                                 className={`w-3.5 h-3.5 ${
                                   checkingId === monitor.id
-                                    ? "animate-spin text-[#DC2626]"
+                                    ? "animate-spin text-[#EF4444]"
                                     : ""
                                 }`}
                               />
@@ -680,7 +680,7 @@ export function Dashboard() {
                   onChange={(e) => setNewMonitorName(e.target.value)}
                   placeholder="e.g. Primary API Gateway"
                   required
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 text-sm focus:border-[#DC2626] outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 text-sm focus:border-[#EF4444] outline-none"
                 />
               </div>
 
@@ -694,7 +694,7 @@ export function Dashboard() {
                   onChange={(e) => setNewMonitorUrl(e.target.value)}
                   placeholder="https://api.example.com/health"
                   required
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 text-sm focus:border-[#DC2626] outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 text-sm focus:border-[#EF4444] outline-none"
                 />
               </div>
 
@@ -707,7 +707,7 @@ export function Dashboard() {
                   onChange={(e) =>
                     setNewMonitorInterval(Number(e.target.value))
                   }
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 text-sm focus:border-[#DC2626] outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 text-sm focus:border-[#EF4444] outline-none"
                 >
                   <option value={1}>Every 1 minute</option>
                   <option value={5}>Every 5 minutes</option>
@@ -728,7 +728,7 @@ export function Dashboard() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-5 py-2 rounded-xl bg-[#DC2626] hover:bg-red-400 text-[#090D16] text-xs font-bold transition-all shadow-md shadow-red-500/20 cursor-pointer flex items-center gap-2 disabled:opacity-50"
+                  className="px-5 py-2 rounded-xl bg-[#EF4444] hover:bg-red-400 text-[#121212] text-xs font-bold transition-all shadow-md shadow-red-500/20 cursor-pointer flex items-center gap-2 disabled:opacity-50"
                 >
                   {isSubmitting ? (
                     <>
@@ -775,7 +775,7 @@ export function Dashboard() {
                   onChange={(e) => setEditMonitorName(e.target.value)}
                   placeholder="e.g. Primary API Gateway"
                   required
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 text-sm focus:border-[#DC2626] outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 text-sm focus:border-[#EF4444] outline-none"
                 />
               </div>
 
@@ -789,7 +789,7 @@ export function Dashboard() {
                   onChange={(e) => setEditMonitorUrl(e.target.value)}
                   placeholder="https://api.example.com/health"
                   required
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 text-sm focus:border-[#DC2626] outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 text-sm focus:border-[#EF4444] outline-none"
                 />
               </div>
 
@@ -802,7 +802,7 @@ export function Dashboard() {
                   onChange={(e) =>
                     setEditMonitorInterval(Number(e.target.value))
                   }
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 text-sm focus:border-[#DC2626] outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 text-sm focus:border-[#EF4444] outline-none"
                 >
                   <option value={1}>Every 1 minute</option>
                   <option value={5}>Every 5 minutes</option>
@@ -826,7 +826,7 @@ export function Dashboard() {
                 <button
                   type="submit"
                   disabled={isUpdating}
-                  className="px-5 py-2 rounded-xl bg-[#DC2626] hover:bg-red-400 text-[#090D16] text-xs font-bold transition-all shadow-md shadow-red-500/20 cursor-pointer flex items-center gap-2 disabled:opacity-50"
+                  className="px-5 py-2 rounded-xl bg-[#EF4444] hover:bg-red-400 text-[#121212] text-xs font-bold transition-all shadow-md shadow-red-500/20 cursor-pointer flex items-center gap-2 disabled:opacity-50"
                 >
                   {isUpdating ? (
                     <>

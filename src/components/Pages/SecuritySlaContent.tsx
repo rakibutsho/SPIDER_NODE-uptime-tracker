@@ -4,7 +4,7 @@ import { Shield01Icon as Shield, ServerStack01Icon as Server, LockKeyIcon as Loc
 
 export default function SecuritySlaContent() {
   return (
-    <div className="min-h-screen pt-24 pb-12 bg-[#090D16] text-slate-300">
+    <div className="min-h-screen pt-24 pb-12 bg-[#121212] text-slate-300">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         
         <div className="mb-12">
@@ -36,7 +36,7 @@ export default function SecuritySlaContent() {
 
           <div className="glass-panel p-6 rounded-2xl border border-red-500/30 flex flex-col items-center text-center">
             <div className="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center mb-4">
-              <Server className="w-6 h-6 text-[#DC2626]" />
+              <Server className="w-6 h-6 text-[#EF4444]" />
             </div>
             <h3 className="text-white font-bold mb-2">99.99% SLA</h3>
             <p className="text-xs text-slate-400">Financially backed uptime guarantee for enterprise.</p>

@@ -8,7 +8,7 @@ import FeatureGrid from "./FeatureGrid";
 
 export default function Home() {
   return (
-    <div className="w-full bg-[#090D16] text-slate-100 overflow-hidden font-sans">
+    <div className="w-full bg-[#121212] text-slate-100 overflow-hidden font-sans">
       <HeroSection />
       <LivePreviewMockup />
       <HowItWorks />

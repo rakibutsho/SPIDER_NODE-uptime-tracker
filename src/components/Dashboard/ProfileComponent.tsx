@@ -278,7 +278,7 @@ export default function ProfileComponent() {
         </p>
         <button
           onClick={() => fetchProfile()}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#DC2626] text-[#090D16] font-bold text-xs hover:bg-red-400 transition-all shadow-md shadow-red-500/20"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#EF4444] text-[#121212] font-bold text-xs hover:bg-red-400 transition-all shadow-md shadow-red-500/20"
         >
           <RefreshCw className="w-4 h-4" />
           <span>Try Again</span>
@@ -311,7 +311,7 @@ export default function ProfileComponent() {
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-800 to-slate-950 text-[#DC2626] font-bold text-4xl font-mono">
+                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-800 to-slate-950 text-[#EF4444] font-bold text-4xl font-mono">
                     {getInitials(profile.name, profile.email)}
                   </div>
                 )}
@@ -354,7 +354,7 @@ export default function ProfileComponent() {
                   className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-950/50 hover:bg-slate-900 border border-slate-800/80 text-slate-300 text-xs font-mono transition-all cursor-pointer shadow-sm hover:border-slate-700 max-w-full group"
                   title="Click to copy User ID"
                 >
-                  <Fingerprint className="w-4 h-4 text-[#DC2626] shrink-0 group-hover:scale-110 transition-transform" />
+                  <Fingerprint className="w-4 h-4 text-[#EF4444] shrink-0 group-hover:scale-110 transition-transform" />
                   <span className="text-slate-200 font-medium truncate">
                     {profile.id}
                   </span>
@@ -370,7 +370,7 @@ export default function ProfileComponent() {
 
           {/* Action Buttons (Right Side) */}
           <div className="flex flex-row flex-wrap items-center justify-center sm:justify-end gap-3 w-full sm:w-auto sm:ml-auto self-center">
-            <span className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-950/80 border border-red-500/30 text-[#DC2626] text-xs font-semibold font-mono shadow-sm">
+            <span className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-950/80 border border-red-500/30 text-[#EF4444] text-xs font-semibold font-mono shadow-sm">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Pro Member</span>
             </span>
@@ -409,7 +409,7 @@ export default function ProfileComponent() {
                 className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-slate-950/80 hover:bg-slate-800 border border-slate-700/80 text-slate-300 hover:text-white text-sm font-medium transition-all cursor-pointer shadow-sm hover:shadow-md disabled:opacity-50"
               >
                 <RefreshCw
-                  className={`w-4 h-4 ${refreshing ? "animate-spin text-[#DC2626]" : ""}`}
+                  className={`w-4 h-4 ${refreshing ? "animate-spin text-[#EF4444]" : ""}`}
                 />
                 <span>Refresh</span>
               </button>
@@ -445,7 +445,7 @@ export default function ProfileComponent() {
             <span className="text-xs font-semibold text-slate-400 tracking-wider uppercase">
               Auth Method
             </span>
-            <div className="p-2.5 rounded-xl bg-red-500/10 text-[#DC2626] border border-red-500/20">
+            <div className="p-2.5 rounded-xl bg-red-500/10 text-[#EF4444] border border-red-500/20">
               <KeyRound className="w-4 h-4" />
             </div>
           </div>
@@ -500,7 +500,7 @@ export default function ProfileComponent() {
         {/* Personal & Account Information */}
         <div className="p-6 sm:p-10 rounded-3xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-md space-y-8 shadow-xl">
           <div className="flex items-center gap-4 pb-5">
-            <div className="p-2.5 rounded-xl bg-red-500/10 border border-red-500/20 text-[#DC2626]">
+            <div className="p-2.5 rounded-xl bg-red-500/10 border border-red-500/20 text-[#EF4444]">
               <UserIcon className="w-5 h-5" />
             </div>
             <div>
@@ -585,7 +585,7 @@ export default function ProfileComponent() {
               <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
                 Account ID
               </span>
-              <span className="text-xs font-mono text-[#DC2626] bg-red-950/40 px-3 py-1.5 rounded-lg border border-red-800/40 truncate max-w-full">
+              <span className="text-xs font-mono text-[#EF4444] bg-red-950/40 px-3 py-1.5 rounded-lg border border-red-800/40 truncate max-w-full">
                 {profile.id}
               </span>
             </div>

@@ -36,18 +36,18 @@ const socialLinks = [
 
 export const Footer = () => {
   return (
-    <footer className="border-t border-slate-800/80 bg-[#090D16] text-slate-300 w-full font-sans">
+    <footer className="border-t border-slate-800/80 bg-[#121212] text-slate-300 w-full font-sans">
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-12">
           {/* Logo & Info */}
           <div className="md:col-span-2 space-y-4">
             <Link href="/" className="inline-flex items-center gap-2.5 group">
-              {/* <div className="p-2 rounded-xl bg-red-500/10 border border-red-500/30 text-[#DC2626] group-hover:scale-105 transition-transform shadow-sm shadow-red-500/20">
+              {/* <div className="p-2 rounded-xl bg-red-500/10 border border-red-500/30 text-[#EF4444] group-hover:scale-105 transition-transform shadow-sm shadow-red-500/20">
                 <Activity className="w-5 h-5" />
               </div> */}
               <Image src={logo} alt="Logo" width={50} height={50} className="w-12 h-12 object-contain" />
               <span className="text-xl font-bold tracking-tight text-white font-mono">
-                Spider<span className="text-[#DC2626]">Node</span>
+                Spider<span className="text-[#EF4444]">Node</span>
               </span>
             </Link>
             <p className="text-xs text-slate-400 max-w-sm leading-relaxed">
@@ -63,17 +63,17 @@ export const Footer = () => {
             {/* Social Icons */}
             <div className="flex items-center gap-3 pt-2">
               {socialLinks.map((social) => (
-                <a
+                <Link
                   key={social.name}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-[#DC2626] hover:border-slate-700 transition-colors"
+                  className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-[#EF4444] hover:border-slate-700 transition-colors"
                   title={social.name}
                 >
                   <social.icon className="w-4 h-4" />
                   <span className="sr-only">{social.name}</span>
-                </a>
+                </Link>
               ))}
             </div>
           </div>
@@ -88,7 +88,7 @@ export const Footer = () => {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-xs text-slate-400 hover:text-[#DC2626] transition-colors"
+                    className="text-xs text-slate-400 hover:text-[#EF4444] transition-colors"
                   >
                     {link.name}
                   </Link>
@@ -105,12 +105,12 @@ export const Footer = () => {
             <ul className="space-y-2.5">
               {footerLinks.resources.map((link) => (
                 <li key={link.name}>
-                  <a
+                  <Link
                     href={link.href}
-                    className="text-xs text-slate-400 hover:text-[#DC2626] transition-colors"
+                    className="text-xs text-slate-400 hover:text-[#EF4444] transition-colors"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -126,7 +126,7 @@ export const Footer = () => {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-xs text-slate-400 hover:text-[#DC2626] transition-colors"
+                    className="text-xs text-slate-400 hover:text-[#EF4444] transition-colors"
                   >
                     {link.name}
                   </Link>
@@ -143,14 +143,14 @@ export const Footer = () => {
           </p>
           <p className="text-xs text-slate-500 font-mono flex items-center gap-1">
             Designed & Developed by{" "}
-            <a 
+            <Link 
               href="https://rakibutsho.dev" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-slate-400 hover:text-[#DC2626] transition-colors"
+              className="text-slate-400 hover:text-[#EF4444] transition-colors"
             >
               Md. Rakibul Islam
-            </a>
+            </Link>
           </p>
         </div>
       </div>

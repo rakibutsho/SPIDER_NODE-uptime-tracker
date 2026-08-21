@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function TermsContent() {
   return (
-    <div className="min-h-screen pt-24 pb-12 bg-[#090D16] text-slate-300">
+    <div className="min-h-screen pt-24 pb-12 bg-[#121212] text-slate-300">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         
         <div className="mb-12">

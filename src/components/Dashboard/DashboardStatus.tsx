@@ -68,8 +68,8 @@ export function DashboardStatus() {
 
   if (status === "loading" || loading) {
     return (
-      <div className="min-h-screen bg-[#090D16] flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-[#DC2626]" />
+      <div className="min-h-screen bg-[#121212] flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-[#EF4444]" />
       </div>
     );
   }
@@ -79,13 +79,13 @@ export function DashboardStatus() {
   const anyDown = monitors.some((m) => m.status === "DOWN");
 
   return (
-    <div className="min-h-screen bg-[#090D16] text-slate-100 p-4 sm:p-6">
+    <div className="min-h-screen bg-[#121212] text-slate-100 p-4 sm:p-6">
       <div className="max-w-3xl mx-auto space-y-6">
 
         {/* Header */}
         <div>
           <h1 className="text-2xl font-bold text-white flex items-center gap-3">
-            <Globe className="w-6 h-6 text-[#DC2626]" />
+            <Globe className="w-6 h-6 text-[#EF4444]" />
             Your Status Page
           </h1>
           <p className="text-xs text-slate-400 mt-1 font-mono">
@@ -94,8 +94,8 @@ export function DashboardStatus() {
         </div>
 
         {/* Public URL Share Card */}
-        <div className="glass-panel rounded-2xl border border-[#DC2626]/30 p-4 sm:p-5 bg-[#DC2626]/5">
-          <p className="text-xs font-semibold text-[#DC2626] uppercase tracking-wider mb-3">
+        <div className="glass-panel rounded-2xl border border-[#EF4444]/30 p-4 sm:p-5 bg-[#EF4444]/5">
+          <p className="text-xs font-semibold text-[#EF4444] uppercase tracking-wider mb-3">
             Your Public Status URL
           </p>
           <div className="flex items-center gap-2">
@@ -104,7 +104,7 @@ export function DashboardStatus() {
             </code>
             <button
               onClick={copyLink}
-              className="p-2.5 rounded-xl bg-[#DC2626] hover:bg-red-500 text-white transition-colors cursor-pointer flex-shrink-0"
+              className="p-2.5 rounded-xl bg-[#EF4444] hover:bg-red-500 text-white transition-colors cursor-pointer flex-shrink-0"
               title="Copy link"
             >
               <Copy className="w-4 h-4" />

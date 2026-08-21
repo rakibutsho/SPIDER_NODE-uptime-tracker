@@ -4,7 +4,7 @@ import { ArrowRight01Icon as ArrowRight } from "hugeicons-react";
 
 export default function DocsPage() {
   return (
-    <div className="min-h-screen pt-24 pb-12 bg-[#090D16] text-slate-300">
+    <div className="min-h-screen pt-24 pb-12 bg-[#121212] text-slate-300">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         
         {/* Header */}
@@ -42,7 +42,7 @@ export default function DocsPage() {
               <p className="text-sm text-slate-400 mb-6">
                 Understand how our multi-region verification prevents false positives and how to route alerts to specific teams.
               </p>
-              <Link href="#" className="text-[#DC2626] font-semibold text-sm inline-flex items-center gap-1 group">
+              <Link href="#" className="text-[#EF4444] font-semibold text-sm inline-flex items-center gap-1 group">
                 Read more <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
@@ -52,7 +52,7 @@ export default function DocsPage() {
               <p className="text-sm text-slate-400 mb-6">
                 Learn how to write JSON assertions and authenticate requests to ensure your APIs are returning the right data.
               </p>
-              <Link href="#" className="text-[#DC2626] font-semibold text-sm inline-flex items-center gap-1 group">
+              <Link href="#" className="text-[#EF4444] font-semibold text-sm inline-flex items-center gap-1 group">
                 Read more <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>

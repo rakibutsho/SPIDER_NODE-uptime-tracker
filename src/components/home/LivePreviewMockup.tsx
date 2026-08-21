@@ -32,7 +32,7 @@ export default function LivePreviewMockup() {
           </div>
           <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
             <div className="text-xs text-slate-400 mb-1">Avg Response Time</div>
-            <div className="text-2xl font-bold font-mono text-[#DC2626]">24ms</div>
+            <div className="text-2xl font-bold font-mono text-[#EF4444]">24ms</div>
           </div>
           <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
             <div className="text-xs text-slate-400 mb-1">Incidents (30d)</div>

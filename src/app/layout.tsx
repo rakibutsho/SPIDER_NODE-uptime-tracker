@@ -6,7 +6,7 @@ import ReduxProvider from "@/redux/Provider";
 import AuthProvider from "@/providers/AuthProvider";
 import Loading from "@/components/Others/Loader/Loading";
 import {
-  openSans,
+  inter,
   spaceGrotesk,
 } from "@/fonts/Fonts";
 
@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${openSans.variable} ${spaceGrotesk.variable} antialiased bg-[#090D16] text-slate-100 min-h-screen`}
+        className={`${inter.variable} ${spaceGrotesk.variable} antialiased bg-[#121212] text-slate-100 min-h-screen`}
       >
         <Suspense fallback={<Loading />}>
           <AuthProvider>

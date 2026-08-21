@@ -18,7 +18,7 @@ export default function FeatureGrid() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-red-500/40 transition-colors">
-            <div className="p-3 rounded-xl bg-red-500/10 text-[#DC2626] w-fit mb-4">
+            <div className="p-3 rounded-xl bg-red-500/10 text-[#EF4444] w-fit mb-4">
               <Zap className="w-6 h-6" />
             </div>
             <h3 className="text-lg font-bold font-heading text-white mb-2">Sub-Minute Pings</h3>
@@ -28,7 +28,7 @@ export default function FeatureGrid() {
           </div>
 
           <div className="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-red-500/40 transition-colors">
-            <div className="p-3 rounded-xl bg-red-500/10 text-[#DC2626] w-fit mb-4">
+            <div className="p-3 rounded-xl bg-red-500/10 text-[#EF4444] w-fit mb-4">
               <ShieldCheck className="w-6 h-6" />
             </div>
             <h3 className="text-lg font-bold font-heading text-white mb-2">Multi-Region Validation</h3>
@@ -38,7 +38,7 @@ export default function FeatureGrid() {
           </div>
 
           <div className="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-red-500/40 transition-colors">
-            <div className="p-3 rounded-xl bg-red-500/10 text-[#DC2626] w-fit mb-4">
+            <div className="p-3 rounded-xl bg-red-500/10 text-[#EF4444] w-fit mb-4">
               <Globe2 className="w-6 h-6" />
             </div>
             <h3 className="text-lg font-bold font-heading text-white mb-2">Instant Alerting</h3>

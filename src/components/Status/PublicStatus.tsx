@@ -57,7 +57,7 @@ export function PublicStatus() {
     return (
       <div className="min-h-[80vh] flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <Loader2 className="w-8 h-8 animate-spin text-[#DC2626]" />
+          <Loader2 className="w-8 h-8 animate-spin text-[#EF4444]" />
           <span className="text-xs text-slate-400 font-mono">Loading status...</span>
         </div>
       </div>
@@ -87,8 +87,8 @@ export function PublicStatus() {
       <div className="border-b border-slate-800 bg-black/40 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-black border border-[#DC2626]/50 flex items-center justify-center">
-              <Activity className="w-4 h-4 text-[#DC2626]" />
+            <div className="w-8 h-8 rounded-lg bg-black border border-[#EF4444]/50 flex items-center justify-center">
+              <Activity className="w-4 h-4 text-[#EF4444]" />
             </div>
             <span className="font-bold text-white text-sm">SpiderNode</span>
           </div>
@@ -240,7 +240,7 @@ export function PublicStatus() {
         {/* Footer */}
         <div className="text-center text-[11px] text-slate-600 font-mono pb-4">
           Powered by{" "}
-          <span className="text-[#DC2626] font-bold">SpiderNode</span> — Real-time Uptime Monitoring
+          <span className="text-[#EF4444] font-bold">SpiderNode</span> — Real-time Uptime Monitoring
         </div>
       </main>
     </div>
