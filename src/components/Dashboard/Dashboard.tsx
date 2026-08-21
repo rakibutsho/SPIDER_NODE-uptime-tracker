@@ -360,12 +360,12 @@ export function Dashboard() {
 
         {/* Metrics Overview Bar */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="glass-panel p-5 rounded-2xl border border-slate-800">
+          <div className="glass-panel p-5 rounded-2xl border border-slate-800 animate-fade-in-up delay-75 card-hover">
             <div className="flex items-center justify-between text-slate-400 mb-2">
               <span className="text-xs font-mono">ACTIVE MONITORS</span>
               <Globe className="w-4 h-4 text-[#EF4444]" />
             </div>
-            <div className="text-3xl font-extrabold font-mono text-white">
+            <div className="text-3xl font-extrabold font-mono text-white transition-number">
               {totalMonitors}
             </div>
             <p className="text-[11px] text-slate-500 mt-1">
@@ -373,12 +373,12 @@ export function Dashboard() {
             </p>
           </div>
 
-          <div className="glass-panel p-5 rounded-2xl border border-slate-800">
+          <div className="glass-panel p-5 rounded-2xl border border-slate-800 animate-fade-in-up delay-150 card-hover">
             <div className="flex items-center justify-between text-slate-400 mb-2">
               <span className="text-xs font-mono">SYSTEM HEALTH</span>
               <ShieldCheck className="w-4 h-4 text-emerald-400" />
             </div>
-            <div className="text-3xl font-extrabold font-mono text-emerald-400">
+            <div className="text-3xl font-extrabold font-mono text-emerald-400 transition-number">
               {healthPercentage}%
             </div>
             <p className="text-[11px] text-slate-500 mt-1">
@@ -386,29 +386,29 @@ export function Dashboard() {
             </p>
           </div>
 
-          <div className="glass-panel p-5 rounded-2xl border border-slate-800">
+          <div className="glass-panel p-5 rounded-2xl border border-slate-800 animate-fade-in-up delay-225 card-hover">
             <div className="flex items-center justify-between text-slate-400 mb-2">
               <span className="text-xs font-mono">STATUS OVERVIEW</span>
               <Activity className="w-4 h-4 text-[#EF4444]" />
             </div>
             <div
-              className={`text-xl font-extrabold font-mono ${
+              className={`text-xl font-extrabold font-mono transition-number ${
                 downMonitors === 0 ? "text-emerald-400" : "text-rose-500"
               }`}
             >
               {operationalStatus}
             </div>
-            <p className="text-[11px] text-slate-500 mt-1">
+            <p className="text-[11px] text-slate-500 mt-1 transition-number">
               {upMonitors} UP • {downMonitors} DOWN
             </p>
           </div>
 
-          <div className="glass-panel p-5 rounded-2xl border border-slate-800">
+          <div className="glass-panel p-5 rounded-2xl border border-slate-800 animate-fade-in-up delay-300 card-hover">
             <div className="flex items-center justify-between text-slate-400 mb-2">
               <span className="text-xs font-mono">AVG LATENCY</span>
               <TrendingUp className="w-4 h-4 text-red-400" />
             </div>
-            <div className="text-3xl font-extrabold font-mono text-[#EF4444]">
+            <div className="text-3xl font-extrabold font-mono text-[#EF4444] transition-number">
               {avgLatency}ms
             </div>
             <p className="text-[11px] text-slate-500 mt-1">
@@ -418,7 +418,7 @@ export function Dashboard() {
         </div>
 
         {/* Monitor Table Section */}
-        <div className="glass-panel rounded-2xl border border-slate-800 overflow-hidden">
+        <div className="glass-panel rounded-2xl border border-slate-800 overflow-hidden animate-fade-in-up" style={{ animationDelay: '400ms' }}>
           <div className="p-4 sm:p-6 border-b border-slate-800/80 flex items-center justify-between">
             <div>
               <h2 className="text-lg font-bold text-white">
@@ -459,7 +459,7 @@ export function Dashboard() {
               </p>
               <button
                 onClick={() => setIsAddModalOpen(true)}
-                className="mt-2 px-4 py-2 rounded-xl bg-[#EF4444] text-[#121212] text-xs font-bold shadow-md shadow-red-500/20 cursor-pointer"
+                className="mt-2 px-4 py-2 rounded-xl bg-[#EF4444] text-[#121212] text-xs font-bold shadow-md shadow-red-500/20 hover:scale-105 transition-transform cursor-pointer"
               >
                 + Add Your First Monitor
               </button>
@@ -469,36 +469,37 @@ export function Dashboard() {
               <table className="w-full text-left font-mono text-xs">
                 <thead className="bg-slate-900/80 border-b border-slate-800 text-slate-400 uppercase tracking-wider text-[11px]">
                   <tr>
-                    <th className="py-3.5 px-4 sm:px-6">Status</th>
+                    <th className="py-3.5 px-4 sm:px-6">Status & Latency</th>
                     <th className="py-3.5 px-4 sm:px-6">Site Name & URL</th>
                     <th className="py-3.5 px-4 sm:px-6">Uptime</th>
-                    <th className="py-3.5 px-4 sm:px-6">Latency</th>
                     <th className="py-3.5 px-4 sm:px-6">Last Checked</th>
                     <th className="py-3.5 px-4 sm:px-6 text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800/60">
-                  {monitors.map((monitor) => {
+                  {monitors.map((monitor, index) => {
                     let statusColor =
                       "bg-slate-500/10 text-slate-400 border-slate-500/30";
                     let dotColor = "bg-slate-500";
                     let label = "PAUSED";
+                    let isDown = false;
 
                     if (monitor.isActive) {
                       if (monitor.status === "UP") {
                         statusColor =
                           "bg-emerald-500/10 text-emerald-400 border-emerald-500/30";
-                        dotColor = "bg-emerald-400 animate-ping";
+                        dotColor = "bg-emerald-400 animate-status-pulse";
                         label = "ONLINE";
                       } else if (monitor.status === "DOWN") {
                         statusColor =
                           "bg-rose-500/10 text-rose-400 border-rose-500/30";
-                        dotColor = "bg-rose-500";
+                        dotColor = "bg-rose-500 animate-alert-pulse";
                         label = "OFFLINE";
+                        isDown = true;
                       } else {
                         statusColor =
                           "bg-slate-500/10 text-slate-400 border-slate-500/30";
-                        dotColor = "bg-slate-400 animate-pulse";
+                        dotColor = "bg-slate-400";
                         label = "PENDING";
                       }
                     }
@@ -506,18 +507,26 @@ export function Dashboard() {
                     return (
                       <tr
                         key={monitor.id}
-                        className={`hover:bg-slate-800/30 transition-colors ${!monitor.isActive ? "opacity-60" : ""}`}
+                        className={`transition-all duration-200 animate-fade-in-up hover:bg-slate-800/40 hover:-translate-y-[1px] ${!monitor.isActive ? "opacity-60" : ""} ${isDown ? "border-l-4 border-l-[#EF4444] bg-[#EF4444]/5 shadow-[inset_4px_0_10px_rgba(239,68,68,0.1)]" : ""}`}
+                        style={{ animationDelay: `${index * 50 + 400}ms` }}
                       >
-                        {/* Status Badge */}
+                        {/* Status & Latency Badge */}
                         <td className="py-4 px-4 sm:px-6 whitespace-nowrap">
-                          <span
-                            className={`inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-[11px] font-semibold border ${statusColor}`}
-                          >
+                          <div className="flex items-center gap-2">
                             <span
-                              className={`w-2 h-2 rounded-full ${dotColor}`}
-                            />
-                            {label}
-                          </span>
+                              className={`inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-[11px] font-semibold border ${statusColor}`}
+                            >
+                              <span
+                                className={`w-2 h-2 rounded-full ${dotColor}`}
+                              />
+                              {label}
+                            </span>
+                            {monitor.isActive && (
+                              <span className={`text-[10px] ml-1 font-mono transition-number ${isDown ? "text-rose-400" : "text-slate-400"}`}>
+                                {monitor.responseTime || 0} ms
+                              </span>
+                            )}
+                          </div>
                         </td>
 
                         {/* Site Name */}
@@ -541,7 +550,7 @@ export function Dashboard() {
                         {/* Uptime */}
                         <td className="py-4 px-4 sm:px-6">
                           <div
-                            className={`font-semibold ${monitor.uptimePercent < 95 ? "text-rose-400" : "text-emerald-400"}`}
+                            className={`font-semibold transition-number ${monitor.uptimePercent < 95 ? "text-rose-400" : "text-emerald-400"}`}
                           >
                             {monitor.uptimePercent
                               ? monitor.uptimePercent.toFixed(2)
@@ -550,13 +559,6 @@ export function Dashboard() {
                           </div>
                           <div className="text-[10px] text-slate-500">
                             {monitor.interval || 5}m interval
-                          </div>
-                        </td>
-
-                        {/* Latency */}
-                        <td className="py-4 px-4 sm:px-6">
-                          <div className="text-slate-300 font-mono">
-                            {monitor.responseTime || 0} ms
                           </div>
                         </td>
 

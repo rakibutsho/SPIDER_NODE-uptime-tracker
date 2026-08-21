@@ -27,14 +27,14 @@ export function NavUser({
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground border"
+              className="data-[state=open]:bg-slate-800/60 data-[state=open]:text-white border border-slate-800 hover:bg-slate-800/40 hover:-translate-y-0.5 transition-all duration-300 rounded-xl glass-panel-hover"
             >
-              <Avatar className="h-8 w-8 rounded-full">
-                <AvatarImage src="https://github.com/shadcn.png" />
+              <Avatar className="h-8 w-8 rounded-lg ring-2 ring-[#EF4444]/20 group-hover:ring-[#EF4444]/50 transition-all">
+                <AvatarImage src={user.avatar || "https://github.com/shadcn.png"} />
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
+                <span className="truncate font-semibold text-slate-200 group-hover:text-white transition-colors">{user.name}</span>
+                <span className="truncate text-[10px] font-mono text-slate-400 group-hover:text-slate-300 transition-colors">{user.email}</span>
               </div>
             </SidebarMenuButton>
           </DropdownMenuTrigger>
