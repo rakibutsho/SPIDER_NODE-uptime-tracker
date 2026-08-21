@@ -51,8 +51,7 @@ function LoginFormContent() {
         toast.error(res.error || "Invalid email or password.");
       } else if (res?.ok) {
         toast.success("Welcome back! Redirecting to dashboard...");
-        router.push(callbackUrl);
-        router.refresh();
+        window.location.href = callbackUrl;
       }
     } catch (err) {
       console.error(err);
