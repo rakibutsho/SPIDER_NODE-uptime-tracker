@@ -32,7 +32,14 @@ jobs:
 
             // If DATABASE_URL secret is provided in GitHub Actions, override or append it
             if (process.env.DATABASE_URL) {
-              const dbUrl = process.env.DATABASE_URL.trim();
+              let dbUrl = process.env.DATABASE_URL.trim();
+              if (dbUrl.startsWith("DATABASE_URL=")) {
+                dbUrl = dbUrl.slice("DATABASE_URL=".length).trim();
+              }
+              if ((dbUrl.startsWith("\"") && dbUrl.endsWith("\"")) || (dbUrl.startsWith("\x27") && dbUrl.endsWith("\x27"))) {
+                dbUrl = dbUrl.slice(1, -1);
+              }
+
               if (/^DATABASE_URL=/m.test(envContent)) {
                 envContent = envContent.replace(/^DATABASE_URL=.*$/m, `DATABASE_URL="${dbUrl}"`);
               } else {
