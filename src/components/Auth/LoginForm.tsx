@@ -1,13 +1,22 @@
 "use client";
 
-import React, { useState, Suspense } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/assets/logo.png";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { toast } from "sonner";
-import { Activity01Icon as Activity, ArrowRight01Icon as ArrowRight, GithubIcon as Github, Mail01Icon as Mail, LockIcon as Lock, ViewIcon as Eye, ViewOffIcon as EyeOff, Loading01Icon as Loader2 } from "hugeicons-react";
+import {
+  Activity01Icon as Activity,
+  ArrowRight01Icon as ArrowRight,
+  GithubIcon as Github,
+  Mail01Icon as Mail,
+  LockIcon as Lock,
+  ViewIcon as Eye,
+  ViewOffIcon as EyeOff,
+  Loading01Icon as Loader2,
+} from "hugeicons-react";
 
 function LoginFormContent() {
   const router = useRouter();
@@ -18,7 +27,10 @@ function LoginFormContent() {
   try {
     if (callbackUrl.startsWith("http")) {
       const parsedUrl = new URL(callbackUrl);
-      if (typeof window !== "undefined" && parsedUrl.hostname !== window.location.hostname) {
+      if (
+        typeof window !== "undefined" &&
+        parsedUrl.hostname !== window.location.hostname
+      ) {
         callbackUrl = parsedUrl.pathname + parsedUrl.search;
       }
     }
@@ -31,6 +43,23 @@ function LoginFormContent() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [socialLoading, setSocialLoading] = useState<string | null>(null);
+
+  useEffect(() => {
+    const authError = searchParams.get("error");
+    if (authError) {
+      if (authError === "OAuthAccountNotLinked") {
+        toast.error(
+          "An account already exists with this email using another login provider.",
+        );
+      } else if (authError === "OAuthSignin" || authError === "OAuthCallback") {
+        toast.error("Social authentication failed. Please try again.");
+      } else if (authError === "AccessDenied") {
+        toast.error("Access denied. Please check your account permissions.");
+      } else {
+        toast.error(`Authentication error: ${authError}`);
+      }
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -85,12 +114,20 @@ function LoginFormContent() {
             {/* <div className="p-2.5 rounded-xl bg-red-500/10 border border-red-500/30 text-[#EF4444] group-hover:scale-105 transition-transform shadow-sm shadow-red-500/20">
               <Activity className="w-6 h-6" />
             </div> */}
-            <Image src={logo} alt="Logo" width={50} height={50} className="w-12 h-12 object-contain" />
+            <Image
+              src={logo}
+              alt="Logo"
+              width={50}
+              height={50}
+              className="w-12 h-12 object-contain"
+            />
             <span className="text-2xl font-bold tracking-tight text-white font-mono">
               Spider<span className="text-[#EF4444]">Node</span>
             </span>
           </Link>
-          <h1 className="text-2xl font-bold text-slate-100 mt-2">Welcome Back</h1>
+          <h1 className="text-2xl font-bold text-slate-100 mt-2">
+            Welcome Back
+          </h1>
           <p className="text-sm text-slate-400 mt-1">
             Sign in to access your monitor health metrics
           </p>
@@ -248,7 +285,13 @@ function LoginFormContent() {
 
 export function LoginForm() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[#121212] flex items-center justify-center"><Loader2 className="w-8 h-8 animate-spin text-[#EF4444]"/></div>}>
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#121212] flex items-center justify-center">
+          <Loader2 className="w-8 h-8 animate-spin text-[#EF4444]" />
+        </div>
+      }
+    >
       <LoginFormContent />
     </Suspense>
   );
