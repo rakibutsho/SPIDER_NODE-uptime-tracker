@@ -16,10 +16,12 @@ export const authOptions: NextAuthOptions = {
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID || "",
             clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+            allowDangerousEmailAccountLinking: true,
         }),
         GithubProvider({
             clientId: process.env.GITHUB_CLIENT_ID || "",
             clientSecret: process.env.GITHUB_CLIENT_SECRET || "",
+            allowDangerousEmailAccountLinking: true,
         }),
 
         // credentials login
@@ -68,10 +70,49 @@ export const authOptions: NextAuthOptions = {
             },
         }),
     ],
+    pages: {
+        signIn: "/login",
+        error: "/login",
+    },
     callbacks: {
+        async signIn({ user, account }) {
+            if (account?.provider === "google" || account?.provider === "github") {
+                if (user.email) {
+                    try {
+                        const existingUser = await prisma.user.findUnique({
+                            where: { email: user.email.toLowerCase() },
+                        });
+                        if (existingUser && !existingUser.emailVerified) {
+                            await prisma.user.update({
+                                where: { id: existingUser.id },
+                                data: { emailVerified: new Date() },
+                            });
+                        }
+                    } catch (e) {
+                        console.error("Error auto-verifying OAuth user email:", e);
+                    }
+                }
+            }
+            return true;
+        },
         async jwt({ token, user, trigger, session }) {
             if (user) {
                 token.id = user.id;
+            }
+            
+            // Ensure token.id is always populated for OAuth users
+            if (!token.id && token.email) {
+                try {
+                    const dbUser = await prisma.user.findUnique({
+                        where: { email: token.email.toLowerCase() },
+                        select: { id: true },
+                    });
+                    if (dbUser) {
+                        token.id = dbUser.id;
+                    }
+                } catch (e) {
+                    console.error("Error fetching dbUser in jwt callback:", e);
+                }
             }
             
             // Handle session update
