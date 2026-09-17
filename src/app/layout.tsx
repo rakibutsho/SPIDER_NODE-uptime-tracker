@@ -7,10 +7,66 @@ import AuthProvider from "@/providers/AuthProvider";
 import Loading from "@/components/Others/Loader/Loading";
 import { inter, jetbrainsMono } from "@/fonts/Fonts";
 
+const siteUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://spidernode.net";
+
 export const metadata: Metadata = {
-  title: "SpiderNode | Real-Time Uptime & Infrastructure Monitoring",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "SpiderNode | Real-Time Uptime & Infrastructure Monitoring",
+    template: "%s | SpiderNode",
+  },
   description:
-    "Developer-centric, real-time uptime monitoring for websites, APIs, and microservices.",
+    "Developer-centric, real-time uptime monitoring for websites, APIs, and microservices with instant Telegram alerts and public telemetry status boards.",
+  keywords: [
+    "uptime monitoring",
+    "status page",
+    "incident response",
+    "API monitoring",
+    "infrastructure telemetry",
+    "heartbeat monitoring",
+    "Telegram alert bot",
+    "SpiderNode",
+  ],
+  authors: [{ name: "SpiderNode" }],
+  creator: "SpiderNode",
+  publisher: "SpiderNode",
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "/",
+    siteName: "SpiderNode",
+    title: "SpiderNode | Real-Time Uptime & Infrastructure Monitoring",
+    description:
+      "Developer-centric, real-time uptime monitoring for websites, APIs, and microservices with instant Telegram alerts and public telemetry status boards.",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "SpiderNode — Real-Time Uptime & Infrastructure Telemetry",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SpiderNode | Real-Time Uptime & Infrastructure Monitoring",
+    description:
+      "Developer-centric, real-time uptime monitoring for websites, APIs, and microservices with instant Telegram alerts and public telemetry status boards.",
+    images: ["/og-image.png"],
+    creator: "@spidernode",
+  },
+  icons: {
+    icon: [
+      { url: "/icon.png" },
+      { url: "/icon.png", sizes: "32x32", type: "image/png" },
+    ],
+    shortcut: "/icon.png",
+    apple: "/icon.png",
+  },
 };
 
 export default function RootLayout({
