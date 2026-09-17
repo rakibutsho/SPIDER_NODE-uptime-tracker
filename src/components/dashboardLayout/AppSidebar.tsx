@@ -1,9 +1,22 @@
 "use client";
 
-import { UserCircle02Icon as CircleUser, CodesandboxIcon as Codesandbox, GlobeIcon as Globe, LayoutGridIcon as LayoutGrid, Message01Icon as MessageCircleMore, ComputerSettingsIcon as MonitorCog, File01Icon as ReceiptText, Shield01Icon as ShieldAlert, AccountSetting01Icon as UserCog, UserMultiple02Icon as Users, Wallet01Icon as Wallet } from "hugeicons-react";
+import {
+  UserCircle02Icon as CircleUser,
+  CodesandboxIcon as Codesandbox,
+  GlobeIcon as Globe,
+  LayoutGridIcon as LayoutGrid,
+  Message01Icon as MessageCircleMore,
+  ComputerSettingsIcon as MonitorCog,
+  File01Icon as ReceiptText,
+  Shield01Icon as ShieldAlert,
+  AccountSetting01Icon as UserCog,
+  UserMultiple02Icon as Users,
+  Wallet01Icon as Wallet,
+} from "hugeicons-react";
 type LucideIcon = React.ElementType;
 import type * as React from "react";
 
+import { useSession } from "next-auth/react";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { Sidebar, SidebarContent, SidebarRail } from "@/components/ui/sidebar";
 import { usePathname } from "next/navigation";
@@ -62,37 +75,33 @@ const adminUserData: NavigationData = {
       icon: LayoutGrid,
     },
     {
-      title: "Monitors",
-      path: "/monitors",
-      icon: MonitorCog,
-    },
-    {
-      title: "Incidents",
-      path: "/incidents",
-      icon: ShieldAlert,
-    },
-    {
-      title: "Users",
+      title: "User Management",
       path: "/users",
       icon: Users,
+    },
+    {
+      title: "Role & Permissions",
+      path: "/roles",
+      icon: UserCog,
     },
   ],
   other: [
     {
-      title: "Billing",
-      path: "/billing",
+      title: "Audit Logs",
+      path: "/audit-logs",
       icon: ReceiptText,
     },
     {
-      title: "Settings",
+      title: "System Settings",
       path: "/settings",
-      icon: UserCog,
+      icon: Codesandbox,
     },
   ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
+  const { data: session } = useSession();
   const currentUser = useSelector(selectCurrentUser) as {
     name?: string;
     email?: string;
@@ -104,22 +113,27 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   const buildUrl = (path: string) => (path ? `${basePath}${path}` : basePath);
 
+  const userName =
+    session?.user?.name ||
+    currentUser?.name ||
+    (isAdminPath ? "Admin Operator" : "Operator");
+  const userEmail =
+    session?.user?.email ||
+    currentUser?.email ||
+    (isAdminPath ? "admin@spidernode.com" : "operator@spidernode.site");
+  const userAvatar = session?.user?.image || currentUser?.avatar;
+
   return (
-    <Sidebar
-      collapsible="offcanvas"
-      {...props}
-    >
+    <Sidebar collapsible="offcanvas" {...props}>
       <SidebarContent className="px-3 pt-2">
         <TeamSwitcher
           teams={[
             { name: isAdminPath ? "Admin" : "Default", logo: () => null },
           ]}
           user={{
-            name:
-              currentUser?.name ??
-              (isAdminPath ? "Admin User" : "Default User"),
-            email: currentUser?.email ?? (isAdminPath ? "admin@spidernode.com" : "user@spidernode.com"),
-            avatar: currentUser?.avatar,
+            name: userName,
+            email: userEmail,
+            avatar: userAvatar,
             roleLabel: isAdminPath ? "Admin" : "User",
           }}
         />

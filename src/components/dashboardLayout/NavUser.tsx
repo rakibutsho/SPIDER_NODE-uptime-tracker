@@ -1,7 +1,6 @@
 "use client";
 
 import { useSession, signOut } from "next-auth/react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,14 +9,19 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Logout01Icon, UserIcon } from "hugeicons-react";
+import {
+  Logout01Icon as LogOut,
+  UserIcon,
+  GlobeIcon as Globe,
+  ArrowRight01Icon as ArrowRight,
+} from "hugeicons-react";
 import Link from "next/link";
 
 export function NavUser() {
   const { data: session } = useSession();
-  
-  const userName = session?.user?.name || "Developer";
-  const userEmail = session?.user?.email || "";
+
+  const userName = session?.user?.name || "OPERATOR";
+  const userEmail = session?.user?.email || "operator@spidernode.site";
   const userImage = session?.user?.image;
   const userInitials = userName
     .split(" ")
@@ -29,43 +33,99 @@ export function NavUser() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="flex items-center gap-2 outline-none group rounded-xl p-1 hover:bg-slate-800/50 transition-colors">
-          <Avatar className="h-9 w-9 border border-slate-700 group-hover:border-red-500/50 transition-colors cursor-pointer shadow-sm">
-            <AvatarImage
-              src={userImage || ""}
-              alt={userName}
-              className="object-cover"
-            />
-            <AvatarFallback className="bg-slate-800 text-red-400 font-medium text-xs">
-              {userInitials}
-            </AvatarFallback>
-          </Avatar>
+        <button className="flex items-center gap-2.5 outline-none p-1 hover:bg-white/5 border border-transparent hover:border-white/15 transition-colors cursor-pointer rounded-none">
+          {/* Square Avatar Box */}
+          <div className="w-7 h-7 border border-white/20 bg-[#0C0D0E] overflow-hidden flex items-center justify-center shrink-0">
+            {userImage ? (
+              <img
+                src={userImage}
+                alt={userName}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <span className="text-white font-mono text-[10px] font-bold">
+                {userInitials}
+              </span>
+            )}
+          </div>
+
+          {/* User Name & Operator Tag */}
+          <div className="hidden sm:flex flex-col text-left font-mono">
+            <span className="text-xs font-bold text-white truncate max-w-[130px] leading-tight uppercase">
+              {userName}
+            </span>
+            <span className="text-[9px] text-[#8E929B] tracking-wider uppercase">
+              OPERATOR
+            </span>
+          </div>
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 bg-slate-900 border-slate-800 text-slate-200 shadow-xl" align="end" sideOffset={8}>
-        <DropdownMenuLabel className="font-normal">
+
+      {/* Swiss Dropdown Menu */}
+      <DropdownMenuContent
+        className="w-60 bg-[#121316] border border-white/15 text-[#ECECED] shadow-2xl p-2 rounded-none font-mono"
+        align="end"
+        sideOffset={8}
+      >
+        <DropdownMenuLabel className="font-normal p-2.5">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none text-white">{userName}</p>
-            <p className="text-xs leading-none text-slate-400 font-mono">
-              {userEmail}
+            <div className="text-[9px] uppercase tracking-widest text-[#8E929B]">
+              IDENTIFIED OPERATOR
+            </div>
+            <p className="text-xs font-bold text-white uppercase truncate">
+              {userName}
             </p>
+            <p className="text-[10px] text-[#8E929B] truncate">{userEmail}</p>
           </div>
         </DropdownMenuLabel>
-        <DropdownMenuSeparator className="bg-slate-800" />
-        <DropdownMenuItem asChild className="hover:bg-slate-800 focus:bg-slate-800 cursor-pointer">
-          <Link href="/dashboard/profile" className="flex items-center gap-2 w-full">
-            <UserIcon className="h-4 w-4 text-slate-400" />
-            <span>Profile</span>
+
+        <DropdownMenuSeparator className="bg-white/10 my-1" />
+
+        <DropdownMenuItem
+          asChild
+          className="p-0 rounded-none focus:bg-white/5 cursor-pointer"
+        >
+          <Link
+            href="/dashboard/profile"
+            className="flex items-center justify-between px-2.5 py-2 text-xs text-white hover:text-white hover:bg-white/5 w-full transition-colors"
+          >
+            <div className="flex items-center gap-2">
+              <UserIcon className="w-3.5 h-3.5 text-[#8E929B]" />
+              <span className="uppercase text-[11px] tracking-wider">
+                Operator Profile
+              </span>
+            </div>
+            <ArrowRight className="w-3 h-3 text-white/30" />
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuSeparator className="bg-slate-800" />
-        <DropdownMenuItem 
-          onClick={() => signOut({ callbackUrl: "/login" })}
-          className="hover:bg-slate-800 focus:bg-slate-800 cursor-pointer text-red-400 hover:text-red-300 focus:text-red-300"
+
+        <DropdownMenuItem
+          asChild
+          className="p-0 rounded-none focus:bg-white/5 cursor-pointer"
         >
-          <div className="flex items-center gap-2 w-full">
-            <Logout01Icon className="h-4 w-4" />
-            <span>Sign Out</span>
+          <Link
+            href="/dashboard/status"
+            className="flex items-center justify-between px-2.5 py-2 text-xs text-white hover:text-white hover:bg-white/5 w-full transition-colors"
+          >
+            <div className="flex items-center gap-2">
+              <Globe className="w-3.5 h-3.5 text-[#8E929B]" />
+              <span className="uppercase text-[11px] tracking-wider">
+                Status Board
+              </span>
+            </div>
+            <ArrowRight className="w-3 h-3 text-white/30" />
+          </Link>
+        </DropdownMenuItem>
+
+        <DropdownMenuSeparator className="bg-white/10 my-1" />
+
+        <DropdownMenuItem
+          onClick={() => signOut({ callbackUrl: "/login" })}
+          className="p-0 rounded-none focus:bg-red-500/10 cursor-pointer"
+        >
+          <div className="flex items-center gap-2 px-2.5 py-2 text-xs text-[#EF4444] hover:bg-red-500/10 w-full transition-colors uppercase tracking-wider font-bold">
+            <LogOut className="w-3.5 h-3.5 text-[#EF4444]" />
+            <span>Terminate Session</span>
           </div>
         </DropdownMenuItem>
       </DropdownMenuContent>
