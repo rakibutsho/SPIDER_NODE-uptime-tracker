@@ -40,6 +40,7 @@ export default function UptimeMonitoringContent() {
           </h1>
           <p className="text-lg text-slate-400 mb-8">
             Don't let downtime cost you customers. SpiderNode monitors your websites and infrastructure around the clock with zero false positives.
+            Don&apos;t let downtime cost you customers. SpiderNode monitors your websites and infrastructure around the clock with zero false positives.
           </p>
           
           <Link

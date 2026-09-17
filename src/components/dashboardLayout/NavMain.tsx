@@ -30,6 +30,7 @@ export function NavMain({
       {title && (
         <p className="px-3 pb-2 pt-2 text-[10px] font-mono uppercase tracking-[0.25em] text-[#EF4444] font-bold">
           // {title}
+          {"//"} {title}
         </p>
       )}
       <SidebarMenu className="space-y-1">

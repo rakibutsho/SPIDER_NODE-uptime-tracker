@@ -60,6 +60,7 @@ export async function PATCH(req: Request, { params }: RouteParams) {
         const monitorId = parseInt(id, 10);
         if (isNaN(monitorId)) {
             return
+            return NextResponse.json({ error: "Invalid monitor ID" }, { status: 400 });
         }
 
         let body: any = {};
@@ -130,6 +131,7 @@ export async function DELETE(req: Request, { params }: RouteParams) {
         const monitorId = parseInt(id, 10);
         if (isNaN(monitorId)) {
             return
+            return NextResponse.json({ error: "Invalid monitor ID" }, { status: 400 });
         }
 
         const existingMonitor = await prisma.monitor.findFirst({

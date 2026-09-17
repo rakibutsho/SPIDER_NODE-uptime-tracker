@@ -56,6 +56,7 @@ export default function LivePreviewMockup() {
           <div className="font-mono text-xs uppercase tracking-[0.18em] text-[#8E929B]">
             SAMPLING INTERVAL:{" "}
             <span className="text-white font-bold">1000MS</span> // TOTAL
+            <span className="text-white font-bold">1000MS</span> {"//"} TOTAL
             MONITORS: <span className="text-white font-bold">12</span>
           </div>
         </div>

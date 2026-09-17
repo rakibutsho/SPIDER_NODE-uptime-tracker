@@ -59,6 +59,7 @@
     "eslint-config-next": "^16.3.5",
     "prisma": "^7.10.0",
     "typescript": "^7.0.2"
+    "typescript": "^5"
   },
   "author": "Md. Rakibul Islam (Junior Frontend Developer)",
   "license": "MIT",
