@@ -7,7 +7,10 @@ import AuthProvider from "@/providers/AuthProvider";
 import Loading from "@/components/Others/Loader/Loading";
 import { inter, jetbrainsMono } from "@/fonts/Fonts";
 
-const siteUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://spidernode.net";
+const siteUrl =
+  process.env.NEXTAUTH_URL ||
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  "https://spidernode.site";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
