@@ -19,7 +19,7 @@ jobs:
           node-version: 22
 
       - name: Install Dependencies
-        run: npm ci --legacy-peer-deps
+        run: npm install --legacy-peer-deps
 
       - name: Create .env file for Build
         env:
@@ -62,7 +62,7 @@ jobs:
         run: npm run build
 
       - name: Tar Build Artifacts
-        run: tar -czf deploy.tar.gz .next public package.json package-lock.json prisma ecosystem.config.js .env .npmrc
+        run: tar -czf deploy.tar.gz .next public package.json package-lock.json prisma ecosystem.config.js .env .npmrc src/generated
 
       - name: Copy Archive to VPS via SCP
         uses: appleboy/scp-action@master
@@ -96,7 +96,7 @@ jobs:
             rm /tmp/deploy.tar.gz
             
             echo "--- Installing dependencies ---"
-            npm install --omit=dev --no-audit --no-fund --legacy-peer-deps
+            npm install --no-audit --no-fund --legacy-peer-deps
             
             echo "--- Generating Prisma Client ---"
             npx prisma generate
