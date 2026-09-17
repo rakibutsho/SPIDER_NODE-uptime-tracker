@@ -4,7 +4,22 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Activity01Icon as Activity, PlusSignIcon as Plus, RefreshIcon as RefreshCw, Delete02Icon as Trash2, LinkSquare01Icon as ExternalLink, Logout01Icon as LogOut, Shield01Icon as ShieldCheck, GlobeIcon as Globe, Clock01Icon as Clock, ArrowUpRight01Icon as TrendingUp, Loading01Icon as Loader2, Cancel01Icon as X, Edit02Icon as Edit2, EcoPowerIcon as Power } from "hugeicons-react";
+import {
+  Activity01Icon as Activity,
+  PlusSignIcon as Plus,
+  RefreshIcon as RefreshCw,
+  Delete02Icon as Trash2,
+  LinkSquare01Icon as ExternalLink,
+  Logout01Icon as LogOut,
+  Shield01Icon as ShieldCheck,
+  GlobeIcon as Globe,
+  Clock01Icon as Clock,
+  ArrowUpRight01Icon as TrendingUp,
+  Loading01Icon as Loader2,
+  Cancel01Icon as X,
+  Edit02Icon as Edit2,
+  EcoPowerIcon as Power,
+} from "hugeicons-react";
 import Link from "next/link";
 
 interface Monitor {
@@ -184,12 +199,9 @@ export function Dashboard() {
   const handleCheckMonitor = async (id: number) => {
     setCheckingId(id);
     try {
-      const res = await fetch(
-        `/api/monitors/${id}/check`,
-        {
-          method: "POST",
-        },
-      );
+      const res = await fetch(`/api/monitors/${id}/check`, {
+        method: "POST",
+      });
       const data = await res.json();
       if (res.ok) {
         toast.success(`Check triggered manually`);
@@ -302,237 +314,228 @@ export function Dashboard() {
     .toUpperCase();
 
   return (
-    <div className="min-h-screen bg-[#121212] text-slate-100 p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-[#0C0D0E] text-[#F4F4F5] p-4 sm:p-6 lg:p-8 font-sans">
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Header Bar */}
-        <div className="glass-panel p-4 sm:p-6 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border border-slate-800">
-          <div className="flex items-center gap-4">
-            {userImage ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={userImage}
-                alt={userName}
-                className="w-12 h-12 rounded-xl object-cover ring-2 ring-[#EF4444]/40"
-              />
-            ) : (
-              <div className="w-12 h-12 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-[#EF4444] font-mono font-bold text-lg red-glow">
-                {userInitials}
-              </div>
-            )}
+        <div className="border border-white/15 bg-[#121316] p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 rounded-none">
+          <div className="flex items-center gap-4 text-left">
+            <div className="w-12 h-12 bg-[#0C0D0E] border border-white/20 flex items-center justify-center text-white font-mono font-black text-lg rounded-none">
+              {userInitials}
+            </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-xl font-bold text-white">{userName}</h1>
-                <span className="px-2 py-0.5 rounded-md bg-red-500/10 text-[#EF4444] text-[10px] font-mono font-semibold border border-red-500/20">
-                  PRO MONITOR
+                <span className="w-2 h-2 bg-[#EF4444]" />
+                <h1 className="text-xl font-black uppercase tracking-tight text-white">
+                  {userName}
+                </h1>
+                <span className="px-2 py-0.5 text-[9px] font-mono font-bold uppercase tracking-widest bg-white/10 text-white border border-white/20 rounded-none">
+                  PRO CONSOLE
                 </span>
               </div>
-              <p className="text-xs text-slate-400 font-mono mt-0.5">
-                {userEmail}
+              <p className="text-xs text-[#8E929B] font-mono mt-0.5">
+                OPERATOR ID // {userEmail}
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
+          <div className="flex items-center gap-3 w-full sm:w-auto justify-start sm:justify-end">
             <Link
               href="/dashboard/profile"
-              className="px-3.5 py-2.5 rounded-xl glass-panel hover:bg-slate-800 border border-slate-800 text-slate-400 hover:text-white text-xs font-semibold transition-colors cursor-pointer"
+              className="px-4 py-2.5 border border-white/20 hover:border-white/60 text-[#A0A4AD] hover:text-white text-xs font-mono uppercase tracking-wider transition-colors rounded-none"
             >
-              Profile
+              Account
             </Link>
 
             <button
               onClick={() => setIsAddModalOpen(true)}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#EF4444] hover:bg-red-400 text-[#121212] font-bold text-xs transition-all shadow-lg shadow-red-500/20 cursor-pointer"
+              className="flex items-center gap-2 px-5 py-2.5 bg-[#EF4444] hover:bg-[#DC2626] text-white font-bold text-xs uppercase tracking-[0.18em] transition-colors rounded-none shadow-none cursor-pointer"
             >
               <Plus className="w-4 h-4" />
-              <span>Add Monitor</span>
+              <span>Register Monitor</span>
             </button>
 
             <button
               onClick={() => signOut({ callbackUrl: "/login" })}
-              className="flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-400 hover:text-rose-400 text-xs font-semibold transition-colors cursor-pointer"
+              className="p-2.5 border border-white/15 text-[#8E929B] hover:text-[#EF4444] hover:border-[#EF4444]/40 transition-colors cursor-pointer rounded-none"
+              title="Sign Out"
             >
               <LogOut className="w-4 h-4" />
-              <span className="hidden sm:inline">Sign Out</span>
             </button>
           </div>
         </div>
 
-        {/* Metrics Overview Bar */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="glass-panel p-5 rounded-2xl border border-slate-800 animate-fade-in-up delay-75 card-hover">
-            <div className="flex items-center justify-between text-slate-400 mb-2">
-              <span className="text-xs font-mono">ACTIVE MONITORS</span>
-              <Globe className="w-4 h-4 text-[#EF4444]" />
+        {/* Swiss Connected Metrics Strip */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border border-white/15 bg-[#121316] divide-y sm:divide-y-0 sm:divide-x divide-white/15 rounded-none text-left">
+          <div className="p-6">
+            <div className="flex items-center justify-between text-[#8E929B] mb-2 font-mono text-[10px] uppercase tracking-[0.2em]">
+              <span>ACTIVE MONITORS</span>
+              <Globe className="w-3.5 h-3.5 text-[#EF4444]" />
             </div>
-            <div className="text-3xl font-extrabold font-mono text-white transition-number">
+            <div className="text-4xl font-black font-mono text-white tracking-tight">
               {totalMonitors}
             </div>
-            <p className="text-[11px] text-slate-500 mt-1">
-              Total {monitors.length} listed
+            <p className="text-[10px] font-mono text-[#8E929B] uppercase tracking-wider mt-2">
+              TOTAL {monitors.length} REGISTERED
             </p>
           </div>
 
-          <div className="glass-panel p-5 rounded-2xl border border-slate-800 animate-fade-in-up delay-150 card-hover">
-            <div className="flex items-center justify-between text-slate-400 mb-2">
-              <span className="text-xs font-mono">SYSTEM HEALTH</span>
-              <ShieldCheck className="w-4 h-4 text-emerald-400" />
+          <div className="p-6">
+            <div className="flex items-center justify-between text-[#8E929B] mb-2 font-mono text-[10px] uppercase tracking-[0.2em]">
+              <span>SYSTEM HEALTH</span>
+              <ShieldCheck className="w-3.5 h-3.5 text-white" />
             </div>
-            <div className="text-3xl font-extrabold font-mono text-emerald-400 transition-number">
+            <div className="text-4xl font-black font-mono text-white tracking-tight">
               {healthPercentage}%
             </div>
-            <p className="text-[11px] text-slate-500 mt-1">
-              Operational target 99.9%
+            <p className="text-[10px] font-mono text-[#8E929B] uppercase tracking-wider mt-2">
+              TARGET 99.90% SLA
             </p>
           </div>
 
-          <div className="glass-panel p-5 rounded-2xl border border-slate-800 animate-fade-in-up delay-225 card-hover">
-            <div className="flex items-center justify-between text-slate-400 mb-2">
-              <span className="text-xs font-mono">STATUS OVERVIEW</span>
-              <Activity className="w-4 h-4 text-[#EF4444]" />
+          <div className="p-6">
+            <div className="flex items-center justify-between text-[#8E929B] mb-2 font-mono text-[10px] uppercase tracking-[0.2em]">
+              <span>STATUS OVERVIEW</span>
+              <Activity className="w-3.5 h-3.5 text-[#EF4444]" />
             </div>
             <div
-              className={`text-xl font-extrabold font-mono transition-number ${
-                downMonitors === 0 ? "text-emerald-400" : "text-rose-500"
+              className={`text-2xl font-black font-mono uppercase tracking-tight ${
+                downMonitors === 0 ? "text-white" : "text-[#EF4444]"
               }`}
             >
               {operationalStatus}
             </div>
-            <p className="text-[11px] text-slate-500 mt-1 transition-number">
-              {upMonitors} UP • {downMonitors} DOWN
+            <p className="text-[10px] font-mono text-[#8E929B] uppercase tracking-wider mt-2">
+              {upMonitors} OPERATIONAL • {downMonitors} FAILING
             </p>
           </div>
 
-          <div className="glass-panel p-5 rounded-2xl border border-slate-800 animate-fade-in-up delay-300 card-hover">
-            <div className="flex items-center justify-between text-slate-400 mb-2">
-              <span className="text-xs font-mono">AVG LATENCY</span>
-              <TrendingUp className="w-4 h-4 text-red-400" />
+          <div className="p-6">
+            <div className="flex items-center justify-between text-[#8E929B] mb-2 font-mono text-[10px] uppercase tracking-[0.2em]">
+              <span>AVG LATENCY</span>
+              <TrendingUp className="w-3.5 h-3.5 text-[#EF4444]" />
             </div>
-            <div className="text-3xl font-extrabold font-mono text-[#EF4444] transition-number">
-              {avgLatency}ms
+            <div className="text-4xl font-black font-mono text-[#EF4444] tracking-tight">
+              {avgLatency}
+              <span className="text-sm font-normal text-[#8E929B] ml-1">
+                MS
+              </span>
             </div>
-            <p className="text-[11px] text-slate-500 mt-1">
-              Average global ping
+            <p className="text-[10px] font-mono text-[#8E929B] uppercase tracking-wider mt-2">
+              GLOBAL PING SAMPLE
             </p>
           </div>
         </div>
 
         {/* Monitor Table Section */}
-        <div className="glass-panel rounded-2xl border border-slate-800 overflow-hidden animate-fade-in-up" style={{ animationDelay: '400ms' }}>
-          <div className="p-4 sm:p-6 border-b border-slate-800/80 flex items-center justify-between">
+        <div className="border border-white/15 bg-[#121316] rounded-none">
+          <div className="p-6 border-b border-white/15 flex items-center justify-between text-left">
             <div>
-              <h2 className="text-lg font-bold text-white">
-                Monitored Services
+              <div className="flex items-center gap-2 mb-1">
+                <span className="w-2 h-2 bg-[#EF4444]" />
+                <span className="swiss-kicker">02 // ACTIVE ENDPOINTS</span>
+              </div>
+              <h2 className="text-xl font-black uppercase tracking-tight text-white">
+                Monitored Telemetry Services
               </h2>
-              <p className="text-xs text-slate-400">
-                Real-time HTTP health check monitors linked to your account
+              <p className="text-xs text-[#8E929B] font-mono mt-1">
+                SYNCHRONOUS HTTP / TCP HEALTH CHECKS
               </p>
             </div>
             <button
               onClick={fetchMonitors}
               disabled={loadingMonitors}
-              className="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-400 hover:text-white transition-colors cursor-pointer"
+              className="p-2.5 border border-white/15 hover:border-white/40 text-[#8E929B] hover:text-white transition-colors cursor-pointer rounded-none"
               title="Refresh List"
             >
               <RefreshCw
-                className={`w-4 h-4 ${loadingMonitors ? "animate-spin text-[#EF4444]" : ""}`}
+                className={`w-3.5 h-3.5 ${loadingMonitors ? "animate-spin text-[#EF4444]" : ""}`}
               />
             </button>
           </div>
 
           {loadingMonitors && monitors.length === 0 ? (
-            <div className="p-12 text-center text-slate-500 font-mono text-xs flex flex-col items-center gap-2">
+            <div className="p-16 text-center text-[#8E929B] font-mono text-xs flex flex-col items-center gap-3">
               <Loader2 className="w-6 h-6 animate-spin text-[#EF4444]" />
-              <span>Fetching status records...</span>
+              <span className="uppercase tracking-widest">
+                AWAITING TELEMETRY STREAMS...
+              </span>
             </div>
           ) : monitors.length === 0 ? (
-            <div className="p-12 text-center space-y-3">
-              <div className="w-12 h-12 rounded-full bg-slate-900 border border-slate-800 text-slate-500 flex items-center justify-center mx-auto">
+            <div className="p-16 text-center space-y-4">
+              <div className="w-12 h-12 border border-white/20 text-[#8E929B] flex items-center justify-center mx-auto rounded-none">
                 <Globe className="w-6 h-6" />
               </div>
-              <h3 className="text-sm font-semibold text-slate-300">
-                No Monitors Found
+              <h3 className="text-sm font-bold uppercase tracking-wider text-white">
+                NO MONITORS CONFIGURED
               </h3>
-              <p className="text-xs text-slate-500 max-w-sm mx-auto">
-                You haven&apos;t added any endpoints yet. Click &quot;Add
-                Monitor&quot; above to start tracking your website or API.
+              <p className="text-xs text-[#8E929B] max-w-sm mx-auto font-mono">
+                No active endpoints are being probed. Register your first
+                production URL to start tracking latency.
               </p>
               <button
                 onClick={() => setIsAddModalOpen(true)}
-                className="mt-2 px-4 py-2 rounded-xl bg-[#EF4444] text-[#121212] text-xs font-bold shadow-md shadow-red-500/20 hover:scale-105 transition-transform cursor-pointer"
+                className="mt-4 px-6 py-3 bg-[#EF4444] text-white text-xs font-bold uppercase tracking-[0.18em] hover:bg-[#DC2626] transition-colors rounded-none shadow-none cursor-pointer"
               >
-                + Add Your First Monitor
+                + REGISTER FIRST ENDPOINT
               </button>
             </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-left font-mono text-xs">
-                <thead className="bg-slate-900/80 border-b border-slate-800 text-slate-400 uppercase tracking-wider text-[11px]">
+                <thead className="bg-white/[0.02] border-b border-white/15 text-[#8E929B] uppercase tracking-[0.2em] text-[10px]">
                   <tr>
-                    <th className="py-3.5 px-4 sm:px-6">Status & Latency</th>
-                    <th className="py-3.5 px-4 sm:px-6">Site Name & URL</th>
-                    <th className="py-3.5 px-4 sm:px-6">Uptime</th>
-                    <th className="py-3.5 px-4 sm:px-6">Last Checked</th>
-                    <th className="py-3.5 px-4 sm:px-6 text-right">Actions</th>
+                    <th className="py-4 px-6">STATUS & PING</th>
+                    <th className="py-4 px-6">TARGET ENDPOINT</th>
+                    <th className="py-4 px-6">AVAILABILITY</th>
+                    <th className="py-4 px-6">LAST PROBE</th>
+                    <th className="py-4 px-6 text-right">COMMANDS</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800/60">
-                  {monitors.map((monitor, index) => {
-                    let statusColor =
-                      "bg-slate-500/10 text-slate-400 border-slate-500/30";
-                    let dotColor = "bg-slate-500";
-                    let label = "PAUSED";
-                    let isDown = false;
-
-                    if (monitor.isActive) {
-                      if (monitor.status === "UP") {
-                        statusColor =
-                          "bg-emerald-500/10 text-emerald-400 border-emerald-500/30";
-                        dotColor = "bg-emerald-400 animate-status-pulse";
-                        label = "ONLINE";
-                      } else if (monitor.status === "DOWN") {
-                        statusColor =
-                          "bg-rose-500/10 text-rose-400 border-rose-500/30";
-                        dotColor = "bg-rose-500 animate-alert-pulse";
-                        label = "OFFLINE";
-                        isDown = true;
-                      } else {
-                        statusColor =
-                          "bg-slate-500/10 text-slate-400 border-slate-500/30";
-                        dotColor = "bg-slate-400";
-                        label = "PENDING";
-                      }
-                    }
+                <tbody className="divide-y divide-white/10">
+                  {monitors.map((monitor) => {
+                    const isUp = monitor.isActive && monitor.status === "UP";
+                    const isDown =
+                      monitor.isActive && monitor.status === "DOWN";
 
                     return (
                       <tr
                         key={monitor.id}
-                        className={`transition-all duration-200 animate-fade-in-up hover:bg-slate-800/40 hover:-translate-y-[1px] ${!monitor.isActive ? "opacity-60" : ""} ${isDown ? "border-l-4 border-l-[#EF4444] bg-[#EF4444]/5 shadow-[inset_4px_0_10px_rgba(239,68,68,0.1)]" : ""}`}
-                        style={{ animationDelay: `${index * 50 + 400}ms` }}
+                        className={`hover:bg-white/[0.02] transition-colors ${!monitor.isActive ? "opacity-50" : ""} ${
+                          isDown
+                            ? "border-l-2 border-l-[#EF4444] bg-[#EF4444]/5"
+                            : ""
+                        }`}
                       >
                         {/* Status & Latency Badge */}
-                        <td className="py-4 px-4 sm:px-6 whitespace-nowrap">
-                          <div className="flex items-center gap-2">
+                        <td className="py-4 px-6 whitespace-nowrap">
+                          <div className="flex items-center gap-3">
                             <span
-                              className={`inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-[11px] font-semibold border ${statusColor}`}
+                              className={`px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider rounded-none ${
+                                isUp
+                                  ? "bg-white/10 text-white border border-white/20"
+                                  : isDown
+                                    ? "bg-[#EF4444] text-white border border-[#EF4444]"
+                                    : "bg-white/5 text-[#8E929B] border border-white/10"
+                              }`}
                             >
-                              <span
-                                className={`w-2 h-2 rounded-full ${dotColor}`}
-                              />
-                              {label}
+                              {monitor.isActive ? monitor.status : "PAUSED"}
                             </span>
                             {monitor.isActive && (
-                              <span className={`text-[10px] ml-1 font-mono transition-number ${isDown ? "text-rose-400" : "text-slate-400"}`}>
-                                {monitor.responseTime || 0} ms
+                              <span
+                                className={`text-xs font-mono font-bold ${
+                                  isDown ? "text-[#EF4444]" : "text-white"
+                                }`}
+                              >
+                                {monitor.responseTime || 0} MS
                               </span>
                             )}
                           </div>
                         </td>
 
-                        {/* Site Name */}
-                        <td className="py-4 px-4 sm:px-6">
+                        {/* Site Name & URL */}
+                        <td className="py-4 px-6">
                           <Link href={`/dashboard/monitor/${monitor.id}`}>
-                            <div className="font-semibold text-slate-200 font-sans text-sm mb-1 hover:text-[#EF4444] transition-colors cursor-pointer">
+                            <div className="font-bold text-white text-sm hover:text-[#EF4444] transition-colors cursor-pointer uppercase tracking-tight font-sans">
                               {monitor.name}
                             </div>
                           </Link>
@@ -540,52 +543,54 @@ export function Dashboard() {
                             href={monitor.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 text-slate-400 hover:text-[#EF4444] transition-colors text-[10px]"
+                            className="inline-flex items-center gap-1.5 text-[#8E929B] hover:text-white transition-colors text-[11px] font-mono mt-0.5"
                           >
-                            <span>{monitor.url}</span>
+                            <span className="truncate max-w-xs">
+                              {monitor.url}
+                            </span>
                             <ExternalLink className="w-3 h-3" />
                           </a>
                         </td>
 
                         {/* Uptime */}
-                        <td className="py-4 px-4 sm:px-6">
+                        <td className="py-4 px-6">
                           <div
-                            className={`font-semibold transition-number ${monitor.uptimePercent < 95 ? "text-rose-400" : "text-emerald-400"}`}
+                            className={`font-mono font-bold text-sm ${
+                              monitor.uptimePercent < 95
+                                ? "text-[#EF4444]"
+                                : "text-white"
+                            }`}
                           >
                             {monitor.uptimePercent
                               ? monitor.uptimePercent.toFixed(2)
                               : 100}
                             %
                           </div>
-                          <div className="text-[10px] text-slate-500">
-                            {monitor.interval || 5}m interval
+                          <div className="text-[10px] text-[#8E929B] font-mono uppercase tracking-wider">
+                            {monitor.interval || 5}M CYCLE
                           </div>
                         </td>
 
                         {/* Last Checked */}
-                        <td className="py-4 px-4 sm:px-6 text-slate-400">
-                          <span className="flex items-center gap-1.5 text-slate-400">
-                            <Clock className="w-3.5 h-3.5 text-slate-500" />
+                        <td className="py-4 px-6 text-[#8E929B] font-mono text-[11px]">
+                          <span className="flex items-center gap-1.5">
+                            <Clock className="w-3 h-3 text-[#8E929B]" />
                             {monitor.lastChecked
                               ? new Date(
                                   monitor.lastChecked,
                                 ).toLocaleTimeString()
-                              : "Never"}
+                              : "NEVER"}
                           </span>
                         </td>
 
                         {/* Actions */}
-                        <td className="py-4 px-4 sm:px-6 text-right whitespace-nowrap">
+                        <td className="py-4 px-6 text-right whitespace-nowrap">
                           <div className="flex items-center justify-end gap-2">
                             {/* Toggle Pause/Resume */}
                             <button
                               onClick={() => handleToggleActive(monitor)}
                               disabled={togglingId === monitor.id}
-                              className={`p-2 rounded-lg border transition-colors cursor-pointer disabled:opacity-50 ${
-                                monitor.isActive
-                                  ? "bg-slate-900 border-slate-800 text-slate-400 hover:text-amber-400"
-                                  : "bg-amber-500/10 border-amber-500/30 text-amber-400 hover:bg-amber-500/20"
-                              }`}
+                              className="p-2 bg-[#0C0D0E] border border-white/15 text-[#8E929B] hover:text-white hover:border-white/40 transition-colors cursor-pointer rounded-none disabled:opacity-50"
                               title={
                                 monitor.isActive
                                   ? "Pause Monitor"
@@ -605,7 +610,7 @@ export function Dashboard() {
                               disabled={
                                 checkingId === monitor.id || !monitor.isActive
                               }
-                              className="p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-400 hover:text-[#EF4444] transition-colors cursor-pointer disabled:opacity-50"
+                              className="p-2 bg-[#0C0D0E] border border-white/15 text-[#8E929B] hover:text-[#EF4444] hover:border-[#EF4444]/40 transition-colors cursor-pointer rounded-none disabled:opacity-50"
                               title="Re-check endpoint status"
                             >
                               <RefreshCw
@@ -620,8 +625,8 @@ export function Dashboard() {
                             {/* Edit */}
                             <button
                               onClick={() => openEditModal(monitor)}
-                              className="p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-400 hover:text-white transition-colors cursor-pointer"
-                              title="Edit Monitor"
+                              className="p-2 bg-[#0C0D0E] border border-white/15 text-[#8E929B] hover:text-white hover:border-white/40 transition-colors cursor-pointer rounded-none"
+                              title="Edit Configuration"
                             >
                               <Edit2 className="w-3.5 h-3.5" />
                             </button>
@@ -632,7 +637,7 @@ export function Dashboard() {
                                 handleDeleteMonitor(monitor.id, monitor.name)
                               }
                               disabled={deletingId === monitor.id}
-                              className="p-2 rounded-lg bg-slate-900 hover:bg-rose-950/60 border border-slate-800 text-slate-400 hover:text-rose-400 transition-colors cursor-pointer disabled:opacity-50"
+                              className="p-2 bg-[#0C0D0E] border border-white/15 text-[#8E929B] hover:text-[#EF4444] hover:border-[#EF4444]/40 transition-colors cursor-pointer rounded-none disabled:opacity-50"
                               title="Delete Monitor"
                             >
                               {deletingId === monitor.id ? (
@@ -653,28 +658,35 @@ export function Dashboard() {
         </div>
       </div>
 
-      {/* Add Monitor Modal */}
+      {/* Swiss Add Monitor Modal */}
       {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
-          <div className="glass-panel w-full max-w-md p-6 rounded-2xl border border-slate-800 shadow-2xl relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80">
+          <div className="w-full max-w-md p-8 bg-[#121316] border border-white/20 rounded-none text-left relative">
             <button
               onClick={() => setIsAddModalOpen(false)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800"
+              className="absolute top-6 right-6 text-[#8E929B] hover:text-white"
             >
               <X className="w-5 h-5" />
             </button>
 
-            <h3 className="text-lg font-bold text-white mb-1">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="w-2 h-2 bg-[#EF4444]" />
+              <span className="swiss-kicker">01 // TARGET REGISTRATION</span>
+            </div>
+            <h3 className="text-xl font-black uppercase tracking-tight text-white mb-1">
               Add New Monitor
             </h3>
-            <p className="text-xs text-slate-400 mb-6">
-              Configure a target URL for automated 24/7 uptime monitoring.
+            <p className="text-xs text-[#8E929B] font-mono mb-6">
+              CONFIGURE ENDPOINT FOR 30S POLLING
             </p>
 
-            <form onSubmit={handleCreateMonitor} className="space-y-4">
+            <form
+              onSubmit={handleCreateMonitor}
+              className="space-y-5 font-mono"
+            >
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1.5">
-                  Monitor Name
+                <label className="block text-[10px] uppercase tracking-[0.18em] text-[#A0A4AD] mb-2">
+                  Service Identifier (Name)
                 </label>
                 <input
                   type="text"
@@ -682,63 +694,63 @@ export function Dashboard() {
                   onChange={(e) => setNewMonitorName(e.target.value)}
                   placeholder="e.g. Primary API Gateway"
                   required
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 text-sm focus:border-[#EF4444] outline-none"
+                  className="w-full px-4 py-3 bg-[#0C0D0E] border border-white/15 text-white text-xs rounded-none focus:border-white focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1.5">
-                  Target URL
+                <label className="block text-[10px] uppercase tracking-[0.18em] text-[#A0A4AD] mb-2">
+                  Target URL (HTTP/HTTPS)
                 </label>
                 <input
                   type="url"
                   value={newMonitorUrl}
                   onChange={(e) => setNewMonitorUrl(e.target.value)}
-                  placeholder="https://api.example.com/health"
+                  placeholder="https://api.spidernode.site/health"
                   required
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 text-sm focus:border-[#EF4444] outline-none"
+                  className="w-full px-4 py-3 bg-[#0C0D0E] border border-white/15 text-white text-xs rounded-none focus:border-white focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1.5">
-                  Check Interval
+                <label className="block text-[10px] uppercase tracking-[0.18em] text-[#A0A4AD] mb-2">
+                  Polling Interval
                 </label>
                 <select
                   value={newMonitorInterval}
                   onChange={(e) =>
                     setNewMonitorInterval(Number(e.target.value))
                   }
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 text-sm focus:border-[#EF4444] outline-none"
+                  className="w-full px-4 py-3 bg-[#0C0D0E] border border-white/15 text-white text-xs rounded-none focus:border-white focus:outline-none uppercase"
                 >
-                  <option value={1}>Every 1 minute</option>
-                  <option value={5}>Every 5 minutes</option>
-                  <option value={10}>Every 10 minutes</option>
-                  <option value={30}>Every 30 minutes</option>
-                  <option value={60}>Every 60 minutes</option>
+                  <option value={1}>Every 1 Minute</option>
+                  <option value={5}>Every 5 Minutes</option>
+                  <option value={10}>Every 10 Minutes</option>
+                  <option value={30}>Every 30 Minutes</option>
+                  <option value={60}>Every 60 Minutes</option>
                 </select>
               </div>
 
-              <div className="pt-2 flex items-center justify-end gap-3">
+              <div className="pt-4 flex items-center justify-end gap-3 border-t border-white/10">
                 <button
                   type="button"
                   onClick={() => setIsAddModalOpen(false)}
-                  className="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 text-xs font-semibold cursor-pointer"
+                  className="px-4 py-2.5 border border-white/15 text-[#A0A4AD] hover:text-white text-xs uppercase tracking-wider rounded-none cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-5 py-2 rounded-xl bg-[#EF4444] hover:bg-red-400 text-[#121212] text-xs font-bold transition-all shadow-md shadow-red-500/20 cursor-pointer flex items-center gap-2 disabled:opacity-50"
+                  className="px-6 py-2.5 bg-[#EF4444] hover:bg-[#DC2626] text-white text-xs font-bold uppercase tracking-[0.18em] rounded-none shadow-none cursor-pointer flex items-center gap-2 disabled:opacity-50"
                 >
                   {isSubmitting ? (
                     <>
                       <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                      <span>Saving...</span>
+                      <span>INITIALIZING...</span>
                     </>
                   ) : (
-                    <span>Create Monitor</span>
+                    <span>CONFIRM MONITOR</span>
                   )}
                 </button>
               </div>
@@ -747,29 +759,35 @@ export function Dashboard() {
         </div>
       )}
 
-      {/* Edit Monitor Modal */}
+      {/* Swiss Edit Monitor Modal */}
       {isEditModalOpen && editingMonitor && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
-          <div className="glass-panel w-full max-w-md p-6 rounded-2xl border border-slate-800 shadow-2xl relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80">
+          <div className="w-full max-w-md p-8 bg-[#121316] border border-white/20 rounded-none text-left relative">
             <button
               onClick={() => {
                 setIsEditModalOpen(false);
                 setEditingMonitor(null);
               }}
-              className="absolute top-4 right-4 text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800"
+              className="absolute top-6 right-6 text-[#8E929B] hover:text-white"
             >
               <X className="w-5 h-5" />
             </button>
 
-            <h3 className="text-lg font-bold text-white mb-1">Edit Monitor</h3>
-            <p className="text-xs text-slate-400 mb-6">
-              Update configuration for {editingMonitor.name}.
+            <div className="flex items-center gap-2 mb-2">
+              <span className="w-2 h-2 bg-[#EF4444]" />
+              <span className="swiss-kicker">02 // CONFIGURATION MUTATION</span>
+            </div>
+            <h3 className="text-xl font-black uppercase tracking-tight text-white mb-1">
+              Edit Monitor
+            </h3>
+            <p className="text-xs text-[#8E929B] font-mono mb-6">
+              MUTATING CONFIGURATION FOR {editingMonitor.name}
             </p>
 
-            <form onSubmit={handleEditMonitor} className="space-y-4">
+            <form onSubmit={handleEditMonitor} className="space-y-5 font-mono">
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1.5">
-                  Monitor Name
+                <label className="block text-[10px] uppercase tracking-[0.18em] text-[#A0A4AD] mb-2">
+                  Service Identifier (Name)
                 </label>
                 <input
                   type="text"
@@ -777,66 +795,66 @@ export function Dashboard() {
                   onChange={(e) => setEditMonitorName(e.target.value)}
                   placeholder="e.g. Primary API Gateway"
                   required
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 text-sm focus:border-[#EF4444] outline-none"
+                  className="w-full px-4 py-3 bg-[#0C0D0E] border border-white/15 text-white text-xs rounded-none focus:border-white focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1.5">
-                  Target URL
+                <label className="block text-[10px] uppercase tracking-[0.18em] text-[#A0A4AD] mb-2">
+                  Target URL (HTTP/HTTPS)
                 </label>
                 <input
                   type="url"
                   value={editMonitorUrl}
                   onChange={(e) => setEditMonitorUrl(e.target.value)}
-                  placeholder="https://api.example.com/health"
+                  placeholder="https://api.spidernode.site/health"
                   required
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 text-sm focus:border-[#EF4444] outline-none"
+                  className="w-full px-4 py-3 bg-[#0C0D0E] border border-white/15 text-white text-xs rounded-none focus:border-white focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1.5">
-                  Check Interval
+                <label className="block text-[10px] uppercase tracking-[0.18em] text-[#A0A4AD] mb-2">
+                  Polling Interval
                 </label>
                 <select
                   value={editMonitorInterval}
                   onChange={(e) =>
                     setEditMonitorInterval(Number(e.target.value))
                   }
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 text-sm focus:border-[#EF4444] outline-none"
+                  className="w-full px-4 py-3 bg-[#0C0D0E] border border-white/15 text-white text-xs rounded-none focus:border-white focus:outline-none uppercase"
                 >
-                  <option value={1}>Every 1 minute</option>
-                  <option value={5}>Every 5 minutes</option>
-                  <option value={10}>Every 10 minutes</option>
-                  <option value={30}>Every 30 minutes</option>
-                  <option value={60}>Every 60 minutes</option>
+                  <option value={1}>Every 1 Minute</option>
+                  <option value={5}>Every 5 Minutes</option>
+                  <option value={10}>Every 10 Minutes</option>
+                  <option value={30}>Every 30 Minutes</option>
+                  <option value={60}>Every 60 Minutes</option>
                 </select>
               </div>
 
-              <div className="pt-2 flex items-center justify-end gap-3">
+              <div className="pt-4 flex items-center justify-end gap-3 border-t border-white/10">
                 <button
                   type="button"
                   onClick={() => {
                     setIsEditModalOpen(false);
                     setEditingMonitor(null);
                   }}
-                  className="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 text-xs font-semibold cursor-pointer"
+                  className="px-4 py-2.5 border border-white/15 text-[#A0A4AD] hover:text-white text-xs uppercase tracking-wider rounded-none cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isUpdating}
-                  className="px-5 py-2 rounded-xl bg-[#EF4444] hover:bg-red-400 text-[#121212] text-xs font-bold transition-all shadow-md shadow-red-500/20 cursor-pointer flex items-center gap-2 disabled:opacity-50"
+                  className="px-6 py-2.5 bg-[#EF4444] hover:bg-[#DC2626] text-white text-xs font-bold uppercase tracking-[0.18em] rounded-none shadow-none cursor-pointer flex items-center gap-2 disabled:opacity-50"
                 >
                   {isUpdating ? (
                     <>
                       <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                      <span>Updating...</span>
+                      <span>UPDATING...</span>
                     </>
                   ) : (
-                    <span>Save Changes</span>
+                    <span>COMMIT CHANGES</span>
                   )}
                 </button>
               </div>

@@ -4,7 +4,12 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter, useParams } from "next/navigation";
 import { toast } from "sonner";
-import { Activity01Icon as Activity, ArrowLeft01Icon as ArrowLeft, Clock01Icon as Clock, GlobeIcon as Globe, Loading01Icon as Loader2, Alert01Icon as AlertTriangle, CheckmarkCircle02Icon as CheckCircle2, CancelCircleIcon as XCircle, ArrowUpRight01Icon as TrendingUp, ServerStack01Icon as ServerCrash } from "hugeicons-react";
+import {
+  ArrowLeft01Icon as ArrowLeft,
+  Clock01Icon as Clock,
+  GlobeIcon as Globe,
+  Loading01Icon as Loader2,
+} from "hugeicons-react";
 import Link from "next/link";
 
 interface Ping {
@@ -22,7 +27,7 @@ interface Incident {
   resolvedAt: string | null;
 }
 
-interface MonitorDetails {
+interface MonitorDetailsData {
   id: number;
   name: string;
   url: string;
@@ -38,12 +43,12 @@ interface MonitorDetails {
 }
 
 export function MonitorDetails() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   const params = useParams();
   const id = params.id as string;
 
-  const [monitor, setMonitor] = useState<MonitorDetails | null>(null);
+  const [monitor, setMonitor] = useState<MonitorDetailsData | null>(null);
   const [loading, setLoading] = useState(true);
 
   // Protect route
@@ -81,21 +86,23 @@ export function MonitorDetails() {
   useEffect(() => {
     if (status === "authenticated" && id) {
       fetchDetails();
-      
+
       const interval = setInterval(() => {
         fetchDetails();
       }, 30000); // 30s refresh
-      
+
       return () => clearInterval(interval);
     }
   }, [status, id, fetchDetails]);
 
   if (status === "loading" || loading) {
     return (
-      <div className="min-h-screen bg-[#121212] flex items-center justify-center">
+      <div className="min-h-screen bg-[#0C0D0E] flex items-center justify-center font-mono">
         <div className="flex flex-col items-center gap-3">
           <Loader2 className="w-8 h-8 animate-spin text-[#EF4444]" />
-          <span className="text-xs text-slate-400 font-mono">Loading Monitor Data...</span>
+          <span className="text-xs text-[#8E929B] uppercase tracking-widest">
+            Awaiting Telemetry Stream...
+          </span>
         </div>
       </div>
     );
@@ -103,212 +110,244 @@ export function MonitorDetails() {
 
   if (!monitor) return null;
 
-  // Chart preparation
-  // Reverse pings to show oldest to newest (left to right)
-  const chartPings = [...monitor.pings].reverse().slice(-50); // Show last 50
-  
+  const chartPings = [...monitor.pings].reverse().slice(-50);
+  const isUp = monitor.isActive && monitor.status === "UP";
+  const isDown = monitor.isActive && monitor.status === "DOWN";
+
   return (
-    <div className="min-h-screen bg-[#121212] text-slate-100 p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-[#0C0D0E] text-[#F4F4F5] p-4 sm:p-6 lg:p-8 font-sans">
       <div className="max-w-7xl mx-auto space-y-8">
-        
-        {/* Top Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        {/* Top Header Bar */}
+        <div className="border border-white/15 bg-[#121316] p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-6 rounded-none text-left">
           <div className="flex items-center gap-4">
-            <Link 
+            <Link
               href="/dashboard"
-              className="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-400 hover:text-white transition-colors cursor-pointer"
+              className="p-3 border border-white/15 text-[#8E929B] hover:text-white hover:border-white/40 transition-colors cursor-pointer rounded-none"
+              title="Return to Console"
             >
-              <ArrowLeft className="w-5 h-5" />
+              <ArrowLeft className="w-4 h-4" />
             </Link>
             <div>
-              <h1 className="text-2xl font-bold text-white flex items-center gap-3">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="w-2 h-2 bg-[#EF4444]" />
+                <span className="swiss-kicker">
+                  01 // TARGET TELEMETRY NODE
+                </span>
+              </div>
+              <h1 className="text-2xl font-black uppercase tracking-tight text-white flex items-center gap-3">
                 {monitor.name}
                 <span
-                  className={`inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-[11px] font-bold border ${
-                    !monitor.isActive
-                      ? "bg-slate-500/10 text-slate-400 border-slate-500/30"
-                      : monitor.status === "UP"
-                      ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
-                      : monitor.status === "DOWN"
-                      ? "bg-rose-500/10 text-rose-400 border-rose-500/30"
-                      : "bg-amber-500/10 text-amber-400 border-amber-500/30"
+                  className={`px-2.5 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider rounded-none ${
+                    isUp
+                      ? "bg-white/10 text-white border border-white/20"
+                      : isDown
+                        ? "bg-[#EF4444] text-white border border-[#EF4444]"
+                        : "bg-white/5 text-[#8E929B] border border-white/10"
                   }`}
                 >
-                  <span
-                    className={`w-2 h-2 rounded-full ${
-                      !monitor.isActive
-                        ? "bg-slate-500"
-                        : monitor.status === "UP"
-                        ? "bg-emerald-400 animate-ping"
-                        : "bg-rose-500"
-                    }`}
-                  />
                   {!monitor.isActive ? "PAUSED" : monitor.status}
                 </span>
               </h1>
-              <a 
-                href={monitor.url} 
-                target="_blank" 
+              <a
+                href={monitor.url}
+                target="_blank"
                 rel="noreferrer"
-                className="text-sm text-slate-400 hover:text-[#EF4444] flex items-center gap-1 mt-1 transition-colors"
+                className="text-xs text-[#8E929B] hover:text-white flex items-center gap-1.5 mt-1 font-mono transition-colors"
               >
                 <Globe className="w-3.5 h-3.5" />
-                {monitor.url}
+                <span>{monitor.url} ↗</span>
               </a>
             </div>
           </div>
-          
-          <div className="flex items-center gap-6 text-sm text-slate-400 bg-slate-900/50 p-3 rounded-xl border border-slate-800/80">
-            <div className="flex flex-col">
-              <span className="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Check Interval</span>
-              <span className="font-mono text-white">{monitor.interval} minutes</span>
+
+          <div className="flex items-center gap-6 font-mono text-xs border-t sm:border-t-0 sm:border-l border-white/15 pt-4 sm:pt-0 sm:pl-6">
+            <div>
+              <span className="text-[10px] uppercase font-bold text-[#8E929B] tracking-wider block">
+                POLLING CYCLE
+              </span>
+              <span className="text-white font-bold">
+                {monitor.interval} MIN
+              </span>
             </div>
-            <div className="w-px h-8 bg-slate-800"></div>
-            <div className="flex flex-col">
-              <span className="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Last Checked</span>
-              <span className="font-mono text-white">
-                {monitor.lastChecked ? new Date(monitor.lastChecked).toLocaleTimeString() : "Never"}
+            <div className="w-px h-8 bg-white/15" />
+            <div>
+              <span className="text-[10px] uppercase font-bold text-[#8E929B] tracking-wider block">
+                LAST PROBE
+              </span>
+              <span className="text-white font-bold">
+                {monitor.lastChecked
+                  ? new Date(monitor.lastChecked).toLocaleTimeString()
+                  : "NEVER"}
               </span>
             </div>
           </div>
         </div>
 
-        {/* Metrics Overview */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div className="glass-panel p-5 rounded-2xl border border-slate-800">
-            <div className="flex items-center justify-between text-slate-400 mb-2">
-              <span className="text-xs font-mono">OVERALL UPTIME</span>
-              <Activity className="w-4 h-4 text-emerald-400" />
+        {/* Swiss Connected Metrics Strip */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 border border-white/15 bg-[#121316] divide-y sm:divide-y-0 sm:divide-x divide-white/15 rounded-none text-left">
+          <div className="p-6">
+            <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#8E929B] mb-2">
+              OVERALL UPTIME
             </div>
-            <div className={`text-3xl font-extrabold font-mono ${monitor.uptimePercent < 95 ? "text-rose-400" : "text-emerald-400"}`}>
+            <div
+              className={`text-4xl font-black font-mono tracking-tight ${
+                monitor.uptimePercent < 95 ? "text-[#EF4444]" : "text-white"
+              }`}
+            >
               {monitor.uptimePercent ? monitor.uptimePercent.toFixed(2) : 100}%
             </div>
+            <p className="text-[10px] font-mono text-[#8E929B] uppercase tracking-wider mt-2">
+              ROLLING 30-DAY WINDOW
+            </p>
           </div>
 
-          <div className="glass-panel p-5 rounded-2xl border border-slate-800">
-            <div className="flex items-center justify-between text-slate-400 mb-2">
-              <span className="text-xs font-mono">AVG RESPONSE TIME</span>
-              <TrendingUp className="w-4 h-4 text-[#EF4444]" />
+          <div className="p-6">
+            <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#8E929B] mb-2">
+              AVG RESPONSE TIME
             </div>
-            <div className="text-3xl font-extrabold font-mono text-white">
-              {monitor.responseTime || 0}ms
+            <div className="text-4xl font-black font-mono text-[#EF4444] tracking-tight">
+              {monitor.responseTime || 0}
+              <span className="text-sm font-normal text-[#8E929B] ml-1">
+                MS
+              </span>
             </div>
+            <p className="text-[10px] font-mono text-[#8E929B] uppercase tracking-wider mt-2">
+              LAST RECORDED PROBE
+            </p>
           </div>
 
-          <div className="glass-panel p-5 rounded-2xl border border-slate-800">
-            <div className="flex items-center justify-between text-slate-400 mb-2">
-              <span className="text-xs font-mono">TOTAL INCIDENTS</span>
-              <AlertTriangle className="w-4 h-4 text-amber-400" />
+          <div className="p-6">
+            <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#8E929B] mb-2">
+              RECORDED INCIDENTS
             </div>
-            <div className="text-3xl font-extrabold font-mono text-amber-400">
+            <div className="text-4xl font-black font-mono text-white tracking-tight">
               {monitor.incidents.length}
             </div>
+            <p className="text-[10px] font-mono text-[#8E929B] uppercase tracking-wider mt-2">
+              LIFETIME FAILURES
+            </p>
           </div>
         </div>
 
-        {/* Response Time Chart (Bar Chart visualization) */}
-        <div className="glass-panel p-5 sm:p-6 rounded-2xl border border-slate-800">
-          <h2 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-            <Activity className="w-5 h-5 text-[#EF4444]" />
-            Response Time History (Last 50 checks)
-          </h2>
-          
-          <div className="h-48 w-full flex items-end gap-1 overflow-hidden relative border-b border-slate-800 pb-2">
+        {/* Response Time Telemetry Strip (Bar visualization) */}
+        <div className="border border-white/15 bg-[#121316] p-6 text-left rounded-none">
+          <div className="flex items-baseline justify-between mb-6 pb-4 border-b border-white/10">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="w-2 h-2 bg-[#EF4444]" />
+                <span className="swiss-kicker">
+                  02 // HISTORIC RESPONSE TIME
+                </span>
+              </div>
+              <h2 className="text-lg font-black uppercase tracking-tight text-white">
+                Last 50 Probe Cycles
+              </h2>
+            </div>
+            <span className="font-mono text-[10px] uppercase tracking-wider text-[#8E929B]">
+              SCALE: 0MS — 1000MS
+            </span>
+          </div>
+
+          <div className="h-44 w-full flex items-end gap-1 overflow-hidden relative border-b border-white/15 pb-2">
             {chartPings.length === 0 ? (
-              <div className="absolute inset-0 flex items-center justify-center text-slate-500 font-mono text-xs">
-                No ping data available yet.
+              <div className="absolute inset-0 flex items-center justify-center text-[#8E929B] font-mono text-xs uppercase tracking-widest">
+                NO TELEMETRY RECORDED YET
               </div>
             ) : (
-              chartPings.map((ping, i) => {
-                // max height for 1000ms
-                const heightPercent = Math.min(100, Math.max(5, (ping.responseTime / 1000) * 100));
-                const isDown = ping.status === "DOWN";
-                
+              chartPings.map((ping) => {
+                const heightPercent = Math.min(
+                  100,
+                  Math.max(5, (ping.responseTime / 1000) * 100),
+                );
+                const pingDown = ping.status === "DOWN";
+
                 return (
-                  <div 
-                    key={ping.id} 
+                  <div
+                    key={ping.id}
                     title={`${ping.responseTime}ms at ${new Date(ping.createdAt).toLocaleTimeString()}`}
-                    className={`flex-1 min-w-[4px] rounded-t-sm transition-all hover:opacity-80 cursor-crosshair group relative ${
-                      isDown ? 'bg-rose-500' : 'bg-[#EF4444]'
+                    className={`flex-1 min-w-[4px] transition-colors group relative cursor-crosshair rounded-none ${
+                      pingDown ? "bg-[#EF4444]" : "bg-white/40 hover:bg-white"
                     }`}
-                    style={{ height: `${isDown ? 10 : heightPercent}%` }}
+                    style={{ height: `${pingDown ? 10 : heightPercent}%` }}
                   >
-                    <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-slate-900 border border-slate-800 text-xs text-white px-2 py-1 rounded pointer-events-none whitespace-nowrap z-10 transition-opacity">
-                      {isDown ? 'OFFLINE' : `${ping.responseTime}ms`}
-                      <div className="text-[9px] text-slate-400 mt-0.5">{new Date(ping.createdAt).toLocaleTimeString()}</div>
+                    <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-[#0C0D0E] border border-white/20 text-xs font-mono text-white px-2 py-1 pointer-events-none whitespace-nowrap z-10 rounded-none">
+                      {pingDown ? "OFFLINE" : `${ping.responseTime}ms`}
+                      <div className="text-[9px] text-[#8E929B] mt-0.5">
+                        {new Date(ping.createdAt).toLocaleTimeString()}
+                      </div>
                     </div>
                   </div>
-                )
+                );
               })
             )}
           </div>
         </div>
 
         {/* Incident History Section */}
-        <div className="glass-panel rounded-2xl border border-slate-800 overflow-hidden">
-          <div className="p-4 sm:p-6 border-b border-slate-800/80">
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <ServerCrash className="w-5 h-5 text-slate-400" />
-              Incident History
+        <div className="border border-white/15 bg-[#121316] text-left rounded-none">
+          <div className="p-6 border-b border-white/15">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="w-2 h-2 bg-[#EF4444]" />
+              <span className="swiss-kicker">03 // EVENT LOG</span>
+            </div>
+            <h2 className="text-lg font-black uppercase tracking-tight text-white">
+              Incident Audit Log
             </h2>
-            <p className="text-xs text-slate-400 mt-1">
-              Recent downtime events and their duration.
+            <p className="text-xs text-[#8E929B] font-mono mt-1">
+              HISTORICAL DOWNTIME EVENTS AND DURATION
             </p>
           </div>
-          
+
           {monitor.incidents.length === 0 ? (
-            <div className="p-12 text-center space-y-3">
-              <div className="w-12 h-12 rounded-full bg-slate-900 border border-slate-800 text-emerald-400 flex items-center justify-center mx-auto">
-                <CheckCircle2 className="w-6 h-6" />
+            <div className="p-16 text-center space-y-2">
+              <div className="text-xs font-mono font-bold uppercase tracking-widest text-white">
+                NO RECORDED OUTAGES
               </div>
-              <h3 className="text-sm font-semibold text-slate-300">Clean History</h3>
-              <p className="text-xs text-slate-500">
-                No incidents recorded for this monitor.
+              <p className="text-xs text-[#8E929B] font-mono">
+                This endpoint has maintained 100% operational availability
+                during tracking.
               </p>
             </div>
           ) : (
-            <div className="divide-y divide-slate-800/60">
+            <div className="divide-y divide-white/10 font-mono text-xs">
               {monitor.incidents.map((incident) => {
                 const isOngoing = incident.status === "ONGOING";
-                
+
                 return (
-                  <div key={incident.id} className="p-4 sm:p-6 hover:bg-slate-800/20 transition-colors">
+                  <div
+                    key={incident.id}
+                    className="p-6 hover:bg-white/[0.02] transition-colors"
+                  >
                     <div className="flex items-start justify-between gap-4">
-                      <div className="flex items-start gap-4">
-                        <div className={`mt-0.5 w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                          isOngoing ? "bg-rose-500/10 text-rose-500" : "bg-emerald-500/10 text-emerald-400"
-                        }`}>
-                          {isOngoing ? <XCircle className="w-4 h-4" /> : <CheckCircle2 className="w-4 h-4" />}
+                      <div>
+                        <div className="flex items-center gap-3">
+                          <span
+                            className={`px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-none ${
+                              isOngoing
+                                ? "bg-[#EF4444] text-white border border-[#EF4444]"
+                                : "bg-white/10 text-white border border-white/20"
+                            }`}
+                          >
+                            {isOngoing ? "ACTIVE OUTAGE" : "RESOLVED"}
+                          </span>
+                          <span className="font-bold text-white uppercase">
+                            {incident.description ||
+                              "HTTP Timeout or Status Code Failure"}
+                          </span>
                         </div>
-                        <div>
-                          <h4 className="text-sm font-bold text-white">
-                            {isOngoing ? "Downtime Ongoing" : "Downtime Resolved"}
-                          </h4>
-                          <p className="text-xs text-slate-400 mt-1">
-                            {incident.description || "Connection timeout or invalid status code."}
-                          </p>
-                          <div className="flex items-center gap-4 mt-3 text-[11px] font-mono text-slate-500">
-                            <span className="flex items-center gap-1.5">
-                              <Clock className="w-3 h-3 text-slate-600" />
-                              Started: {new Date(incident.startedAt).toLocaleString()}
+                        <div className="flex items-center gap-6 mt-3 text-[11px] text-[#8E929B]">
+                          <span>
+                            STARTED:{" "}
+                            {new Date(incident.startedAt).toLocaleString()}
+                          </span>
+                          {!isOngoing && incident.resolvedAt && (
+                            <span className="text-white">
+                              RESOLVED:{" "}
+                              {new Date(incident.resolvedAt).toLocaleString()}
                             </span>
-                            {!isOngoing && incident.resolvedAt && (
-                              <span className="flex items-center gap-1.5 text-emerald-500/80">
-                                <Activity className="w-3 h-3" />
-                                Resolved: {new Date(incident.resolvedAt).toLocaleString()}
-                              </span>
-                            )}
-                          </div>
+                          )}
                         </div>
                       </div>
-                      
-                      <span className={`px-2.5 py-1 rounded border text-[10px] font-bold tracking-wider ${
-                        isOngoing 
-                          ? "bg-rose-500/10 border-rose-500/30 text-rose-400 animate-pulse"
-                          : "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
-                      }`}>
-                        {isOngoing ? "ACTIVE" : "RESOLVED"}
-                      </span>
                     </div>
                   </div>
                 );
@@ -316,7 +355,6 @@ export function MonitorDetails() {
             </div>
           )}
         </div>
-
       </div>
     </div>
   );

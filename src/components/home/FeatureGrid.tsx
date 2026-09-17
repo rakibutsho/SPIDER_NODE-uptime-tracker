@@ -1,53 +1,81 @@
 "use client";
 
 import React from "react";
-import { Globe02Icon as Globe2, Shield01Icon as ShieldCheck, FlashIcon as Zap } from "hugeicons-react";
 
 export default function FeatureGrid() {
+  const features = [
+    {
+      num: "01",
+      title: "Sub-Minute Health Pings",
+      description:
+        "High-frequency probe clusters dispatch automated HTTP/TCP heartbeats every 30 seconds to immediately isolate outages before customer escalation.",
+      meta: "FREQUENCY: 30S // HTTP, TCP, SSL",
+    },
+    {
+      num: "02",
+      title: "Consensus Multi-Region Proof",
+      description:
+        "Health checks are verified across multiple autonomous geographic nodes. A service is only declared down when consensus confirms unreachable state.",
+      meta: "GEOGRAPHY: 4 GLOBAL POPS",
+    },
+    {
+      num: "03",
+      title: "Real-Time Telegram & Webhooks",
+      description:
+        "Payloads are pushed synchronously to your DevOps escalation channels, incident bots, and mobile devices the moment latency threshold breaches occur.",
+      meta: "DISPATCH LATENCY: < 800MS",
+    },
+  ];
+
   return (
-    <div className="border-t border-slate-800/80 bg-[#0F172A]/40 py-20 mt-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="text-3xl font-bold font-heading tracking-tight text-white">
-            Built for Engineering Teams
-          </h2>
-          <p className="text-slate-400 mt-2 text-sm">
-            Everything you need to guarantee high availability and maintain customer trust.
-          </p>
+    <section className="w-full border-b border-white/15 bg-[#0C0D0E] py-20 md:py-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8">
+        {/* Section Header */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-16 pb-6 border-b-2 border-white">
+          <div className="md:col-span-4">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="w-2 h-2 bg-[#EF4444]" />
+              <span className="swiss-kicker">03 // CORE CAPABILITIES</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-[-0.04em] text-white">
+              Engineered For Reliability
+            </h2>
+          </div>
+          <div className="md:col-span-8 flex items-end">
+            <p className="text-[#A0A4AD] text-sm sm:text-base max-w-xl text-left leading-relaxed">
+              Every feature is built around mathematical precision,
+              deterministic reporting, and zero tolerance for false positive
+              alerting.
+            </p>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-red-500/40 transition-colors">
-            <div className="p-3 rounded-xl bg-red-500/10 text-[#EF4444] w-fit mb-4">
-              <Zap className="w-6 h-6" />
-            </div>
-            <h3 className="text-lg font-bold font-heading text-white mb-2">Sub-Minute Pings</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Automated continuous health checks ensure downtime is detected within seconds, before your customers notice.
-            </p>
-          </div>
+        {/* Visible 3-Column Architectural Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 border-t border-l border-white/15">
+          {features.map((f) => (
+            <div
+              key={f.num}
+              className="border-r border-b border-white/15 p-8 sm:p-10 flex flex-col justify-between hover:bg-white/[0.02] transition-colors bg-[#121316]"
+            >
+              <div>
+                <div className="text-4xl sm:text-5xl font-mono font-black text-[#EF4444] tracking-tighter mb-8">
+                  {f.num}
+                </div>
+                <h3 className="text-xl font-bold uppercase tracking-[-0.02em] text-white mb-4">
+                  {f.title}
+                </h3>
+                <p className="text-sm text-[#A0A4AD] leading-relaxed text-left">
+                  {f.description}
+                </p>
+              </div>
 
-          <div className="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-red-500/40 transition-colors">
-            <div className="p-3 rounded-xl bg-red-500/10 text-[#EF4444] w-fit mb-4">
-              <ShieldCheck className="w-6 h-6" />
+              <div className="mt-12 pt-4 border-t border-white/10 font-mono text-[10px] tracking-[0.18em] uppercase text-[#8E929B]">
+                {f.meta}
+              </div>
             </div>
-            <h3 className="text-lg font-bold font-heading text-white mb-2">Multi-Region Validation</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Health checks double verify from multiple geographic locations to prevent false alarm noise.
-            </p>
-          </div>
-
-          <div className="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-red-500/40 transition-colors">
-            <div className="p-3 rounded-xl bg-red-500/10 text-[#EF4444] w-fit mb-4">
-              <Globe2 className="w-6 h-6" />
-            </div>
-            <h3 className="text-lg font-bold font-heading text-white mb-2">Instant Alerting</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Receive instant notifications via Webhooks, Email, or Telegram when any endpoint experiences latency spikes or HTTP errors.
-            </p>
-          </div>
+          ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

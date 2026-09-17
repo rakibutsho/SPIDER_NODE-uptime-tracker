@@ -5,14 +5,12 @@ import { Suspense } from "react";
 import ReduxProvider from "@/redux/Provider";
 import AuthProvider from "@/providers/AuthProvider";
 import Loading from "@/components/Others/Loader/Loading";
-import {
-  inter,
-  spaceGrotesk,
-} from "@/fonts/Fonts";
+import { inter, jetbrainsMono } from "@/fonts/Fonts";
 
 export const metadata: Metadata = {
   title: "SpiderNode | Real-Time Uptime & Infrastructure Monitoring",
-  description: "Developer-centric, real-time uptime monitoring for websites, APIs, and microservices.",
+  description:
+    "Developer-centric, real-time uptime monitoring for websites, APIs, and microservices.",
 };
 
 export default function RootLayout({
@@ -23,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} antialiased bg-[#121212] text-slate-100 min-h-screen`}
+        className={`${inter.variable} ${jetbrainsMono.variable} antialiased bg-[#0C0D0E] text-[#ECECED] min-h-screen selection:bg-[#EF4444] selection:text-white font-sans`}
       >
         <Suspense fallback={<Loading />}>
           <AuthProvider>

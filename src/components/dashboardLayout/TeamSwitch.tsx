@@ -1,5 +1,5 @@
 "use client";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
 import {
   SidebarMenu,
   SidebarMenuButton,
@@ -7,23 +7,19 @@ import {
 } from "@/components/ui/sidebar";
 import { logout } from "@/redux/features/auth/authSlice";
 import Cookies from "js-cookie";
-import {
-  Logout01Icon as LogOut,
-  Activity01Icon as Activity,
-} from "hugeicons-react";
+import { Logout01Icon as LogOut } from "hugeicons-react";
 import { signOut } from "next-auth/react";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
+import logo from "@/assets/logo.png";
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
-import logo from "@/assets/logo.png";
 
 export function TeamSwitcher({
-  teams,
   user,
 }: {
-  teams: { name: string; logo: React.ElementType }[];
+  teams?: { name: string; logo: React.ElementType }[];
   user?: {
     name?: string;
     email?: string;
@@ -31,19 +27,10 @@ export function TeamSwitcher({
     roleLabel?: string;
   };
 }) {
-  const [activeTeam] = React.useState(teams[0]);
   const [showLogoutModal, setShowLogoutModal] = React.useState(false);
   const dispatch = useDispatch();
-  const displayName = user?.name ?? "Default User";
-  const displayEmail = user?.email ?? "user@spidernode.com";
-  const displayAvatar = user?.avatar ?? "https://github.com/shadcn.png";
-  const displayFallback =
-    displayName
-      .split(" ")
-      .filter(Boolean)
-      .slice(0, 2)
-      .map((part) => part[0]?.toUpperCase())
-      .join("") || "U";
+  const displayName = user?.name ?? "OPERATOR";
+  const displayEmail = user?.email ?? "operator@spidernode.site";
 
   const handleLogout = () => {
     dispatch(logout());
@@ -52,78 +39,87 @@ export function TeamSwitcher({
     signOut({ callbackUrl: "/login" });
   };
 
-  if (!activeTeam) {
-    return null;
-  }
-
   return (
-    <div className="space-y-5">
-      {/* Sidebar top logo */}
+    <div className="space-y-4 pb-4">
+      {/* Sidebar Top Wordmark */}
       <SidebarMenu>
         <SidebarMenuItem>
-          <Link href={"/"} className="flex items-center gap-3 px-2 py-3">
-            {/* <div className="flex aspect-square size-10 items-center justify-center rounded-lg bg-black text-[#EF4444] shadow-sm">
-              <Activity className="size-6" />
-            </div> */}
+          <Link
+            href="/"
+            className="flex items-center gap-3 px-3 py-4 border-b border-white/10 w-full group"
+          >
+            <div className="w-2.5 h-6 bg-[#EF4444]" />
             <Image
               src={logo}
-              alt="Logo"
-              width={50}
-              height={50}
-              className="w-12 h-12 object-contain"
+              alt="SpiderNode Logo"
+              width={36}
+              height={36}
+              className="w-8 h-8 object-contain"
             />
-            <span className="text-xl font-bold tracking-tight text-white font-mono">
-              Spider<span className="text-[#EF4444]">Node</span>
-            </span>
+            <div className="flex flex-col">
+              <span className="text-lg font-black tracking-[-0.04em] text-white uppercase leading-none">
+                SpiderNode
+              </span>
+              <span className="text-[9px] font-mono tracking-[0.22em] text-[#8E929B] uppercase mt-0.5">
+                Operator Console
+              </span>
+            </div>
           </Link>
         </SidebarMenuItem>
       </SidebarMenu>
 
-      {/* Footer user and logout */}
-      <div className="absolute bottom-4 left-4 right-4">
-        {/* <div className="mb-4 flex items-center gap-3 rounded-xl bg-white/70 p-2">
-          <Avatar className="h-9 w-9">
-            <AvatarImage src={displayAvatar} alt={displayName} />
-            <AvatarFallback>{displayFallback}</AvatarFallback>
-          </Avatar>
-          <div className="min-w-0">
-            <p className="truncate text-xs font-semibold text-[#111827]">
-              {displayName}
-            </p>
-            <p className="truncate text-[11px] text-[#8A8D91]">
-              {displayEmail}
-            </p>
-          </div>
-        </div> */}
+      {/* Operator Metadata Strip */}
+      <div className="px-3 py-2 border-b border-white/10 text-left font-mono">
+        <div className="text-[9px] uppercase tracking-[0.2em] text-[#8E929B]">
+          LOGGED AS //
+        </div>
+        <div className="text-xs font-bold text-white truncate mt-0.5">
+          {displayName}
+        </div>
+        <div className="text-[10px] text-[#8E929B] truncate">
+          {displayEmail}
+        </div>
+      </div>
+
+      {/* Footer User and Logout */}
+      <div className="absolute bottom-4 left-3 right-3">
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
               onClick={() => setShowLogoutModal(true)}
-              className="h-auto justify-start gap-2 rounded-lg bg-transparent px-2 py-2 text-sm font-semibold text-[#DE251F] hover:bg-[#DE251F]/10 hover:text-[#DE251F]"
+              className="h-auto justify-start gap-2 rounded-none bg-transparent px-3 py-2.5 text-xs font-mono font-bold uppercase tracking-[0.15em] text-[#EF4444] hover:bg-[#EF4444]/10 border border-transparent hover:border-[#EF4444]/20 transition-colors w-full cursor-pointer"
             >
-              <LogOut className="w-4 h-4" />
-              <span>Log out</span>
+              <LogOut className="w-3.5 h-3.5" />
+              <span>TERMINATE SESSION</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </div>
 
+      {/* Swiss Modal */}
       {showLogoutModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4">
-          <div className="w-full max-w-sm rounded-2xl bg-[#0B0F19] border border-white/10 p-6 shadow-2xl text-white animate-in fade-in zoom-in-95 duration-150">
-            <h3 className="text-lg font-semibold tracking-tight text-white">
-              Log Out
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4">
+          <div className="w-full max-w-sm rounded-none bg-[#121316] border border-white/20 p-6 text-white text-left">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="w-2 h-2 bg-[#EF4444]" />
+              <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#EF4444] font-bold">
+                CONFIRMATION REQUIRED
+              </span>
+            </div>
+            <h3 className="text-lg font-black uppercase tracking-tight text-white">
+              Terminate Active Session?
             </h3>
-            <p className="mt-2 text-sm text-gray-400">
-              Are you sure you want to log out of SpiderNode?
+            <p className="mt-2 text-xs text-[#A0A4AD] leading-relaxed">
+              You will be signed out of the SpiderNode management interface on
+              this terminal.
             </p>
-            <div className="mt-6 flex justify-end gap-3">
+            <div className="mt-6 flex justify-end gap-3 pt-4 border-t border-white/10">
               <button
                 type="button"
                 onClick={() => setShowLogoutModal(false)}
-                className="rounded-lg px-4 py-2 text-sm font-medium text-gray-300 hover:bg-white/10 transition-colors cursor-pointer"
+                className="px-4 py-2 text-xs font-mono uppercase tracking-wider text-[#A0A4AD] hover:text-white border border-white/15 hover:border-white/40 transition-colors rounded-none cursor-pointer"
               >
-                Cancel
+                CANCEL
               </button>
               <button
                 type="button"
@@ -131,9 +127,9 @@ export function TeamSwitcher({
                   setShowLogoutModal(false);
                   handleLogout();
                 }}
-                className="rounded-lg bg-[#DE251F] px-4 py-2 text-sm font-semibold text-white hover:bg-[#DE251F]/90 transition-colors shadow-sm cursor-pointer"
+                className="bg-[#EF4444] hover:bg-[#DC2626] px-5 py-2 text-xs font-mono font-bold uppercase tracking-wider text-white transition-colors rounded-none cursor-pointer"
               >
-                Log Out
+                CONFIRM LOGOUT
               </button>
             </div>
           </div>
