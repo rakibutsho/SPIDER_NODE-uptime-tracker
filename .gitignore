@@ -54,3 +54,9 @@ next-env.d.ts
 
 # Local project notes (not for version control)
 project_analysis.md
+
+# Binaries, logs & DB dumps
+ngrok*
+*.log
+*.sql
+dump/

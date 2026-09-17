@@ -36,7 +36,6 @@
     "react-redux": "^9.3.0",
     "redux-persist": "^6.0.0",
     "sonner": "^2.0.8",
-    "sweetalert2": "^11.26.25",
     "tailwind-merge": "^3.7.0",
     "uuid": "^14.0.2"
   },
