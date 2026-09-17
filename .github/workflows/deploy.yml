@@ -16,10 +16,10 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Install Dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
 
       - name: Create .env file for Build
         run: |
@@ -31,7 +31,7 @@ jobs:
         run: npm run build
 
       - name: Tar Build Artifacts
-        run: tar -czf deploy.tar.gz .next public package.json package-lock.json prisma ecosystem.config.js .env
+        run: tar -czf deploy.tar.gz .next public package.json package-lock.json prisma ecosystem.config.js .env .npmrc
 
       - name: Copy Archive to VPS via SCP
         uses: appleboy/scp-action@master
@@ -64,8 +64,8 @@ jobs:
             tar -xzf /tmp/deploy.tar.gz -C /var/www/uptime-tracker
             rm /tmp/deploy.tar.gz
             
-            echo "--- Installing dependencies (this may take a few minutes on small servers) ---"
-            npm ci --omit=dev --no-audit --no-fund
+            echo "--- Installing dependencies ---"
+            npm install --omit=dev --no-audit --no-fund --legacy-peer-deps
             
             echo "--- Generating Prisma Client ---"
             npx prisma generate
@@ -74,5 +74,5 @@ jobs:
             npx prisma db push --accept-data-loss
             
             echo "--- Restarting PM2 ---"
-            pm2 start ecosystem.config.js
+            pm2 restart uptime-tracker --update-env || pm2 start ecosystem.config.js
             echo "--- Deployment Complete ---"

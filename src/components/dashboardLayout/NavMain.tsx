@@ -26,10 +26,10 @@ export function NavMain({
   const pathname = usePathname();
 
   return (
-    <SidebarGroup>
+    <SidebarGroup className="py-2">
       {title && (
-        <p className="px-2 pb-2 pt-1 text-xs font-medium text-[#8A8D91]">
-          {title}
+        <p className="px-3 pb-2 pt-2 text-[10px] font-mono uppercase tracking-[0.25em] text-[#EF4444] font-bold">
+          // {title}
         </p>
       )}
       <SidebarMenu className="space-y-1">
@@ -43,19 +43,21 @@ export function NavMain({
 
           return (
             <SidebarMenuItem key={item.title}>
-              <Link href={item.url}>
+              <Link href={item.url} className="w-full block">
                 <SidebarMenuButton
                   tooltip={item.title}
                   onClick={item.onClick}
-                  className={`flex items-center gap-4 rounded-xl px-3 py-2.5 w-full cursor-pointer text-left transition-colors ${
+                  className={`flex items-center gap-3 px-3 py-2.5 w-full cursor-pointer text-left transition-colors rounded-none ${
                     active
-                      ? "text-[#00E5FF] bg-cyan-500/10 border border-cyan-500/20 font-medium hover:bg-cyan-500/20"
-                      : "text-slate-400 hover:bg-slate-800/50 hover:text-slate-200"
+                      ? "text-white bg-white/[0.05] border-l-2 border-[#EF4444] font-bold"
+                      : "text-[#8E929B] hover:text-white hover:bg-white/[0.02] border-l-2 border-transparent font-medium"
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     {item.icon && <item.icon className="h-4 w-4" />}
-                    <span className="text-sm font-medium">{item.title}</span>
+                    <span className="text-xs uppercase tracking-[0.1em]">
+                      {item.title}
+                    </span>
                   </div>
                 </SidebarMenuButton>
               </Link>
