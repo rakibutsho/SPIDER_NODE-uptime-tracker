@@ -3,7 +3,15 @@
 import React, { useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { LockIcon as Lock, ViewIcon as Eye, ViewOffIcon as EyeOff, Loading01Icon as Loader2, ArrowLeft01Icon as ArrowLeft } from "hugeicons-react";
+import Image from "next/image";
+import logo from "@/assets/logo.png";
+import {
+  LockIcon as Lock,
+  ViewIcon as Eye,
+  ViewOffIcon as EyeOff,
+  Loading01Icon as Loader2,
+  ArrowLeft01Icon as ArrowLeft,
+} from "hugeicons-react";
 import { toast } from "sonner";
 
 function ResetPasswordContent() {
@@ -20,11 +28,11 @@ function ResetPasswordContent() {
     e.preventDefault();
 
     if (!token) {
-      toast.error("Missing reset token");
+      toast.error("Missing password reset token.");
       return;
     }
     if (password.length < 6) {
-      toast.error("Password must be at least 6 characters long.");
+      toast.error("Password must contain at least 6 characters.");
       return;
     }
     if (password !== confirmPassword) {
@@ -48,9 +56,9 @@ function ResetPasswordContent() {
         return;
       }
 
-      toast.success("Password reset successfully! You can now log in.");
+      toast.success("Password updated. Sign in with your new credentials.");
       router.push("/login");
-    } catch (err) {
+    } catch {
       toast.error("An unexpected error occurred.");
     } finally {
       setIsLoading(false);
@@ -59,107 +67,170 @@ function ResetPasswordContent() {
 
   if (!token) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4 bg-[#121212]">
-        <div className="max-w-md w-full glass-panel border border-slate-800 rounded-2xl p-8 text-center space-y-4">
-          <h2 className="text-xl font-bold text-white">Invalid Reset Link</h2>
-          <p className="text-slate-400 text-sm">
-            This password reset link is invalid or missing the required token.
-          </p>
-          <Link
-            href="/forgot-password"
-            className="inline-block px-6 py-2.5 rounded-xl bg-[#EF4444] text-white font-medium text-sm transition-all mt-4"
-          >
-            Request New Link
+      <div className="min-h-screen flex items-center justify-center p-4 bg-[#0C0D0E]">
+        <div className="w-full max-w-md bg-[#121316] border border-red-500/30 p-6 sm:p-8 space-y-6">
+          <Link href="/" className="inline-flex items-center gap-2 group">
+            <div className="w-7 h-7 flex items-center justify-center border border-white/20 bg-black/40">
+              <Image
+                src={logo}
+                alt="SpiderNode"
+                width={22}
+                height={22}
+                className="object-contain"
+                priority
+              />
+            </div>
+            <div className="flex flex-col text-left">
+              <span className="text-xs font-black tracking-[0.25em] text-white uppercase leading-none">
+                SpiderNode
+              </span>
+              <span className="text-[9px] font-mono tracking-[0.25em] text-[#8E929B] uppercase mt-0.5">
+                Telemetry System
+              </span>
+            </div>
           </Link>
+
+          <div className="border-t border-white/10 pt-4 space-y-2">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 bg-[#EF4444]" />
+              <span className="swiss-kicker text-[#EF4444]">
+                TOKEN MISSING OR EXPIRED
+              </span>
+            </div>
+            <h2 className="text-xl font-bold uppercase tracking-tight text-white">
+              Invalid Recovery Token
+            </h2>
+            <p className="text-xs font-mono text-[#8E929B] leading-relaxed">
+              This password reset link is invalid or has expired. Please
+              initiate a new recovery request.
+            </p>
+          </div>
+
+          <div className="pt-2">
+            <Link
+              href="/forgot-password"
+              className="w-full py-3 bg-[#EF4444] hover:bg-white hover:text-black text-white font-mono text-xs font-bold uppercase tracking-[0.15em] transition-colors rounded-none flex items-center justify-center gap-2 cursor-pointer"
+            >
+              Request New Link
+            </Link>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center p-4 bg-[#121212] text-slate-100 relative overflow-hidden">
-      <div className="w-full max-w-md z-10 my-8">
-        <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-slate-100">Set New Password</h1>
-          <p className="text-sm text-slate-400 mt-1">
-            Choose a strong password for your account
+    <div className="min-h-screen w-full flex items-center justify-center p-4 bg-[#0C0D0E] text-slate-100">
+      <div className="w-full max-w-md bg-[#121316] border border-white/15 p-6 sm:p-8 space-y-6">
+        {/* Brand Header */}
+        <Link href="/" className="inline-flex items-center gap-2 group">
+          <div className="w-7 h-7 flex items-center justify-center border border-white/20 bg-black/40">
+            <Image
+              src={logo}
+              alt="SpiderNode"
+              width={22}
+              height={22}
+              className="object-contain"
+              priority
+            />
+          </div>
+          <div className="flex flex-col text-left">
+            <span className="text-xs font-black tracking-[0.25em] text-white uppercase leading-none">
+              SpiderNode
+            </span>
+            <span className="text-[9px] font-mono tracking-[0.25em] text-[#8E929B] uppercase mt-0.5">
+              Telemetry System
+            </span>
+          </div>
+        </Link>
+
+        {/* Section Title */}
+        <div className="border-t border-white/10 pt-4 space-y-1">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 bg-[#EF4444]" />
+            <span className="swiss-kicker">02 // CREDENTIAL OVERWRITE</span>
+          </div>
+          <h1 className="text-xl font-bold uppercase tracking-tight text-white">
+            Set New Password
+          </h1>
+          <p className="text-xs font-mono text-[#8E929B]">
+            SPECIFY NEW ACCESS KEY FOR TELEMETRY ENVIRONMENT
           </p>
         </div>
 
-        <div className="glass-panel p-8 rounded-2xl shadow-2xl border border-slate-800/80">
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1.5">
-                New Password
-              </label>
-              <div className="relative">
-                <Lock className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
-                <input
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="At least 6 characters"
-                  required
-                  minLength={6}
-                  className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-slate-900/80 border border-slate-800 focus:border-[#EF4444]/60 focus:ring-1 focus:ring-[#EF4444]/60 text-slate-100 placeholder-slate-500 text-sm outline-none transition-all"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors"
-                >
-                  {showPassword ? (
-                    <EyeOff className="w-4 h-4" />
-                  ) : (
-                    <Eye className="w-4 h-4" />
-                  )}
-                </button>
-              </div>
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-1.5">
+            <label className="block text-[10px] font-mono uppercase tracking-widest text-[#8E929B]">
+              New Password
+            </label>
+            <div className="relative">
+              <Lock className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40" />
+              <input
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="At least 6 characters"
+                required
+                minLength={6}
+                className="w-full pl-10 pr-10 py-2.5 bg-[#0C0D0E] border border-white/15 focus:border-[#EF4444] text-white placeholder-[#8E929B]/50 text-xs font-mono outline-none rounded-none transition-colors"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors"
+              >
+                {showPassword ? (
+                  <EyeOff className="w-4 h-4" />
+                ) : (
+                  <Eye className="w-4 h-4" />
+                )}
+              </button>
             </div>
-
-            <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1.5">
-                Confirm New Password
-              </label>
-              <div className="relative">
-                <Lock className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
-                <input
-                  type={showPassword ? "text" : "password"}
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  placeholder="Repeat new password"
-                  required
-                  minLength={6}
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-800 focus:border-[#EF4444]/60 focus:ring-1 focus:ring-[#EF4444]/60 text-slate-100 placeholder-slate-500 text-sm outline-none transition-all"
-                />
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full mt-2 py-3 rounded-xl bg-[#EF4444] hover:bg-red-500 text-white font-semibold text-sm transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
-            >
-              {isLoading ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  <span>Resetting Password...</span>
-                </>
-              ) : (
-                <span>Reset Password</span>
-              )}
-            </button>
-          </form>
-
-          <div className="mt-6 text-center">
-            <Link
-              href="/login"
-              className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors"
-            >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              Back to login
-            </Link>
           </div>
+
+          <div className="space-y-1.5">
+            <label className="block text-[10px] font-mono uppercase tracking-widest text-[#8E929B]">
+              Confirm New Password
+            </label>
+            <div className="relative">
+              <Lock className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40" />
+              <input
+                type={showPassword ? "text" : "password"}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Repeat password"
+                required
+                minLength={6}
+                className="w-full pl-10 pr-4 py-2.5 bg-[#0C0D0E] border border-white/15 focus:border-[#EF4444] text-white placeholder-[#8E929B]/50 text-xs font-mono outline-none rounded-none transition-colors"
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="w-full py-3 bg-[#EF4444] hover:bg-white hover:text-black text-white font-mono text-xs font-bold uppercase tracking-[0.15em] transition-colors rounded-none flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+          >
+            {isLoading ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <span>Updating Credentials...</span>
+              </>
+            ) : (
+              <span>Confirm Password Update</span>
+            )}
+          </button>
+        </form>
+
+        <div className="pt-2 border-t border-white/10 flex items-center justify-between text-xs font-mono text-[#8E929B]">
+          <Link
+            href="/login"
+            className="inline-flex items-center gap-1.5 hover:text-white transition-colors"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>Return to Login</span>
+          </Link>
         </div>
       </div>
     </div>
@@ -168,7 +239,13 @@ function ResetPasswordContent() {
 
 export function ResetPasswordForm() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="w-8 h-8 border-2 border-[#EF4444] border-t-transparent rounded-full animate-spin"></div></div>}>
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-[#0C0D0E]">
+          <Loader2 className="w-8 h-8 animate-spin text-[#EF4444]" />
+        </div>
+      }
+    >
       <ResetPasswordContent />
     </Suspense>
   );

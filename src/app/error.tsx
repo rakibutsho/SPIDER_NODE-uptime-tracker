@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { Alert01Icon as AlertCircle, RefreshIcon as RefreshCw } from "hugeicons-react";
+import { RefreshIcon as RefreshCw, Home01Icon as Home } from "hugeicons-react";
 import Link from "next/link";
 
 export default function Error({
@@ -12,42 +12,55 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    // Optionally log the error to an error reporting service
-    console.error("App Error:", error);
+    console.error("Application runtime error:", error);
   }, [error]);
 
   return (
-    <div className="min-h-[80vh] flex flex-col items-center justify-center p-4">
-      <div className="max-w-md w-full glass-panel border border-red-500/20 rounded-2xl p-8 text-center space-y-6 relative overflow-hidden bg-slate-950/80 backdrop-blur-md">
-        <div className="absolute top-0 left-0 w-full h-1 bg-red-500/50"></div>
-        
-        <div className="flex justify-center">
-          <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center">
-            <AlertCircle className="w-8 h-8 text-red-500" />
-          </div>
+    <div className="min-h-[80vh] flex items-center justify-center p-4 sm:p-8 bg-[#0C0D0E]">
+      <div className="w-full max-w-2xl border border-red-500/30 bg-[#121316] p-6 sm:p-12 space-y-6">
+        {/* Kicker */}
+        <div className="flex items-center gap-2">
+          <span className="w-2.5 h-2.5 bg-[#EF4444]" />
+          <span className="swiss-kicker text-[#EF4444]">
+            500 // RUNTIME_FAULT_DETECTED
+          </span>
         </div>
 
-        <div className="space-y-2">
-          <h2 className="text-2xl font-bold text-white tracking-tight">Something went wrong!</h2>
-          <p className="text-slate-400 text-sm">
-            We experienced an unexpected error. Our team has been notified.
+        <div className="space-y-3">
+          <h1 className="text-2xl sm:text-3xl font-bold uppercase tracking-tight text-white">
+            Application Execution Interrupted
+          </h1>
+          <p className="text-xs font-mono text-[#8E929B] leading-relaxed">
+            An unhandled runtime exception halted rendering. The event trace has
+            been logged to the telemetry audit pipeline.
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4">
+        {/* Diagnostics block */}
+        {error.digest && (
+          <div className="p-4 border border-white/10 bg-[#0C0D0E] font-mono text-xs space-y-1">
+            <span className="text-[10px] uppercase tracking-widest text-[#8E929B]">
+              EXCEPTION TRACE DIGEST
+            </span>
+            <p className="text-white break-all">{error.digest}</p>
+          </div>
+        )}
+
+        {/* Actions */}
+        <div className="border-t border-white/15 pt-6 flex flex-wrap items-center gap-3">
           <button
             onClick={() => reset()}
-            className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-medium text-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
+            className="px-6 py-3 bg-[#EF4444] hover:bg-white hover:text-black text-white font-mono text-xs font-bold uppercase tracking-[0.15em] transition-colors rounded-none flex items-center gap-2 cursor-pointer"
           >
-            <RefreshCw className="w-4 h-4" />
-            Try again
+            <RefreshCw className="w-3.5 h-3.5" />
+            <span>Attempt Recovery</span>
           </button>
-          
           <Link
             href="/"
-            className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-medium text-sm transition-all flex items-center justify-center"
+            className="px-6 py-3 border border-white/20 bg-transparent hover:bg-white/10 text-white font-mono text-xs uppercase tracking-[0.15em] transition-colors rounded-none flex items-center gap-2 cursor-pointer"
           >
-            Go to Home
+            <Home className="w-3.5 h-3.5" />
+            <span>Return to Home</span>
           </Link>
         </div>
       </div>

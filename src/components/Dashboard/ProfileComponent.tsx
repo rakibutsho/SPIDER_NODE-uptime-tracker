@@ -4,7 +4,28 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { UserIcon, Mail01Icon as Mail, Shield01Icon as ShieldCheck, Key01Icon as KeyRound, SentIcon as Send, Calendar01Icon as Calendar, Clock01Icon as Clock, Copy01Icon as Copy, Tick01Icon as Check, RefreshIcon as RefreshCw, AlertCircleIcon as AlertCircle, SparklesIcon as Sparkles, LockIcon as Lock, CheckmarkCircle02Icon as CheckCircle2, CancelCircleIcon as XCircle, FingerPrintIcon as Fingerprint, Edit02Icon as Edit2, Delete02Icon as Trash2, FloppyDiskIcon as Save, Cancel01Icon as X, Camera01Icon as Camera } from "hugeicons-react";
+import {
+  UserIcon,
+  Mail01Icon as Mail,
+  Shield01Icon as ShieldCheck,
+  Key01Icon as KeyRound,
+  SentIcon as Send,
+  Calendar01Icon as Calendar,
+  Clock01Icon as Clock,
+  Copy01Icon as Copy,
+  Tick01Icon as Check,
+  RefreshIcon as RefreshCw,
+  AlertCircleIcon as AlertCircle,
+  LockIcon as Lock,
+  CheckmarkCircle02Icon as CheckCircle2,
+  CancelCircleIcon as XCircle,
+  FingerPrintIcon as Fingerprint,
+  Edit02Icon as Edit2,
+  Delete02Icon as Trash2,
+  FloppyDiskIcon as Save,
+  Cancel01Icon as X,
+  Camera01Icon as Camera,
+} from "hugeicons-react";
 import TelegramSettings from "./TelegramSettings";
 
 interface UserProfile {
@@ -79,7 +100,7 @@ export default function ProfileComponent() {
             timezone: data.user.timezone || "UTC",
           }));
           if (isRefresh) {
-            toast.success("Profile reloaded!");
+            toast.success("Profile reloaded.");
           }
         } else {
           throw new Error(data.error || "Profile data missing");
@@ -119,7 +140,8 @@ export default function ProfileComponent() {
       if (editForm.name !== profile?.name) payload.name = editForm.name;
       if (editForm.telegramChatId !== profile?.telegramChatId)
         payload.telegramChatId = editForm.telegramChatId;
-      if (editForm.timezone !== profile?.timezone) payload.timezone = editForm.timezone;
+      if (editForm.timezone !== profile?.timezone)
+        payload.timezone = editForm.timezone;
       if (editForm.newPassword) {
         payload.newPassword = editForm.newPassword;
         payload.currentPassword = editForm.currentPassword;
@@ -140,13 +162,13 @@ export default function ProfileComponent() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Update failed");
 
-      // Update NextAuth session cookie so navbar and other places reflect new name/image immediately
+      // Update NextAuth session cookie
       await update({
         name: data.user.name,
         image: data.user.image,
       });
 
-      toast.success("Profile updated successfully!");
+      toast.success("Profile updated successfully.");
       setIsEditing(false);
       setEditForm((prev) => ({
         ...prev,
@@ -191,12 +213,11 @@ export default function ProfileComponent() {
     if (profile?.id) {
       navigator.clipboard.writeText(profile.id);
       setCopiedId(true);
-      toast.success("User ID copied to clipboard!");
+      toast.success("User ID copied to clipboard");
       setTimeout(() => setCopiedId(false), 2000);
     }
   };
 
-  // Avatar fallback letters
   const getInitials = (name?: string | null, email?: string | null) => {
     if (name) {
       const parts = name.trim().split(" ");
@@ -211,7 +232,6 @@ export default function ProfileComponent() {
     return "US";
   };
 
-  // Date formatter helper
   const formatDate = (dateStr?: string) => {
     if (!dateStr) return "N/A";
     try {
@@ -229,36 +249,23 @@ export default function ProfileComponent() {
 
   if (status === "loading" || loading) {
     return (
-      <div className="w-full max-w-6xl mx-auto space-y-6 animate-pulse p-4 sm:p-6 lg:p-8">
-        {/* Banner Skeleton */}
-        <div className="h-44 rounded-2xl bg-slate-900/80 border border-slate-800 p-6 flex items-center justify-between">
+      <div className="w-full space-y-6 animate-pulse p-4 sm:p-6 lg:p-8">
+        <div className="h-44 bg-[#121316] border border-white/10 p-6 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="w-20 h-20 rounded-full bg-slate-800" />
+            <div className="w-20 h-20 bg-white/5 border border-white/10" />
             <div className="space-y-2">
-              <div className="w-44 h-6 bg-slate-800 rounded-md" />
-              <div className="w-60 h-4 bg-slate-800/70 rounded-md" />
+              <div className="w-48 h-6 bg-white/10" />
+              <div className="w-64 h-4 bg-white/5" />
             </div>
           </div>
         </div>
-
-        {/* Stats Grid Skeleton */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border border-white/10 divide-y sm:divide-y-0 sm:divide-x divide-white/10">
           {[1, 2, 3, 4].map((i) => (
-            <div
-              key={i}
-              className="h-28 rounded-2xl bg-slate-900/60 border border-slate-800 p-5 space-y-3"
-            >
-              <div className="w-8 h-8 rounded-lg bg-slate-800" />
-              <div className="w-24 h-4 bg-slate-800 rounded-md" />
-              <div className="w-32 h-3 bg-slate-800/60 rounded-md" />
+            <div key={i} className="h-28 bg-[#121316] p-5 space-y-3">
+              <div className="w-24 h-3 bg-white/5" />
+              <div className="w-32 h-5 bg-white/10" />
             </div>
           ))}
-        </div>
-
-        {/* Details Skeleton */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="h-72 rounded-2xl bg-slate-900/60 border border-slate-800 p-6" />
-          <div className="h-72 rounded-2xl bg-slate-900/60 border border-slate-800 p-6" />
         </div>
       </div>
     );
@@ -266,125 +273,114 @@ export default function ProfileComponent() {
 
   if (error || !profile) {
     return (
-      <div className="w-full max-w-xl mx-auto p-8 rounded-2xl bg-slate-900/90 text-center">
-        <div className="inline-flex p-4 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20">
-          <AlertCircle className="w-8 h-8" />
+      <div className="w-full max-w-xl mx-auto p-8 border border-white/15 bg-[#121316] text-left space-y-4">
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 bg-[#EF4444]" />
+          <span className="swiss-kicker text-[#EF4444]">
+            ERROR // IDENTITY_UNREACHABLE
+          </span>
         </div>
-        <h2 className="text-xl font-bold text-white font-mono">
+        <h2 className="text-xl font-bold uppercase tracking-tight text-white">
           Failed to Load Profile
         </h2>
-        <p className="text-sm text-slate-400">
-          {error || "User information is unavailable."}
+        <p className="text-xs font-mono text-[#8E929B]">
+          {error || "User identity records unavailable."}
         </p>
-        <button
-          onClick={() => fetchProfile()}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#EF4444] text-[#121212] font-bold text-xs hover:bg-red-400 transition-all shadow-md shadow-red-500/20"
-        >
-          <RefreshCw className="w-4 h-4" />
-          <span>Try Again</span>
-        </button>
+        <div className="pt-2">
+          <button
+            onClick={() => fetchProfile()}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-[#EF4444] text-white font-mono text-xs uppercase tracking-wider hover:bg-white hover:text-black transition-colors rounded-none"
+          >
+            <RefreshCw className="w-4 h-4" />
+            <span>Retry Connection</span>
+          </button>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="w-full max-w-6xl mx-auto space-y-10 p-5 sm:p-8 lg:p-10 pb-24">
-      {/* 1. Premium Header Profile Card */}
-      <div className="relative rounded-3xl border border-slate-800/80 bg-slate-900/60 backdrop-blur-2xl shadow-[0_8px_30px_rgb(0,0,0,0.4)] p-6 sm:p-10 overflow-hidden">
-        {/* Subtle Background Glows */}
-        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-red-500/10 blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 h-64 rounded-full bg-indigo-500/10 blur-3xl pointer-events-none" />
-
-        <div className="relative flex flex-col sm:flex-row items-center justify-between gap-8 w-full">
-          {/* Avatar & Info (Left Side) */}
-          <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8 w-full sm:w-auto">
+    <div className="w-full space-y-8 p-4 sm:p-6 lg:p-8">
+      {/* 1. Swiss Identity Header Card */}
+      <div className="border border-white/15 bg-[#121316] p-6 sm:p-8">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          {/* Avatar & User Details */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
             {/* Avatar Container */}
-            <div
-              className="relative shrink-0 flex-none group"
-              style={{ width: "120px", height: "120px" }}
-            >
-              <div className="absolute inset-0 rounded-[2rem] border-[3px] border-slate-800/80 shadow-2xl bg-slate-950 overflow-hidden flex items-center justify-center transition-all duration-300 group-hover:border-red-500/50 group-hover:shadow-[0_0_25px_rgba(6,182,212,0.2)]">
-                {editForm.image || profile.image ? (
-                  <img
-                    src={editForm.image || profile.image || ""}
-                    alt={profile.name || "User"}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-800 to-slate-950 text-[#EF4444] font-bold text-4xl font-mono">
-                    {getInitials(profile.name, profile.email)}
-                  </div>
-                )}
+            <div className="relative shrink-0 w-24 h-24 border border-white/20 bg-[#0C0D0E] overflow-hidden group">
+              {editForm.image || profile.image ? (
+                <img
+                  src={editForm.image || profile.image || ""}
+                  alt={profile.name || "User"}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-white font-bold text-2xl font-mono">
+                  {getInitials(profile.name, profile.email)}
+                </div>
+              )}
 
-                {isEditing && (
-                  <label className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 cursor-pointer opacity-0 hover:opacity-100 transition-opacity duration-300 z-10 m-0 backdrop-blur-sm">
-                    <Camera className="w-8 h-8 text-white mb-2 transform transition-transform group-hover:scale-110" />
-                    <span className="text-[10px] font-bold text-white uppercase tracking-widest">
-                      Upload
-                    </span>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      className="hidden"
-                      onChange={handleImageChange}
-                    />
-                  </label>
-                )}
-              </div>
+              {isEditing && (
+                <label className="absolute inset-0 flex flex-col items-center justify-center bg-black/75 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity">
+                  <Camera className="w-5 h-5 text-white mb-1" />
+                  <span className="text-[9px] font-mono font-bold text-white uppercase tracking-wider">
+                    UPLOAD
+                  </span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleImageChange}
+                  />
+                </label>
+              )}
             </div>
 
-            {/* Info Text */}
-            <div className="space-y-3 text-center sm:text-left min-w-0">
-              <h1 className="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-300 tracking-tight truncate">
-                {profile.name || "Anonymous User"}
+            {/* Info */}
+            <div className="space-y-2 text-left">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 bg-[#EF4444]" />
+                <span className="swiss-kicker">01 // USER PROFILE</span>
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-bold uppercase tracking-tight text-white">
+                {profile.name || "UNNAMED USER"}
               </h1>
 
-              <div className="flex items-center justify-center sm:justify-start gap-2.5 text-slate-400 text-sm truncate">
-                <div className="p-1.5 rounded-lg bg-red-500/10 text-red-400 shrink-0">
-                  <Mail className="w-3.5 h-3.5" />
-                </div>
-                <span className="font-mono text-slate-300 font-medium truncate">
-                  {profile.email || "No email attached"}
+              <div className="flex flex-wrap items-center gap-4 text-xs font-mono text-[#8E929B]">
+                <span className="flex items-center gap-1.5">
+                  <Mail className="w-3.5 h-3.5 text-white/50" />
+                  {profile.email || "NO EMAIL"}
                 </span>
-              </div>
-
-              <div className="pt-2 flex justify-center sm:justify-start">
+                <span className="text-white/20">|</span>
                 <button
                   onClick={handleCopyId}
-                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-950/50 hover:bg-slate-900 border border-slate-800/80 text-slate-300 text-xs font-mono transition-all cursor-pointer shadow-sm hover:border-slate-700 max-w-full group"
+                  className="inline-flex items-center gap-1.5 text-white/70 hover:text-white transition-colors cursor-pointer"
                   title="Click to copy User ID"
                 >
-                  <Fingerprint className="w-4 h-4 text-[#EF4444] shrink-0 group-hover:scale-110 transition-transform" />
-                  <span className="text-slate-200 font-medium truncate">
-                    {profile.id}
-                  </span>
+                  <Fingerprint className="w-3.5 h-3.5 text-[#EF4444]" />
+                  <span>ID: {profile.id.slice(0, 12)}...</span>
                   {copiedId ? (
-                    <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                    <Check className="w-3 h-3 text-emerald-400" />
                   ) : (
-                    <Copy className="w-3.5 h-3.5 text-slate-500 shrink-0 group-hover:text-slate-300 transition-colors" />
+                    <Copy className="w-3 h-3 text-white/40" />
                   )}
                 </button>
               </div>
             </div>
           </div>
 
-          {/* Action Buttons (Right Side) */}
-          <div className="flex flex-row flex-wrap items-center justify-center sm:justify-end gap-3 w-full sm:w-auto sm:ml-auto self-center">
-            <span className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-950/80 border border-red-500/30 text-[#EF4444] text-xs font-semibold font-mono shadow-sm">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Pro Member</span>
-            </span>
-
+          {/* Action Toolbar */}
+          <div className="flex flex-wrap items-center gap-3 pt-2 lg:pt-0">
             <button
               onClick={() =>
                 isEditing ? setIsEditing(false) : setIsEditing(true)
               }
-              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-slate-950/80 hover:bg-slate-800 border border-slate-700/80 text-slate-300 hover:text-white text-sm font-medium transition-all cursor-pointer shadow-sm hover:shadow-md"
+              className="inline-flex items-center gap-2 px-4 py-2 border border-white/20 bg-transparent text-white font-mono text-xs uppercase tracking-wider hover:bg-white/10 transition-colors rounded-none cursor-pointer"
             >
               {isEditing ? (
-                <X className="w-4 h-4" />
+                <X className="w-3.5 h-3.5" />
               ) : (
-                <Edit2 className="w-4 h-4" />
+                <Edit2 className="w-3.5 h-3.5" />
               )}
               <span>{isEditing ? "Cancel" : "Edit Profile"}</span>
             </button>
@@ -393,131 +389,115 @@ export default function ProfileComponent() {
               <button
                 onClick={handleUpdate}
                 disabled={isUpdating}
-                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-500 to-blue-500 hover:from-red-400 hover:to-blue-400 text-white text-sm font-bold transition-all cursor-pointer shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:shadow-[0_0_25px_rgba(6,182,212,0.5)] hover:-translate-y-0.5 disabled:opacity-50 disabled:hover:translate-y-0"
+                className="inline-flex items-center gap-2 px-5 py-2 bg-[#EF4444] text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-white hover:text-black transition-colors rounded-none cursor-pointer disabled:opacity-50"
               >
                 {isUpdating ? (
-                  <RefreshCw className="w-4 h-4 animate-spin" />
+                  <RefreshCw className="w-3.5 h-3.5 animate-spin" />
                 ) : (
-                  <Save className="w-4 h-4" />
+                  <Save className="w-3.5 h-3.5" />
                 )}
-                <span>{isUpdating ? "Saving..." : "Save"}</span>
+                <span>{isUpdating ? "Saving..." : "Save Changes"}</span>
               </button>
             ) : (
               <button
                 onClick={() => fetchProfile(true)}
                 disabled={refreshing}
-                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-slate-950/80 hover:bg-slate-800 border border-slate-700/80 text-slate-300 hover:text-white text-sm font-medium transition-all cursor-pointer shadow-sm hover:shadow-md disabled:opacity-50"
+                className="inline-flex items-center gap-2 px-4 py-2 border border-white/15 bg-transparent text-[#8E929B] hover:text-white font-mono text-xs uppercase tracking-wider hover:bg-white/5 transition-colors rounded-none cursor-pointer disabled:opacity-50"
               >
                 <RefreshCw
-                  className={`w-4 h-4 ${refreshing ? "animate-spin text-[#EF4444]" : ""}`}
+                  className={`w-3.5 h-3.5 ${refreshing ? "animate-spin text-[#EF4444]" : ""}`}
                 />
-                <span>Refresh</span>
+                <span>Sync</span>
               </button>
             )}
           </div>
         </div>
       </div>
 
-      {/* 2. Key Metrics Highlights Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6 mb-6">
-        {/* Account Status Card */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-md hover:border-slate-700/80 transition-all space-y-4 shadow-lg">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-400 tracking-wider uppercase">
-              Account Status
+      {/* 2. Connected 4-Metric Telemetry Strip */}
+      <div className="border border-white/15 bg-[#121316] divide-y sm:divide-y-0 sm:divide-x divide-white/15 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Metric 01: Status */}
+        <div className="p-5 space-y-2">
+          <div className="swiss-kicker">01 // STATUS</div>
+          <div className="flex items-center gap-2">
+            <span className="inline-block w-2 h-2 bg-emerald-500" />
+            <span className="font-mono text-sm font-bold text-white uppercase tracking-wider">
+              [ACTIVE]
             </span>
-            <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-              <ShieldCheck className="w-4 h-4" />
-            </div>
           </div>
-          <div>
-            <p className="text-xl font-bold text-white flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-              Active
-            </p>
-            <p className="text-xs text-slate-400 mt-1">Verified System User</p>
-          </div>
+          <p className="text-[11px] font-mono text-[#8E929B]">
+            VERIFIED SYSTEM OPERATOR
+          </p>
         </div>
 
-        {/* Security / Auth Method Card */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-md hover:border-slate-700/80 transition-all space-y-4 shadow-lg">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-400 tracking-wider uppercase">
-              Auth Method
-            </span>
-            <div className="p-2.5 rounded-xl bg-red-500/10 text-[#EF4444] border border-red-500/20">
-              <KeyRound className="w-4 h-4" />
-            </div>
+        {/* Metric 02: Auth Provider */}
+        <div className="p-5 space-y-2">
+          <div className="swiss-kicker">02 // AUTH PROTOCOL</div>
+          <div className="font-mono text-sm font-bold text-white uppercase tracking-wider">
+            {profile.hasPassword ? "[PASSWORD_AUTH]" : "[OAUTH_SSO]"}
           </div>
-          <div>
-            <p className="text-xl font-bold text-white truncate">
-              {profile.hasPassword ? "Password Auth" : "OAuth Provider"}
-            </p>
-            <p className="text-xs text-slate-400 mt-1">
-              {profile.hasPassword
-                ? "Secured via Password"
-                : "Social Login Enabled"}
-            </p>
-          </div>
+          <p className="text-[11px] font-mono text-[#8E929B]">
+            {profile.hasPassword
+              ? "CREDENTIAL PROTECTED"
+              : "FEDERATED IDENTITY"}
+          </p>
         </div>
 
-        {/* Telegram Alerts Card */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-md hover:border-slate-700/80 transition-all space-y-4 shadow-lg">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-400 tracking-wider uppercase">
-              Telegram Alerts
-            </span>
-            <div
-              className={`p-2.5 rounded-xl border ${profile.telegramChatId ? "bg-sky-500/10 text-sky-400 border-sky-500/20" : "bg-slate-800/60 text-slate-500 border-slate-700/50"}`}
-            >
-              <Send className="w-4 h-4" />
-            </div>
+        {/* Metric 03: Telegram Webhook */}
+        <div className="p-5 space-y-2">
+          <div className="swiss-kicker">03 // TELEGRAM INTEGRATION</div>
+          <div className="font-mono text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+            {profile.telegramChatId ? (
+              <>
+                <span className="w-2 h-2 bg-emerald-500" />
+                <span className="text-emerald-400">[CONNECTED]</span>
+              </>
+            ) : (
+              <>
+                <span className="w-2 h-2 bg-[#8E929B]" />
+                <span className="text-[#8E929B]">[DISCONNECTED]</span>
+              </>
+            )}
           </div>
-          <div>
-            <p className="text-xl font-bold text-white flex items-center gap-2">
-              {profile.telegramChatId ? (
-                <span className="text-sky-400 flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4.5 h-4.5" /> Connected
-                </span>
-              ) : (
-                <span className="text-slate-400 flex items-center gap-1.5">
-                  <XCircle className="w-4.5 h-4.5 text-slate-500" />{" "}
-                  Disconnected
-                </span>
-              )}
-            </p>
-            <p className="text-xs text-slate-400 mt-1 truncate">
-              {profile.telegramChatId
-                ? `ID: ${profile.telegramChatId}`
-                : "No alert bot linked"}
-            </p>
+          <p className="text-[11px] font-mono text-[#8E929B] truncate">
+            {profile.telegramChatId
+              ? `ID: ${profile.telegramChatId}`
+              : "NO DISPATCH WEBHOOK"}
+          </p>
+        </div>
+
+        {/* Metric 04: Member Since */}
+        <div className="p-5 space-y-2">
+          <div className="swiss-kicker">04 // REGISTERED ON</div>
+          <div className="font-mono text-sm font-bold text-white uppercase tracking-wider">
+            {new Date(profile.createdAt).toLocaleDateString("en-US", {
+              month: "short",
+              year: "numeric",
+            })}
           </div>
+          <p className="text-[11px] font-mono text-[#8E929B]">
+            INITIAL RECORD STAMP
+          </p>
         </div>
       </div>
 
-      {/* 3. Main Details Section (2 Columns) */}
+      {/* 3. Architectural 2-Column Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Personal & Account Information */}
-        <div className="p-6 sm:p-10 rounded-3xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-md space-y-8 shadow-xl">
-          <div className="flex items-center gap-4 pb-5">
-            <div className="p-2.5 rounded-xl bg-red-500/10 border border-red-500/20 text-[#EF4444]">
-              <UserIcon className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="text-base font-bold text-white">
-                Account Information
-              </h3>
-              <p className="text-xs text-slate-400">
-                Personal metadata and account details
-              </p>
-            </div>
+        {/* Left Column: Account Information */}
+        <div className="border border-white/15 bg-[#121316] p-6 sm:p-8 space-y-6">
+          <div className="border-b border-white/15 pb-4">
+            <div className="swiss-kicker">02 // RECORD DETAILS</div>
+            <h2 className="text-lg font-bold uppercase tracking-tight text-white mt-1">
+              Account Metadata
+            </h2>
           </div>
 
-          <div className="space-y-5">
-            <div className="p-5 sm:px-6 sm:py-5 rounded-2xl bg-slate-950/60 border border-slate-800/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+          <div className="space-y-4">
+            {/* Full Name */}
+            <div className="p-4 border border-white/10 bg-[#0C0D0E] space-y-1.5">
+              <label className="block text-[10px] font-mono uppercase tracking-widest text-[#8E929B]">
                 Full Name
-              </span>
+              </label>
               {isEditing ? (
                 <input
                   type="text"
@@ -525,156 +505,178 @@ export default function ProfileComponent() {
                   onChange={(e) =>
                     setEditForm((prev) => ({ ...prev, name: e.target.value }))
                   }
-                  className="bg-slate-950/50 border border-slate-700 focus:border-red-500 focus:ring-1 focus:ring-red-500/50 rounded-xl px-4 py-2 text-sm text-white transition-all w-full sm:w-1/2 shadow-inner"
-                  placeholder="Enter your full name"
+                  className="w-full bg-[#121316] border border-white/20 focus:border-[#EF4444] text-white text-sm font-mono px-3 py-2 outline-none rounded-none"
+                  placeholder="Enter full name"
                 />
               ) : (
-                <span className="text-sm font-medium text-white">
-                  {profile.name || "Not provided"}
-                </span>
+                <p className="text-sm font-mono font-medium text-white">
+                  {profile.name || "NOT SPECIFIED"}
+                </p>
               )}
             </div>
 
-            <div className="p-5 sm:px-6 sm:py-5 rounded-2xl bg-slate-950/60 border border-slate-800/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-                Timezone
-              </span>
+            {/* Timezone */}
+            <div className="p-4 border border-white/10 bg-[#0C0D0E] space-y-1.5">
+              <label className="block text-[10px] font-mono uppercase tracking-widest text-[#8E929B]">
+                System Timezone
+              </label>
               {isEditing ? (
                 <select
                   value={editForm.timezone}
                   onChange={(e) =>
-                    setEditForm((prev) => ({ ...prev, timezone: e.target.value }))
+                    setEditForm((prev) => ({
+                      ...prev,
+                      timezone: e.target.value,
+                    }))
                   }
-                  className="bg-slate-950/50 border border-slate-700 focus:border-red-500 focus:ring-1 focus:ring-red-500/50 rounded-xl px-4 py-2 text-sm text-white transition-all w-full sm:w-1/2 shadow-inner"
+                  className="w-full bg-[#121316] border border-white/20 focus:border-[#EF4444] text-white text-sm font-mono px-3 py-2 outline-none rounded-none"
                 >
-                  <option value="UTC">UTC</option>
-                  <option value="America/New_York">Eastern Time (US & Canada)</option>
-                  <option value="America/Chicago">Central Time (US & Canada)</option>
-                  <option value="America/Denver">Mountain Time (US & Canada)</option>
-                  <option value="America/Los_Angeles">Pacific Time (US & Canada)</option>
-                  <option value="Europe/London">London</option>
-                  <option value="Europe/Paris">Paris</option>
-                  <option value="Asia/Dubai">Dubai</option>
-                  <option value="Asia/Dhaka">Dhaka</option>
-                  <option value="Asia/Kolkata">Kolkata</option>
-                  <option value="Asia/Tokyo">Tokyo</option>
-                  <option value="Australia/Sydney">Sydney</option>
+                  <option value="UTC">UTC (Coordinated Universal Time)</option>
+                  <option value="America/New_York">
+                    Eastern Time (US & Canada)
+                  </option>
+                  <option value="America/Chicago">
+                    Central Time (US & Canada)
+                  </option>
+                  <option value="America/Denver">
+                    Mountain Time (US & Canada)
+                  </option>
+                  <option value="America/Los_Angeles">
+                    Pacific Time (US & Canada)
+                  </option>
+                  <option value="Europe/London">London (GMT/BST)</option>
+                  <option value="Europe/Paris">Paris (CET)</option>
+                  <option value="Asia/Dubai">Dubai (GST)</option>
+                  <option value="Asia/Dhaka">Dhaka (BST)</option>
+                  <option value="Asia/Kolkata">Kolkata (IST)</option>
+                  <option value="Asia/Tokyo">Tokyo (JST)</option>
+                  <option value="Australia/Sydney">Sydney (AEST)</option>
                 </select>
               ) : (
-                <span className="text-sm font-medium text-white">
+                <p className="text-sm font-mono font-medium text-white">
                   {profile.timezone || "UTC"}
-                </span>
+                </p>
               )}
             </div>
 
-            <div className="p-5 sm:px-6 sm:py-5 rounded-2xl bg-slate-950/60 border border-slate-800/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-                Email Address
-              </span>
-              <span className="text-sm font-medium text-slate-400 font-mono">
-                {profile.email}{" "}
-                {isEditing && (
-                  <span className="text-xs text-slate-500 ml-2">
-                    (Cannot be changed)
-                  </span>
-                )}
-              </span>
-            </div>
-
-            <div className="p-5 sm:px-6 sm:py-5 rounded-2xl bg-slate-950/60 border border-slate-800/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-                Account ID
-              </span>
-              <span className="text-xs font-mono text-[#EF4444] bg-red-950/40 px-3 py-1.5 rounded-lg border border-red-800/40 truncate max-w-full">
-                {profile.id}
-              </span>
-            </div>
-
-            {/* Joined Date Card */}
-            <div className="p-5 sm:px-6 sm:py-5 rounded-2xl bg-slate-950/60 border border-slate-800/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div className="flex-col items-center justify-between">
-                <span className="text-xs font-semibold text-slate-400 tracking-wider uppercase">
-                  Member Since
+            {/* Email Address */}
+            <div className="p-4 border border-white/10 bg-[#0C0D0E] space-y-1.5">
+              <div className="flex items-center justify-between">
+                <label className="text-[10px] font-mono uppercase tracking-widest text-[#8E929B]">
+                  Email Address
+                </label>
+                <span className="text-[10px] font-mono text-[#8E929B] uppercase">
+                  LOCKED
                 </span>
-                <div className="p-2.5 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
-                  <Calendar className="w-4 h-4" />
-                </div>
               </div>
-              <div>
-                <p className="text-xl font-bold text-white truncate">
-                  {new Date(profile.createdAt).toLocaleDateString("en-US", {
-                    month: "short",
-                    year: "numeric",
-                  })}
+              <p className="text-sm font-mono text-[#8E929B]">
+                {profile.email}
+              </p>
+            </div>
+
+            {/* Account UUID */}
+            <div className="p-4 border border-white/10 bg-[#0C0D0E] space-y-1.5">
+              <label className="block text-[10px] font-mono uppercase tracking-widest text-[#8E929B]">
+                System UUID
+              </label>
+              <p className="text-xs font-mono text-[#8E929B] break-all">
+                {profile.id}
+              </p>
+            </div>
+
+            {/* Timestamps */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+              <div className="p-4 border border-white/10 bg-[#0C0D0E] space-y-1">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[#8E929B]">
+                  Created Stamp
+                </span>
+                <p className="text-xs font-mono text-white">
+                  {formatDate(profile.createdAt)}
                 </p>
-                <p className="text-xs text-slate-400 mt-1">
-                  Account Creation Date
+              </div>
+              <div className="p-4 border border-white/10 bg-[#0C0D0E] space-y-1">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[#8E929B]">
+                  Modified Stamp
+                </span>
+                <p className="text-xs font-mono text-white">
+                  {formatDate(profile.updatedAt)}
                 </p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Security & Password Card */}
-        <div className="flex flex-col gap-8">
+        {/* Right Column: Telegram & Security Credentials */}
+        <div className="space-y-8">
+          {/* Telegram Settings Section */}
           <TelegramSettings />
 
-          <div className="p-6 sm:p-10 rounded-3xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-md space-y-8 shadow-xl mb-6 flex-1">
-            <div className="flex items-center gap-4 pb-5">
-              <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
-                <Lock className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="text-base font-bold text-white">Security</h3>
-                <p className="text-xs text-slate-400">Account access status</p>
-              </div>
+          {/* Password / Access Control Card */}
+          <div className="border border-white/15 bg-[#121316] p-6 sm:p-8 space-y-6">
+            <div className="border-b border-white/15 pb-4">
+              <div className="swiss-kicker">03 // ACCESS CONTROL</div>
+              <h2 className="text-lg font-bold uppercase tracking-tight text-white mt-1">
+                Credential Security
+              </h2>
             </div>
 
-            <div className="space-y-5">
-              <div className="p-5 sm:px-6 sm:py-5 rounded-2xl bg-slate-950/60 border border-slate-800/60 flex flex-col gap-4">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+            <div className="space-y-4">
+              <div className="p-4 border border-white/10 bg-[#0C0D0E] space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-mono uppercase tracking-wider text-white">
                     Password Protection
                   </span>
-                  <span className="text-xs font-medium text-slate-200 flex items-center gap-1.5">
-                    <Lock className="w-3.5 h-3.5 text-emerald-400" />
-                    {profile.hasPassword
-                      ? "Custom Password Set"
-                      : "OAuth Managed Account"}
+                  <span className="text-xs font-mono text-emerald-400">
+                    {profile.hasPassword ? "[CONFIGURED]" : "[OAUTH_ONLY]"}
                   </span>
                 </div>
+                <p className="text-xs font-mono text-[#8E929B]">
+                  {profile.hasPassword
+                    ? "Your account uses password authentication alongside any configured OAuth providers."
+                    : "No password assigned. Access is authorized via your linked OAuth provider."}
+                </p>
 
                 {isEditing && (
-                  <div className="pt-5 mt-3 border-t border-slate-800/80 space-y-4">
-                    <p className="text-xs text-slate-400">
-                      Change Password (leave blank to keep current)
+                  <div className="pt-4 border-t border-white/10 space-y-3">
+                    <p className="text-[10px] font-mono uppercase tracking-widest text-[#8E929B]">
+                      UPDATE PASSWORD (LEAVE EMPTY TO KEEP CURRENT)
                     </p>
                     {profile.hasPassword && (
+                      <div>
+                        <label className="block text-[10px] font-mono uppercase tracking-widest text-[#8E929B] mb-1">
+                          Current Password
+                        </label>
+                        <input
+                          type="password"
+                          placeholder="Current password"
+                          value={editForm.currentPassword}
+                          onChange={(e) =>
+                            setEditForm((prev) => ({
+                              ...prev,
+                              currentPassword: e.target.value,
+                            }))
+                          }
+                          className="w-full bg-[#121316] border border-white/20 focus:border-[#EF4444] text-white text-sm font-mono px-3 py-2 outline-none rounded-none"
+                        />
+                      </div>
+                    )}
+                    <div>
+                      <label className="block text-[10px] font-mono uppercase tracking-widest text-[#8E929B] mb-1">
+                        New Password (min. 6 chars)
+                      </label>
                       <input
                         type="password"
-                        placeholder="Current Password"
-                        value={editForm.currentPassword}
+                        placeholder="New password"
+                        value={editForm.newPassword}
                         onChange={(e) =>
                           setEditForm((prev) => ({
                             ...prev,
-                            currentPassword: e.target.value,
+                            newPassword: e.target.value,
                           }))
                         }
-                        className="bg-slate-950/50 border border-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 rounded-xl px-4 py-2.5 text-sm text-white transition-all w-full shadow-inner"
+                        className="w-full bg-[#121316] border border-white/20 focus:border-[#EF4444] text-white text-sm font-mono px-3 py-2 outline-none rounded-none"
                       />
-                    )}
-                    <input
-                      type="password"
-                      placeholder="New Password (min 6 characters)"
-                      value={editForm.newPassword}
-                      onChange={(e) =>
-                        setEditForm((prev) => ({
-                          ...prev,
-                          newPassword: e.target.value,
-                        }))
-                      }
-                      className="bg-slate-950/50 border border-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 rounded-xl px-4 py-2.5 text-sm text-white transition-all w-full shadow-inner"
-                    />
+                    </div>
                   </div>
                 )}
               </div>
@@ -683,131 +685,79 @@ export default function ProfileComponent() {
         </div>
       </div>
 
-      {/* Main Save Button when editing */}
-      {isEditing && (
-        <div className="flex justify-end pt-2 animate-in fade-in slide-in-from-bottom-4 duration-500">
-          <button
-            onClick={handleUpdate}
-            disabled={isUpdating}
-            className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl bg-gradient-to-r from-red-500 to-blue-600 hover:from-red-400 hover:to-blue-500 text-white font-bold text-sm transition-all cursor-pointer shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] hover:-translate-y-1 disabled:opacity-50 disabled:hover:translate-y-0"
-          >
-            {isUpdating ? (
-              <RefreshCw className="w-5 h-5 animate-spin" />
-            ) : (
-              <Save className="w-5 h-5" />
-            )}
-            {isUpdating ? "Saving Your Changes..." : "Save All Changes"}
-          </button>
+      {/* 4. Danger Zone */}
+      <div className="border border-red-500/30 bg-red-950/10 p-6 sm:p-8 space-y-4">
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 bg-[#EF4444]" />
+          <span className="swiss-kicker text-[#EF4444]">
+            04 // IRREVERSIBLE OPERATION
+          </span>
         </div>
-      )}
-
-      {/* 4. Timestamps & Metadata Card (Full Width) */}
-      <div className="p-6 sm:p-10 rounded-3xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-md space-y-8 shadow-xl">
-        <div className="flex items-center gap-4 pb-5">
-          <div className="p-2.5 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400">
-            <Clock className="w-5 h-5" />
-          </div>
-          <div>
-            <h3 className="text-base font-bold text-white">
-              Account Timestamps
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <h3 className="text-base font-bold uppercase tracking-tight text-white">
+              Purge Account & Telemetry Data
             </h3>
-            <p className="text-xs text-slate-400">
-              Creation and modification history
-            </p>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <div className="p-5 sm:px-6 sm:py-5 rounded-2xl bg-slate-950/60 border border-slate-800/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-              Created At
-            </span>
-            <span className="text-xs text-slate-200 font-mono font-medium">
-              {formatDate(profile.createdAt)}
-            </span>
-          </div>
-
-          <div className="p-5 sm:px-6 sm:py-5 rounded-2xl bg-slate-950/60 border border-slate-800/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-              Last Updated
-            </span>
-            <span className="text-xs text-slate-200 font-mono font-medium">
-              {formatDate(profile.updatedAt)}
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* 5. Danger Zone */}
-      <div className="p-6 mt-6 sm:p-10 rounded-3xl bg-rose-950/20 border border-rose-900/30 backdrop-blur-md space-y-6 shadow-xl">
-        <div className="flex items-center gap-4 pb-5">
-          <div className="p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-500">
-            <Trash2 className="w-5 h-5" />
-          </div>
-          <div>
-            <h3 className="text-base font-bold text-rose-500">Danger Zone</h3>
-            <p className="text-xs text-rose-400/80">
-              Irreversible account actions
-            </p>
-          </div>
-        </div>
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-6">
-          <div>
-            <p className="text-sm font-medium text-slate-200">Delete Account</p>
-            <p className="text-xs text-slate-500 mt-1">
-              Permanently remove your account and all associated data.
+            <p className="text-xs font-mono text-[#8E929B]">
+              Permanently eradicate user identity, monitors, and historical
+              uptime traces.
             </p>
           </div>
           <button
             onClick={() => setShowDeleteModal(true)}
             disabled={isDeleting}
-            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-500 text-sm font-bold transition-all disabled:opacity-50 cursor-pointer"
+            className="inline-flex items-center justify-center gap-2 px-4 py-2.5 border border-red-500/40 bg-transparent hover:bg-red-500 hover:text-white text-red-400 font-mono text-xs uppercase tracking-wider transition-colors rounded-none cursor-pointer disabled:opacity-50 shrink-0"
           >
             {isDeleting ? (
-              <RefreshCw className="w-4 h-4 animate-spin" />
+              <RefreshCw className="w-3.5 h-3.5 animate-spin" />
             ) : (
-              <Trash2 className="w-4 h-4" />
+              <Trash2 className="w-3.5 h-3.5" />
             )}
-            {isDeleting ? "Deleting..." : "Delete Account"}
+            <span>Purge Account</span>
           </button>
         </div>
       </div>
-      {/* Delete Confirmation Modal */}
+
+      {/* Swiss Delete Confirmation Modal */}
       {showDeleteModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="relative w-full max-w-md p-6 sm:p-8 rounded-3xl bg-slate-900 border border-rose-500/30 shadow-[0_0_40px_rgba(225,29,72,0.15)] space-y-6">
-            <div className="flex flex-col items-center text-center space-y-4">
-              <div className="p-4 rounded-full bg-rose-500/10 text-rose-500 border border-rose-500/20 mb-2">
-                <AlertCircle className="w-8 h-8" />
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80">
+          <div className="w-full max-w-md bg-[#121316] border border-red-500/50 p-6 sm:p-8 space-y-6">
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 bg-[#EF4444]" />
+                <span className="swiss-kicker text-[#EF4444]">
+                  CONFIRMATION REQUIRED
+                </span>
               </div>
-              <h3 className="text-xl font-bold text-white">Delete Account?</h3>
-              <p className="text-sm text-slate-400">
-                Are you absolutely sure you want to delete your account? This
-                action is{" "}
-                <span className="font-bold text-rose-400">permanent</span> and
-                cannot be undone. All your data will be wiped immediately.
+              <h3 className="text-xl font-bold uppercase tracking-tight text-white">
+                Purge Account Record?
+              </h3>
+              <p className="text-xs font-mono text-[#8E929B] leading-relaxed">
+                This operation is irrevocable. All uptime telemetry, monitor
+                configurations, and notification routes will be permanently
+                purged from the database.
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center gap-3 w-full pt-4">
+            <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
               <button
                 onClick={() => setShowDeleteModal(false)}
                 disabled={isDeleting}
-                className="w-full sm:w-1/2 px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium transition-all"
+                className="w-full sm:w-1/2 px-4 py-2.5 border border-white/20 bg-transparent text-white font-mono text-xs uppercase tracking-wider hover:bg-white/10 transition-colors rounded-none cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 onClick={confirmDelete}
                 disabled={isDeleting}
-                className="w-full sm:w-1/2 flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-sm font-bold transition-all disabled:opacity-50"
+                className="w-full sm:w-1/2 flex items-center justify-center gap-2 px-4 py-2.5 bg-[#EF4444] text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-white hover:text-black transition-colors rounded-none cursor-pointer disabled:opacity-50"
               >
                 {isDeleting ? (
-                  <RefreshCw className="w-4 h-4 animate-spin" />
+                  <RefreshCw className="w-3.5 h-3.5 animate-spin" />
                 ) : (
-                  <Trash2 className="w-4 h-4" />
+                  <Trash2 className="w-3.5 h-3.5" />
                 )}
-                {isDeleting ? "Deleting..." : "Yes, Delete It"}
+                <span>Confirm Purge</span>
               </button>
             </div>
           </div>
