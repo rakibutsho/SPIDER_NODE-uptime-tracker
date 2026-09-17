@@ -22,10 +22,34 @@ jobs:
         run: npm ci --legacy-peer-deps
 
       - name: Create .env file for Build
+        env:
+          ENV_FILE: ${{ secrets.ENV_FILE }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
-          cat << 'EOF' > .env
-          ${{ secrets.ENV_FILE }}
-          EOF
+          node -e '
+            const fs = require("fs");
+            let envContent = process.env.ENV_FILE || "";
+
+            // If DATABASE_URL secret is provided in GitHub Actions, override or append it
+            if (process.env.DATABASE_URL) {
+              const dbUrl = process.env.DATABASE_URL.trim();
+              if (/^DATABASE_URL=/m.test(envContent)) {
+                envContent = envContent.replace(/^DATABASE_URL=.*$/m, `DATABASE_URL="${dbUrl}"`);
+              } else {
+                envContent += (envContent ? "\n" : "") + `DATABASE_URL="${dbUrl}"\n`;
+              }
+            }
+
+            fs.writeFileSync(".env", envContent);
+
+            const match = envContent.match(/^DATABASE_URL=.*$/m);
+            if (match) {
+              const masked = match[0].replace(/:\/\/[^@]*@/, "://***@");
+              console.log("Configured Database in CI:", masked);
+            } else {
+              console.log("WARNING: No DATABASE_URL found in .env!");
+            }
+          '
 
       - name: Build Next.js App
         run: npm run build

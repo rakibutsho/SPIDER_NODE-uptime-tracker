@@ -1,6 +1,6 @@
 "use client";
 
-import { Alert01Icon as AlertCircle } from "hugeicons-react";
+import { RefreshIcon as RefreshCw } from "hugeicons-react";
 
 export default function GlobalError({
   error,
@@ -10,29 +10,40 @@ export default function GlobalError({
   reset: () => void;
 }) {
   return (
-    <html>
-      <body className="bg-[#121212]">
-        <div className="min-h-screen flex flex-col items-center justify-center p-4">
-          <div className="max-w-md w-full bg-[#0F172A] border border-red-500/20 rounded-2xl p-8 text-center space-y-6">
-            <div className="flex justify-center">
-              <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center">
-                <AlertCircle className="w-8 h-8 text-red-500" />
-              </div>
+    <html lang="en">
+      <body className="bg-[#0C0D0E] text-[#EDEDED] font-sans antialiased m-0 p-0">
+        <div className="min-h-screen flex items-center justify-center p-4 sm:p-8">
+          <div className="w-full max-w-xl border border-red-500/40 bg-[#121316] p-6 sm:p-10 space-y-6">
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 bg-[#EF4444]" />
+              <span className="text-[11px] font-mono uppercase tracking-[0.2em] font-bold text-[#EF4444]">
+                CRITICAL // ROOT_EXCEPTION
+              </span>
             </div>
 
             <div className="space-y-2">
-              <h2 className="text-2xl font-bold text-white">Fatal Application Error</h2>
-              <p className="text-slate-400 text-sm">
-                A critical error occurred. We are working to resolve the issue.
+              <h1 className="text-2xl font-bold uppercase tracking-tight text-white">
+                Fatal Kernel Fault
+              </h1>
+              <p className="text-xs font-mono text-[#8E929B] leading-relaxed">
+                A critical framework error interrupted top-level application
+                hydration. An emergency re-initialization is required.
               </p>
             </div>
 
-            <div className="pt-4">
+            {error?.digest && (
+              <div className="p-3 border border-white/10 bg-[#0C0D0E] font-mono text-[11px] text-[#8E929B]">
+                TRACE_ID: {error.digest}
+              </div>
+            )}
+
+            <div className="pt-2">
               <button
                 onClick={() => reset()}
-                className="w-full px-6 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-medium text-sm transition-all"
+                className="w-full py-3 bg-[#EF4444] hover:bg-white hover:text-black text-white font-mono text-xs font-bold uppercase tracking-[0.15em] transition-colors rounded-none flex items-center justify-center gap-2 cursor-pointer"
               >
-                Attempt Recovery
+                <RefreshCw className="w-3.5 h-3.5" />
+                <span>Re-Initialize Application</span>
               </button>
             </div>
           </div>

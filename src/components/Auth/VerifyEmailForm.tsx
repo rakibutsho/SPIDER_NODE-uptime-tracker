@@ -1,17 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { CheckmarkCircle01Icon as CheckCircle, Cancel01Icon as XCircle, Loading01Icon as Loader } from "hugeicons-react";
+import Image from "next/image";
+import logo from "@/assets/logo.png";
+import {
+  Tick01Icon as Check,
+  Cancel01Icon as XIcon,
+  Loading01Icon as Loader2,
+  ArrowRight01Icon as ArrowRight,
+} from "hugeicons-react";
 import { toast } from "sonner";
-import { Suspense } from "react";
 
 function VerifyEmailContent() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
-  
-  const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
+
+  const [status, setStatus] = useState<"loading" | "success" | "error">(
+    "loading",
+  );
   const [message, setMessage] = useState("");
 
   useEffect(() => {
@@ -33,16 +41,16 @@ function VerifyEmailContent() {
 
         if (!res.ok) {
           setStatus("error");
-          setMessage(data.error || "Something went wrong.");
+          setMessage(data.error || "Verification failed or token expired.");
           return;
         }
 
         setStatus("success");
-        setMessage("Email verified successfully!");
-        toast.success("Email verified successfully!");
-      } catch (error) {
+        setMessage("Email address verified. Account is fully activated.");
+        toast.success("Email verified successfully.");
+      } catch {
         setStatus("error");
-        setMessage("Something went wrong. Please try again.");
+        setMessage("An unexpected error occurred during verification.");
       }
     };
 
@@ -50,55 +58,93 @@ function VerifyEmailContent() {
   }, [token]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="max-w-md w-full glass-panel border border-slate-800 rounded-2xl p-8 text-center space-y-6">
-        <div className="flex justify-center">
-          {status === "loading" && (
-            <div className="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center">
-              <Loader className="w-8 h-8 text-slate-400 animate-spin" />
-            </div>
-          )}
-          {status === "success" && (
-            <div className="w-16 h-16 bg-emerald-500/10 rounded-full flex items-center justify-center">
-              <CheckCircle className="w-8 h-8 text-emerald-500" />
-            </div>
-          )}
-          {status === "error" && (
-            <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center">
-              <XCircle className="w-8 h-8 text-red-500" />
-            </div>
-          )}
-        </div>
+    <div className="min-h-screen flex items-center justify-center p-4 bg-[#0C0D0E]">
+      <div className="w-full max-w-md bg-[#121316] border border-white/15 p-6 sm:p-8 space-y-6">
+        {/* Brand Header */}
+        <Link href="/" className="inline-flex items-center gap-2 group">
+          <div className="w-7 h-7 flex items-center justify-center border border-white/20 bg-black/40">
+            <Image
+              src={logo}
+              alt="SpiderNode"
+              width={22}
+              height={22}
+              className="object-contain"
+              priority
+            />
+          </div>
+          <div className="flex flex-col text-left">
+            <span className="text-xs font-black tracking-[0.25em] text-white uppercase leading-none">
+              SpiderNode
+            </span>
+            <span className="text-[9px] font-mono tracking-[0.25em] text-[#8E929B] uppercase mt-0.5">
+              Telemetry System
+            </span>
+          </div>
+        </Link>
 
-        <div className="space-y-2">
-          <h2 className="text-2xl font-bold text-white tracking-tight">
-            {status === "loading" && "Verifying your email..."}
-            {status === "success" && "Verification Complete"}
-            {status === "error" && "Verification Failed"}
-          </h2>
-          <p className="text-slate-400 text-sm">
-            {status === "loading" && "Please wait while we verify your email address."}
-            {status === "success" && "Thank you! Your email has been verified. You can now sign in to your account."}
-            {status === "error" && message}
+        {/* State Banner */}
+        <div className="border-t border-white/10 pt-4 space-y-3">
+          <div className="flex items-center gap-2">
+            <span
+              className={`w-2 h-2 ${
+                status === "success"
+                  ? "bg-emerald-500"
+                  : status === "error"
+                    ? "bg-[#EF4444]"
+                    : "bg-white/40 animate-pulse"
+              }`}
+            />
+            <span className="swiss-kicker">
+              {status === "loading" && "01 // VERIFYING_TOKEN"}
+              {status === "success" && "01 // VERIFICATION_CONFIRMED"}
+              {status === "error" && "01 // VERIFICATION_FAILED"}
+            </span>
+          </div>
+
+          <h1 className="text-xl font-bold uppercase tracking-tight text-white">
+            {status === "loading" && "Validating Security Token"}
+            {status === "success" && "Identity Verified"}
+            {status === "error" && "Verification Rejected"}
+          </h1>
+
+          <p className="text-xs font-mono text-[#8E929B] leading-relaxed">
+            {status === "loading" &&
+              "Communicating with authorization node. Please wait..."}
+            {status === "success" &&
+              "Your email address has been verified. You may now proceed to the authentication console."}
+            {status === "error" &&
+              (message || "The verification token could not be authorized.")}
           </p>
         </div>
 
-        <div className="pt-4 flex flex-col gap-3">
+        {/* Action Button */}
+        <div className="pt-2">
+          {status === "loading" && (
+            <div className="py-3 px-4 border border-white/15 flex items-center justify-center gap-2 text-xs font-mono text-[#8E929B]">
+              <Loader2 className="w-4 h-4 animate-spin text-[#EF4444]" />
+              <span>PROCESSING...</span>
+            </div>
+          )}
+
           {status === "success" && (
             <Link
               href="/login"
-              className="w-full px-6 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-medium text-sm transition-all"
+              className="w-full py-3 bg-[#EF4444] hover:bg-white hover:text-black text-white font-mono text-xs font-bold uppercase tracking-[0.15em] transition-colors rounded-none flex items-center justify-center gap-2 cursor-pointer"
             >
-              Go to Login
+              <span>Proceed to Login</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           )}
+
           {status === "error" && (
-            <Link
-              href="/login"
-              className="w-full px-6 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-medium text-sm transition-all"
-            >
-              Back to Login
-            </Link>
+            <div className="space-y-3">
+              <Link
+                href="/login"
+                className="w-full py-3 border border-white/20 bg-transparent hover:bg-white hover:text-black text-white font-mono text-xs font-bold uppercase tracking-[0.15em] transition-colors rounded-none flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <span>Return to Login</span>
+              </Link>
+            </div>
           )}
         </div>
       </div>
@@ -108,7 +154,13 @@ function VerifyEmailContent() {
 
 export function VerifyEmailForm() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin"></div></div>}>
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-[#0C0D0E]">
+          <Loader2 className="w-8 h-8 animate-spin text-[#EF4444]" />
+        </div>
+      }
+    >
       <VerifyEmailContent />
     </Suspense>
   );
